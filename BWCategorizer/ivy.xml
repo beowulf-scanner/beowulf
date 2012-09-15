@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file 
+	distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under 
+	the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may 
+	obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to 
+	in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
+	ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under 
+	the License. -->
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+
+	<info organisation="com.nvarghese.beowulf" module="beowulf-categorizer" status="integration" revision="${beowulf.project.version}">
+	</info>
+
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="test" />
+	</configurations>
+
+	<dependencies>
+
+		<dependency org="com.nvarghese.beowulf" name="beowulf-common" rev="latest.integration" transitive="true" />
+
+		<!-- logging libraries -->
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" />
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.1" />
+		<!-- <dependency org="org.slf4j" name="log4j-over-slf4j" rev="1.6.1" /> -->
+		<dependency org="log4j" name="log4j" rev="1.2.15">
+			<exclude org="javax.mail" name="mail" />
+			<exclude org="javax.activation" name="activation" />
+			<exclude org="javax.jms" name="jms" />
+			<exclude org="com.sun.jdmk" name="jmxtools" />
+			<exclude org="com.sun.jmx" name="jmxri" />
+		</dependency>
+
+
+	</dependencies>
+</ivy-module>

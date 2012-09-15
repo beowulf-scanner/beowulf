@@ -1,0 +1,191 @@
+<project name="beowulf-categ" basedir="." default="publish-zip" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<description>
+		Build file for beowulf categorizer system
+	</description>
+
+	<property name="bw-categ.root" location="${basedir}" />
+	<property name="bw-builder.root" location="${basedir}/../BWBuilder/" />
+	<property file="build.properties" />
+	<property file="${bw-builder.root}/build-common.properties" />
+	<import file="${bw-builder.root}/commontasks.xml" />
+	<property name="dist.dir" location="dist" />
+	<property name="lib.dir" location="${bw-categ.root}/lib" />
+
+	<property name="testng.output.dir" value="test-outputs" />
+
+	<property name="src.dir" value="src/main/java" />
+	<property name="test.dir" value="src/test/java" />
+	<property name="integration.dir" value="src/integration/java" />
+	<property name="src.resources.dir" value="src/main/resources" />
+	<property name="test.resources.dir" value="src/test/resources" />
+	<property name="integration.resources.dir" value="src/integration/resources" />
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: init-properties 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="init-properties">
+		<property name="artifact.name" value="${ant.project.name}" />
+
+		<property name="build.dir" location="${bw-categ.root}/build" />
+		<property name="build.classes" location="${build.dir}/classes" />
+		<property name="build.test" location="${build.dir}/test" />
+		<property name="build.integration" location="${build.dir}/integration" />
+
+		<property name="dist.dir" location="${bw-categ.root}/dist" />
+		<property name="classpath" location="${lib.dir}" />
+
+		<property name="main-class" value="com.nvarghese.beowulf.categ.CategServer" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-configure 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-configure" depends="ivy-download,ivy-taskdef">
+		<ivy:settings file="${bw-builder.root}/ivysettings.xml" id="${ant.project.name}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-resolve 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-resolve" depends="ivy-tasks-configure">
+		<ivy:resolve file="${bw-categ.root}/ivy.xml" settingsref="${ant.project.name}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-retrieve 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-retrieve" depends="ivy-tasks-resolve">
+		<ivy:retrieve pattern="${lib.dir}/[artifact]-[revision].[ext]" settingsRef="${ant.project.name}" conf="default" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: prepare-compile 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="prepare-compile">
+		<path id="java.compile.classpath">
+			<pathelement location="${build.classes}" />
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: jar 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="jar" depends="compile-module, prepare-buildjar" unless="jar.created" description="--> Create beowulf categorizer jar">
+		<echo message="Building Jar for ${artifact.name}" />
+		<buildJar artifact="${artifact.name}" targetdir="${bw-categ.root}" />
+		<property name="jar.created" value="true" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: prepare-compile-tests           
+	- - - - - - - - - - - - - - - - - -->
+	<target name="prepare-compile-tests">
+		<path id="lib.dir.id">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<path id="test.compile.classpath">
+			<pathelement location="${build.classes}" />
+			<path refid="lib.dir.id" />
+		</path>
+
+		<path id="testng.classpath">
+			<pathelement location="${build.classes}" />
+			<pathelement location="${build.test}" />
+			<pathelement location="${build.integration}" />
+		</path>
+
+	</target>
+
+	<!--
+	 target: publish-zip     
+	-->
+
+	<target name="publish-zip" depends="jar" description="--> Publishes all the artifacts in zip">
+		<move todir="${dist.dir}" file="${artifact.name}.jar" />
+		<zip destfile="${dist.dir}/${artifact.name}-${beowulf.project.version}.zip">
+			<zipfileset file="log4j.properties" prefix="${artifact.name}-${beowulf.project.version}" />
+			<zipfileset dir="lib" prefix="${artifact.name}-${beowulf.project.version}/lib" />
+			<zipfileset dir="${src.resources.dir}" prefix="${artifact.name}-${beowulf.project.version}/${resources.export.dir.name}" />
+			<!-- <zipfileset dir="extlib" prefix="${project.name}-${project.version}/extlib" /> -->
+			<zipfileset dir="webapp" prefix="${artifact.name}-${beowulf.project.version}/webapp" />
+			<!--<zipfileset dir="${dist.dir}/docs/api/" prefix="${project.name}-${project.version}/docs/api" /> -->
+			<zipfileset file="${dist.dir}/${artifact.name}.jar" prefix="${artifact.name}-${beowulf.project.version}" />
+		</zip>
+		<delete file="${dist.dir}/${artifact.name}.jar" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: compile-tests           
+	- - - - - - - - - - - - - - - - - -->
+	<target name="compile-tests" depends="prepare-compile-tests, compile-module" description="Compile the test code" unless="maven.test.skip">
+		<ivy:resolve conf="test" />
+		<mkdir dir="${build.test}" />
+		<!--<javac destdir="${build.test}"
+	                 nowarn="true"
+	                 debug="true"
+	                 optimize="true"
+	                 deprecation="false"
+	                 target="1.6"
+	                 verbose="false"
+	                 fork="true"
+	                 source="1.6">
+			<src>
+				<pathelement location="${test.dir}"/>
+			</src>
+			<classpath>
+				<path refid="java.compile.test.classpath"/>
+			</classpath>
+		</javac> -->
+		<javac srcdir="${test.dir}" destdir="${build.test}" encoding="ISO-8859-1" includeantruntime="false" debug="true">
+			<classpath refid="test.compile.classpath" />
+		</javac>
+		<javac srcdir="${integration.dir}" destdir="${build.integration}" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="test.compile.classpath" />
+		</javac>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-retrieve-tests           
+	- - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-retrieve-tests" depends="ivy-tasks-resolve">
+		<ivy:retrieve pattern="${lib.dir}/[artifact]-[revision].[ext]" settingsRef="${ant.project.name}" conf="*" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: prepare-buildjar 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="prepare-buildjar">
+		<path id="jar.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: clean           
+	- - - - - - - - - - - - - - - - - -->
+	<target name="clean" depends="init-properties" description="--> Cleans all">
+		<delete dir="${build.dir}" />
+		<delete file="${artifact.name}.jar" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${lib.dir}" />
+		<delete dir="${testng.output.dir}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: clean-local-repo 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="clean-local-repo" depends="init-properties, ivy-taskdef" description="--> Cleans the local repository for the current module">
+		<ivy:info file="${bw-categ.root}/ivy.xml" />
+		<delete dir="${ivy.default.ivy.user.dir}/local/${ivy.organisation}/${ivy.module}" />
+	</target>
+
+</project>
