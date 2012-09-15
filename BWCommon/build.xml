@@ -1,0 +1,143 @@
+<project name="beowulf-common" basedir="." default="jar" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<description>
+		Build file for Beowulf common library
+	</description>
+
+	<!--
+		Global properties
+	-->
+	<property name="bw-common.root" location="${basedir}" />
+	<property name="bw-builder.root" location="${basedir}/../BWBuilder/" />
+	<property file="build.properties" />
+	<property file="${bw-builder.root}/build-common.properties" />
+	<import file="${bw-builder.root}/commontasks.xml" />
+	<property name="dist.dir" location="dist" />
+	<property name="lib.dir" location="${bw-common.root}/lib" />
+	
+	<delete dir="${testng.output.dir}" />
+
+	<property name="src.dir" value="src/main/java" />
+	<property name="test.dir" value="src/test/java" />
+	<property name="src.resources.dir" value="src/main/resources" />
+	<property name="test.resources.dir" value="src/test/resources" />
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: init-properties 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="init-properties">
+		<property name="artifact.name" value="${ant.project.name}" />
+		
+		<property name="build.dir" location="${bw-common.root}/build" />		
+		<property name="build.classes" location="${build.dir}/classes" />
+		<property name="build.test" location="${build.dir}/test" />
+		<property name="build.integration" location="${build.dir}/integration" />
+
+		<property name="dist.dir" location="${bw-common.root}/dist" />
+		<property name="classpath" location="${lib.dir}" />
+		
+		<property name="main-class" value="none" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-configure 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-configure" depends="ivy-download, ivy-taskdef">
+		<ivy:settings file="${bw-builder.root}/ivysettings.xml" id="${ant.project.name}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-resolve 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-resolve" depends="ivy-tasks-configure">
+		<ivy:resolve file="${bw-common.root}/ivy.xml" settingsref="${ant.project.name}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-retrieve 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="ivy-tasks-retrieve" depends="ivy-tasks-resolve">
+		<ivy:retrieve pattern="${lib.dir}/[artifact]-[revision].[ext]" settingsRef="${ant.project.name}" conf="default" />
+	</target>
+	
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: prepare-compile 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="prepare-compile">
+		<path id="java.compile.classpath">
+			<pathelement location="${build.classes}" />
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: jar 
+	 - - - - - - - - - - - - - - - - - -->
+	<target name="jar" depends="clean, compile-module, prepare-buildjar" unless="jar.created" description="--> Create beowuld common jar">
+		<echo message="Building Jar for ${artifact.name}" />
+		<buildJar artifact="${artifact.name}" targetdir="${dist.dir}" />
+		<property name="jar.created" value="true" />
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: publish-local-repo 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="publish-local-repo" depends="clean, jar, bundle-sources" description="--> Publish this project in the local ivy repository">
+		<ivy:makepom ivyfile="${bw-common.root}/ivy.xml" pomfile="${dist.dir}/${artifact.name}.pom" artifactname="${artifact.name}">
+			<mapping conf="default" scope="compile" />
+			<mapping conf="test" scope="test" />
+		</ivy:makepom>
+		<ivy:publish artifactspattern="${dist.dir}/[artifact].[ext]" resolver="beowulf-local-projects" 
+			pubrevision="${beowulf.project.version}-local-${now}" pubdate="${now}" status="integration" forcedeliver="true" overwrite="true">			
+		</ivy:publish>
+		<echo message="Project ${ant.project.name} published locally with version ${beowulf.project.version}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: publish-shared-repo 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="publish-shared-repo" depends="jar" description="--> Publish this project in the shared archiva repository">
+		<ivy:makepom ivyfile="${bw-common.root}/ivy.xml" pomfile="${dist.dir}/${artifact.name}.pom" artifactname="${artifact.name}">
+			<mapping conf="default" scope="compile" />
+			<mapping conf="test" scope="test" />
+		</ivy:makepom>
+		<ivy:publish artifactspattern="${dist.dir}/[artifact].[ext]" resolver="archiva-publish" 
+			pubrevision="${beowulf.project.version}" pubdate="${now}" status="integration" forcedeliver="true" overwrite="true" publishivy="false">
+			<artifact name="${artifact.name}" type="pom" conf="default" ext="pom" />
+		</ivy:publish>
+		<echo message="Project ${ant.project.name} published to archiva with version ${beowulf.project.version}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: prepare-buildjar 
+	- - - - - - - - - - - - - - - - - -->
+	<target name="prepare-buildjar">
+		<path id="jar.classpath">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: clean           
+	- - - - - - - - - - - - - - - - - -->
+	<target name="clean" depends="init-properties" description="--> Cleans all">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${lib.dir}" />
+		<delete dir="${testng.output.dir}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: clean-local-repo           
+	- - - - - - - - - - - - - - - - - -->
+	<target name="clean-local-repo" depends="init-properties, ivy-taskdef" description="--> Cleans the local repository for the current module">
+		<ivy:info file="${bw-common.root}/ivy.xml" />
+		<delete dir="${ivy.default.ivy.user.dir}/local/${ivy.organisation}/${ivy.module}" />
+	</target>
+
+</project>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file 
+	distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under 
+	the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may 
+	obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to 
+	in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF 
+	ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under 
+	the License. -->
+<ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
+
+	<info organisation="com.nvarghese.beowulf" module="beowulf-common" status="integration" revision="${beowulf.project.version}">
+	</info>
+
+	<configurations defaultconfmapping="default">
+		<conf name="default" />
+		<conf name="test" />
+	</configurations>
+
+	<dependencies>
+
+		<!-- HTTP libraries -->
+		<dependency org="org.eclipse.jetty.aggregate" name="jetty-all-server" rev="8.1.5.v20120716">
+			<exclude org="org.eclipse.jetty.orbit" name="javax.servlet" />
+			<exclude org="org.eclipse.jetty.orbit" name="javax.security.auth.message" />
+			<exclude org="org.eclipse.jetty.orbit" name="javax.mail.glassfish" />
+			<exclude org="org.eclipse.jetty.orbit" name="javax.activation" />
+			<exclude org="org.eclipse.jetty.orbit" name="javax.annotation" />
+		</dependency>
+		
+		<dependency org="org.jboss.spec.javax.servlet" name="jboss-servlet-api_3.0_spec" rev="1.0.0.Final" />
+		<dependency org="org.eclipse.jetty.aggregate" name="jetty-client" rev="8.1.5.v20120716" />
+		<dependency org="org.apache.httpcomponents" name="httpclient" rev="4.2.1" />
+		<dependency org="org.apache.httpcomponents" name="httpcore" rev="4.2.1" />
+		<dependency org="org.apache.httpcomponents" name="httpmime" rev="4.2.1" />
+
+		<dependency org="org.codehaus.jackson" name="jackson-jaxrs" rev="1.9.2" />
+		<dependency org="net.sf.json-lib" name="json-lib" rev="2.4" />
+
+		<!-- resteasy server/client dependencies -->
+		<dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.3.4.Final" />
+		<dependency org="org.jboss.resteasy" name="resteasy-jaxb-provider" rev="2.3.4.Final" />
+		<dependency org="org.jboss.resteasy" name="resteasy-jettison-provider" rev="2.3.4.Final" />
+		<dependency org="org.jboss.resteasy" name="resteasy-jackson-provider" rev="2.3.4.Final" />
+
+		<!-- hornetQ/JMS client(only) dependencies -->
+		<dependency org="org.hornetq" name="hornetq-jms-client" rev="2.2.19.Final" />
+		<dependency org="org.hornetq" name="hornetq-core-client" rev="2.2.19.Final" />
+		<dependency org="javax.jms" name="jms" rev="1.1" />
+
+		<!-- zookeeper dependencies -->
+		<dependency org="org.apache.zookeeper" name="zookeeper" rev="3.3.6" />
+
+		<!-- Persistence libraries -->
+		<dependency org="org.mongodb" name="mongo-java-driver" rev="2.9.0" />
+		<dependency org="com.google.code.morphia" name="morphia" rev="0.99" />
+
+		<!-- Utils -->
+		<dependency org="commons-configuration" name="commons-configuration" rev="1.6" />
+		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
+		<dependency org="commons-cli" name="commons-cli" rev="1.2" />
+		<dependency org="commons-io" name="commons-io" rev="2.1" />
+
+		<!-- logging libraries -->
+		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" />
+		<dependency org="org.slf4j" name="slf4j-log4j12" rev="1.6.1" />
+		<!-- <dependency org="org.slf4j" name="log4j-over-slf4j" rev="1.6.1" /> -->
+		<dependency org="log4j" name="log4j" rev="1.2.15">
+			<exclude org="javax.mail" name="mail" />
+			<exclude org="javax.activation" name="activation" />
+			<exclude org="javax.jms" name="jms" />
+			<exclude org="com.sun.jdmk" name="jmxtools" />
+			<exclude org="com.sun.jmx" name="jmxri" />
+		</dependency>
+
+	</dependencies>
+</ivy-module>
