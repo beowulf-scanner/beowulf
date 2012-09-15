@@ -1,0 +1,185 @@
+<project name="CommonTasks" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<target name="init-properties" />
+
+	<target name="init" depends="init-properties">
+
+		<tstamp>
+			<format pattern="d-MMMM-yyyy" property="TODAY_IN" locale="en,IN" />
+			<format property="now" pattern="yyyyMMddHHmmss" />
+		</tstamp>
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.test}" />
+		<mkdir dir="${dist.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${ivy.lib.dir}" />
+
+		<condition property="ivy.jar.exists">
+			<available file="${ivy.lib.dir}/ivy-${ivy.version}.jar" />
+		</condition>
+
+	</target>
+
+	<target name="ivy-download" unless="ivy.jar.exists" depends="init">
+		<!--<delete dir="${lib.dir}" includes="ivy-*.jar" excludes="ivy-${ivy.version}.jar"/> -->
+		<get src="${ivy.url}/${ivy.version}/ivy-${ivy.version}.jar" dest="${ivy.lib.dir}/ivy-${ivy.version}.jar"
+			usetimestamp="true" />
+	</target>
+
+	<target name="ivy-taskdef" unless="ivy.initialized">
+		<path id="ivy.lib.dir.id">
+			<fileset dir="${ivy.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.dir.id" />
+		<!-- ensure that ivy taskdef is only run once, otw ant will error -->
+		<property name="ivy.initialized" value="true" />
+	</target>
+
+	<target name="ivy-tasks-configure" />
+	<target name="ivy-tasks-resolve" />
+	<target name="ivy-tasks-retrieve" />
+	<target name="ivy-tasks-retrieve-tests" />
+
+	<target name="prepare-compile" />
+
+	<!-- - - - - - - - - - - - - - - - - - target: compile-module-with-debug javac.debug property is set externally through 
+		rus as external configuration. - - - - - - - - - - - - - - - - - -->
+
+	<target name="compile-module" depends="init, ivy-tasks-configure, 
+		ivy-tasks-resolve, ivy-tasks-retrieve, prepare-compile">
+		<javac debug="true" srcdir="${src.dir}" destdir="${build.classes}" encoding="ISO-8859-1">
+			<classpath refid="java.compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="prepare-compile-tests" />
+
+	<target name="compile-module-test"
+		depends="compile-module,ivy-tasks-configure, 
+		ivy-tasks-resolve, ivy-tasks-retrieve-tests , prepare-compile-tests">
+		<javac srcdir="${test.dir}" destdir="${build.test}" encoding="ISO-8859-1">
+			<classpath refid="test.compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="clean-module" depends="init-properties">
+		<delete dir="${build.classes}" />
+		<delete dir="${build.test}" />
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - target: clean-testng - - - - - - - - - - - - - - - - - -->
+
+	<target name="clean-testng">
+		<delete dir="${testng.output.dir}" />
+	</target>
+
+	<target name="prepare-buildjar" />
+	<target name="dist" />
+
+	<macrodef name="buildJar">
+		<attribute name="artifact" />
+		<attribute name="targetdir" />
+		<sequential>
+			<manifestclasspath property="jar.classpath.final" jarfile="@{targetdir}/@{artifact.name}.jar">
+				<classpath>
+					<path refid="jar.classpath" />
+				</classpath>
+			</manifestclasspath>
+			<jar destfile="@{targetdir}/@{artifact}.jar" basedir="${build.classes}">
+				<manifest>
+					<attribute name="Main-Class" value="${main-class}" />
+					<attribute name="Class-Path" value="${jar.classpath.final}" />
+					<attribute name="Build-Date" value="${TODAY}" />
+				</manifest>
+			</jar>
+		</sequential>
+	</macrodef>
+
+	<!-- - - - - - - - - - - - - - - - - - target: prepare-ivylib - - - - - - - - - - - - - - - - - -->
+	<target name="prepare-ivylib" depends="init">
+		<path id="lib.ivy.id">
+			<fileset dir="${ivy.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - - target: cobertura-instrument-classes - - - - - - - - - - - - - - - - - -->
+
+<!--	<target name="cobertura-instrument-classes" depends="prepare-ivylib,compile-module">
+		<echo message="Running Cobertura" />
+		<mkdir dir="${instrumented.dir}" />
+		<taskdef resource="tasks.properties" classpathref="lib.ivy.id" />
+		<cobertura-instrument datafile="${cobertura.dir}/${cobertura.ser}" todir="${instrumented.dir}">
+			<fileset dir="${build.classes}">
+				<include name="**/*.class" />
+				<exclude name="**/*Test.class" />
+			</fileset>
+		</cobertura-instrument>
+
+	</target> -->
+
+	<!-- - - - - - - - - - - - - - - - - - target: run-testng - - - - - - - - - - - - - - - - - -->
+
+<!--	<target name="run-testng" depends="compile-module-test">
+		<echo message="Running test cases" />
+		<property environment="env" />
+		<echo message="Verimo Home: ${env.VERIMO_HOME}" />
+
+		<taskdef name="testng" classpathref="lib.dir.id" classname="org.testng.TestNGAntTask" />
+
+		<testng verbose="5" outputdir="${testng.output.dir}" classpathref="lib.dir.id">
+
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.dir}/${cobertura.ser}" />
+
+			<classpath location="${instrumented.dir}" />
+			<classpath>
+				<path refid="lib.ivy.id" />
+				<path refid="testng.classpath" />
+			</classpath>
+
+
+			<xmlfileset includes="testng.xml" dir="${verimo.root}" /> -->
+			<!-- <classfileset dir="${build.test}" includes="**/*.class" /> -->
+		<!--</testng>
+	</target> -->
+
+	<!-- - - - - - - - - - - - - - - - - - target: run-cobertura-report - - - - - - - - - - - - - - - - - -->
+
+<!--	<target name="run-cobertura-report" depends="cobertura-instrument-classes,run-testng">
+		<cobertura-report format="xml" datafile="${cobertura.dir}/${cobertura.ser}" destdir="${cobertura.dir}/${module.name}/coverage">
+			<fileset dir="${src.dir}">
+				<include name="**/*.java" />
+			</fileset>
+			<fileset dir="${test.dir}">
+				<include name="**/*.java" />
+			</fileset>
+		</cobertura-report>
+	</target> -->
+	
+	<!-- - - - - - - - - - - - - - - - - - target: bundle-sources - - - - - - - - - - - - - - - - - -->
+	<target name="bundle-sources" depends="init">
+		<zip destfile="${dist.dir}/${artifact.name}-src.zip">
+			<zipfileset dir="${src.dir}" />
+		</zip>
+	</target>
+
+
+	<target name="clean-all" depends="init-properties">
+		<delete dir="${build.root.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete file="${verimo.root}/${artifact.name}.jar" />
+		<delete dir="${testng.output.root.dir}" />
+		<delete dir="${findbug.dir}" />
+		<delete dir="${checkstyle.dir}" />
+		<delete dir="${lib.dir}" />
+		<delete dir="${cobertura.dir}" />
+
+		<!--<ivy:cleancache/> -->
+	</target>
+
+</project>

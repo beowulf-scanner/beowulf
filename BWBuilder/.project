@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>BWBuilder</name>
+	<comment></comment>
+	<projects>
+		<project>BWCategorizer</project>
+		<project>BWCommon</project>
+		<project>BWController</project>
+		<project>BWExecutor</project>
+		<project>BWMgmt</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>
