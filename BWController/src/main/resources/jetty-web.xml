@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
+
+<Configure id="Server" class="org.eclipse.jetty.server.Server">
+
+	<Call name="addConnector">
+		<Arg>
+			<New class="org.eclipse.jetty.server.nio.SelectChannelConnector">
+				<Set name="port">14000</Set>
+			</New>
+		</Arg>
+	</Call>
+
+	<Array id="plusConfig" type="java.lang.String">
+		<Item>org.eclipse.jetty.webapp.WebInfConfiguration</Item>
+		<Item>org.eclipse.jetty.webapp.WebXmlConfiguration</Item>
+		<Item>org.eclipse.jetty.webapp.MetaInfConfiguration</Item>
+		<Item>org.eclipse.jetty.webapp.FragmentConfiguration</Item>
+		<Item>org.eclipse.jetty.plus.webapp.EnvConfiguration</Item> <!-- add -->
+		<Item>org.eclipse.jetty.plus.webapp.PlusConfiguration</Item>    <!-- add -->
+		<Item>org.eclipse.jetty.webapp.JettyWebXmlConfiguration</Item>
+		<Item>org.eclipse.jetty.webapp.TagLibConfiguration</Item>
+	</Array>
+	<Call name="setAttribute">
+		<Arg>org.eclipse.jetty.webapp.configuration</Arg>
+		<Arg>
+			<Ref id="plusConfig" />
+		</Arg>
+	</Call>
+
+
+<!-- 	<New id="shirodbsource" class="org.eclipse.jetty.plus.jndi.Resource"> -->
+<!-- 		<Arg></Arg> -->
+<!-- 		<Arg>jdbc/sessionDB</Arg> -->
+<!-- 		<Arg> -->
+<!-- 			<New class="com.mysql.jdbc.jdbc2.optional.MysqlConnectionPoolDataSource"> -->
+<!-- 				<Set name="Url">jdbc:mysql://127.0.0.1:3306/sessionDB</Set> -->
+<!-- 				<Set name="User">root</Set> -->
+<!-- 				<Set name="Password">root@1234</Set> -->
+<!-- 			</New> -->
+<!-- 		</Arg> -->
+<!-- 	</New> -->
+
+<!-- 	<New id="shirodbsource" class="org.eclipse.jetty.plus.jndi.Resource"> -->
+<!-- 		<Arg></Arg> -->
+<!-- 		<Arg>jdbc/sessionDB</Arg> -->
+<!-- 		<Arg> -->
+<!-- 			<New class="org.hsqldb.jdbc.jdbcDataSource"> -->
+<!-- 				<Set name="Url">jdbc:hsqldb:mem:mymemdb</Set> -->
+<!-- 				<Set name="User">SA</Set> -->
+<!-- 				<Set name="Password"></Set> -->
+<!-- 			</New> -->
+<!-- 		</Arg> -->
+<!-- 	</New> -->
+	
+<!-- 	<New id="shirodbsource" class="org.eclipse.jetty.plus.jndi.Resource">
+		<Arg>jdbc/sessionDB</Arg>
+		<Arg>
+			<New class="org.apache.derby.jdbc.EmbeddedDataSource">
+				<Set name="DatabaseName">sessionDB</Set>
+				<Set name="createDatabase">create</Set>
+			</New>
+		</Arg>
+	</New> -->
+
+ </Configure>
+	
