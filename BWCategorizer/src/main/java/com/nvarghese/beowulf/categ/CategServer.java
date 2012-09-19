@@ -18,11 +18,9 @@ import org.slf4j.LoggerFactory;
 public class CategServer {
 
 	private Server jettyServer;
-	
+
 	/* logger */
 	static Logger logger = LoggerFactory.getLogger(CategServer.class);
-	
-	
 
 	public static CategServer initializeServer(CategServerSettings settings) throws Exception {
 
@@ -40,13 +38,14 @@ public class CategServer {
 		if (settings.getBwCategRootPath().equalsIgnoreCase("")) {
 			context.setDescriptor(settings.getJettyContextDescriptor());
 			context.setResourceBase(settings.getJettyContextResourceBase());
-			
+
 		} else {
 			context.setDescriptor(settings.getBwCategRootPath() + File.separator + settings.getJettyContextDescriptor());
-			context.setResourceBase(settings.getBwCategRootPath() + File.separator +settings.getJettyContextResourceBase());			
+			context.setResourceBase(settings.getBwCategRootPath() + File.separator
+					+ settings.getJettyContextResourceBase());
 		}
 		context.setContextPath(settings.getJettyContextRootPath());
-		
+
 		context.setParentLoaderPriority(true);
 		// context.getSessionHandler().getSessionManager().setSessionCookie("xsessionid");
 		server.jettyServer.setHandler(context);
@@ -55,7 +54,8 @@ public class CategServer {
 
 	}
 
-	private static Resource findAndGetJettyResource(CategServerSettings settings) throws MalformedURLException, IOException {
+	private static Resource findAndGetJettyResource(CategServerSettings settings) throws MalformedURLException,
+			IOException {
 
 		Resource jettyEnvXml = null;
 		jettyEnvXml = Resource.newClassPathResource(settings.getJettyResourceFileName());
@@ -95,6 +95,11 @@ public class CategServer {
 		if (waitForThreadsToComplete)
 			this.jettyServer.join();
 
+	}
+
+	Server getJettyServer() {
+
+		return jettyServer;
 	}
 
 	private static CategServerSettings handleCommandLine(String[] args) {
@@ -146,7 +151,7 @@ public class CategServer {
 		try {
 			logger.info("Shutting down the server...");
 			this.jettyServer.stop();
-			//logger.info("Server has stopped.");
+			// logger.info("Server has stopped.");
 			return true;
 		} catch (Exception ex) {
 			logger.error("Error when stopping Jetty server: " + ex.getMessage(), ex);
@@ -156,15 +161,14 @@ public class CategServer {
 
 	public static void main(String[] args) throws Exception {
 
-		
 		// PropertyConfigurator.configure("log4j.properties");
 		CategServerSettings settings = handleCommandLine(args);
-		
+
 		logger.info("Categ Server initializing...");
 		final CategServer categServer = initializeServer(settings);
 		CategManager.initialize(categServer, settings, false);
-		
-		//add shutdown hook
+
+		// add shutdown hook
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 
 			@Override
@@ -178,7 +182,7 @@ public class CategServer {
 					logger.warn("CategServer shutdown failed. Try killing manually");
 			}
 		});
-		
+
 		categServer.startServer(true);
 	}
 }

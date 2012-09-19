@@ -17,17 +17,27 @@ public class CategServerSettings {
 	private String bwCategRootPath;
 	private String defaultConfDir;
 
+	private String ipAddress;
+
 	/* jetty settings */
 	private String jettyResourceFileName;
 	private String jettyContextDescriptor;
 	private String jettyContextResourceBase;
 	private String jettyContextRootPath;
 
+	/* zookeeper settings */
+	private String zkGroupNode;
+	private String zkServers;
+
+	private static final String BWCATEG__IP_ADDR = "bw-categ.ip_address";
 	private static final String BWCATEG__DEFAULT_CONF_DIR = "bw-categ.conf.dir";
 	private static final String BWCATEG__JETTY__RESOURCE_FILE_NAME = "bw-categ.jetty.resource_file_name";
 	private static final String BWCATEG__JETTY__CONTEXT__DESCRIPTOR = "bw-categ.jetty.context.descriptor";
 	private static final String BWCATEG__JETTY__CONTEXT__RESOURCE_BASE = "bw-categ.jetty.context.resourcebase";
 	private static final String BWCATEG__JETTY__CONTEXT__ROOT_PATH = "bw-categ.jetty.context.rootpath";
+
+	private static final String BWCATEG__ZK__GROUP_NODE = "bw-categ.zookeeper.group_node_name";
+	private static final String BWCATEG__ZK__SERVER_LIST = "bw-categ.zookeeper.servers";
 
 	static Logger logger = LoggerFactory.getLogger(CategServerSettings.class);
 
@@ -69,6 +79,7 @@ public class CategServerSettings {
 
 		{
 			defaultConfDir = propertiesConfiguration.getString(BWCATEG__DEFAULT_CONF_DIR, "conf");
+			ipAddress = propertiesConfiguration.getString(BWCATEG__IP_ADDR);
 		}
 		{
 			jettyResourceFileName = propertiesConfiguration.getString(BWCATEG__JETTY__RESOURCE_FILE_NAME,
@@ -77,6 +88,15 @@ public class CategServerSettings {
 			jettyContextResourceBase = propertiesConfiguration.getString(BWCATEG__JETTY__CONTEXT__RESOURCE_BASE);
 			jettyContextRootPath = propertiesConfiguration.getString(BWCATEG__JETTY__CONTEXT__ROOT_PATH);
 		}
+		{
+			zkGroupNode = propertiesConfiguration.getString(BWCATEG__ZK__GROUP_NODE, "categ");
+			zkServers = propertiesConfiguration.getString(BWCATEG__ZK__SERVER_LIST);
+		}
+	}
+
+	public String getIpAddress() {
+
+		return ipAddress;
 	}
 
 	public String getBwCategRootPath() {
@@ -137,6 +157,16 @@ public class CategServerSettings {
 	public void setJettyContextRootPath(String jettyContextRootPath) {
 
 		this.jettyContextRootPath = jettyContextRootPath;
+	}
+
+	public String getZkGroupNode() {
+
+		return zkGroupNode;
+	}
+
+	public String getZkServers() {
+
+		return zkServers;
 	}
 
 }

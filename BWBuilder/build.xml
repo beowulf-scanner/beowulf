@@ -1,0 +1,22 @@
+<project name="bw-builder" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<description>
+		Beowulf Master Build file
+	</description>
+	<property file="project.dependencies" />
+	<property name="dist.dir" location="dist" />
+	<property environment="env" />
+
+	<target name="clean">
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="clean-all" depends="clean">
+		<subant target="clean" genericantfile="build.xml">
+			<fileset dir="${bw-controller.root}" includes="build.xml" />
+			<fileset dir="${bw-categ.root}" includes="build.xml" />
+			<fileset dir="${bw-executor.root}" includes="build.xml" />
+			<fileset dir="${bw-common.root}" includes="build.xml" />			
+		</subant>
+	</target>
+</project>

@@ -15,7 +15,19 @@
 	<configurations defaultconfmapping="default">
 		<conf name="default" />
 		<conf name="test" />
+		<conf name="src" />
 	</configurations>
+
+	<publications>
+		<!-- jar artifacts -->
+		<artifact name="beowulf-common" type="jar" conf="default" ext="jar" />
+		<!-- source artifact -->
+		<artifact name="beowulf-common-src" type="source" conf="src" ext="zip" />
+		<!-- pom artifacts -->
+		<!-- <artifact name="derrick" type="pom" conf="default" ext="pom" /> -->
+
+	</publications>
+
 
 	<dependencies>
 
@@ -27,7 +39,7 @@
 			<exclude org="org.eclipse.jetty.orbit" name="javax.activation" />
 			<exclude org="org.eclipse.jetty.orbit" name="javax.annotation" />
 		</dependency>
-		
+
 		<dependency org="org.jboss.spec.javax.servlet" name="jboss-servlet-api_3.0_spec" rev="1.0.0.Final" />
 		<dependency org="org.eclipse.jetty.aggregate" name="jetty-client" rev="8.1.5.v20120716" />
 		<dependency org="org.apache.httpcomponents" name="httpclient" rev="4.2.1" />

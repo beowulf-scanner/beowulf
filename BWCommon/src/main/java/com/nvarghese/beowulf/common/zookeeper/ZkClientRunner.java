@@ -21,10 +21,10 @@ public class ZkClientRunner implements Runnable {
 
 	private ZooKeeper zk;
 	private ZkConnectionWatcher zkConnectionWatcher;
-	private String connectString;
-	private String groupName;
+	private final String connectString;
+	private final String groupName;
 	private Thread thread;
-	private String memberIpAddressAndPort;
+	private final String memberIpAddressAndPort;
 
 	private static final int SESSION_TIMEOUT = 5000;
 
@@ -37,6 +37,12 @@ public class ZkClientRunner implements Runnable {
 		this.memberIpAddressAndPort = memberIpAddressAndPort;
 		this.groupName = groupName;
 		thread = new Thread(this, "zkClientRunner");
+	}
+
+	
+	public String getGroupName() {
+	
+		return groupName;
 	}
 
 	public void connect() throws IOException {

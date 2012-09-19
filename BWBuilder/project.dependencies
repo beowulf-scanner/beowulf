@@ -1,0 +1,9 @@
+#Project dependecies
+
+#Platform directories 
+
+bw-controller.root = ${basedir}/../BWController
+bw-categ.root = ${basedir}/../BWCategorizer
+bw-executor.root = ${basedir}/../BWExecutor
+
+bw-common.root = ${basedir}/../BWCommon

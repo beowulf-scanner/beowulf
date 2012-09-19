@@ -98,6 +98,11 @@ public class SFExecutorServer {
 
 	}
 
+	Server getJettyServer() {
+
+		return jettyServer;
+	}
+
 	private static SFExecutorSettings handleCommandLine(String[] args) {
 
 		ProgramOptions options = new ProgramOptions();

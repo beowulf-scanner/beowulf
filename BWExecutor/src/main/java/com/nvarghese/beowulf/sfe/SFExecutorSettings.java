@@ -14,8 +14,10 @@ public class SFExecutorSettings {
 
 	private PropertiesConfiguration propertiesConfiguration;
 
-	private String bwSfControllerRootPath;
+	private String bwSfExecutorRootPath;
 	private String defaultConfDir;
+
+	private String ipAddress;
 
 	/* jetty settings */
 	private String jettyResourceFileName;
@@ -23,11 +25,19 @@ public class SFExecutorSettings {
 	private String jettyContextResourceBase;
 	private String jettyContextRootPath;
 
+	/* zookeeper settings */
+	private String zkGroupNode;
+	private String zkServers;
+
+	private static final String BWSFE__IP_ADDR = "bw-executor.ip_address";
 	private static final String BWSFE__DEFAULT_CONF_DIR = "bw-executor.conf.dir";
 	private static final String BWSFE__JETTY__RESOURCE_FILE_NAME = "bw-executor.jetty.resource_file_name";
 	private static final String BWSFE__JETTY__CONTEXT__DESCRIPTOR = "bw-executor.jetty.context.descriptor";
 	private static final String BWSFE__JETTY__CONTEXT__RESOURCE_BASE = "bw-executor.jetty.context.resourcebase";
 	private static final String BWSFE__JETTY__CONTEXT__ROOT_PATH = "bw-executor.jetty.context.rootpath";
+
+	private static final String BWSFE__ZK__GROUP_NODE = "bw-executor.zookeeper.group_node_name";
+	private static final String BWSFE__ZK__SERVER_LIST = "bw-executor.zookeeper.servers";
 
 	static Logger logger = LoggerFactory.getLogger(SFExecutorSettings.class);
 
@@ -57,10 +67,10 @@ public class SFExecutorSettings {
 			String bwSfeHome = System.getenv("BWSFE_HOME");
 			if (bwSfeHome != null) {
 				PropertyConfigurator.configure(bwSfeHome + File.separator + "log4j.properties");
-				bwSfControllerRootPath = bwSfeHome;
+				bwSfExecutorRootPath = bwSfeHome;
 			} else {
 				PropertyConfigurator.configure("log4j.properties");
-				bwSfControllerRootPath = "";
+				bwSfExecutorRootPath = "";
 				logger.warn("Environment variable 'BWSFE_HOME' is not set");
 
 			}
@@ -69,6 +79,7 @@ public class SFExecutorSettings {
 
 		{
 			defaultConfDir = propertiesConfiguration.getString(BWSFE__DEFAULT_CONF_DIR, "conf");
+			ipAddress = propertiesConfiguration.getString(BWSFE__IP_ADDR);
 		}
 		{
 			jettyResourceFileName = propertiesConfiguration
@@ -77,16 +88,26 @@ public class SFExecutorSettings {
 			jettyContextResourceBase = propertiesConfiguration.getString(BWSFE__JETTY__CONTEXT__RESOURCE_BASE);
 			jettyContextRootPath = propertiesConfiguration.getString(BWSFE__JETTY__CONTEXT__ROOT_PATH);
 		}
+		{
+			zkGroupNode = propertiesConfiguration.getString(BWSFE__ZK__GROUP_NODE, "executor");
+			zkServers = propertiesConfiguration.getString(BWSFE__ZK__SERVER_LIST);
+		}
+
 	}
 
 	public String getBwSfExecutorRootPath() {
 
-		return bwSfControllerRootPath;
+		return bwSfExecutorRootPath;
 	}
 
-	public void setBwSfExecutorRootPath(String bwSfControllerRootPath) {
+	public void setBwSfExecutorRootPath(String bwSfExecutorRootPath) {
 
-		this.bwSfControllerRootPath = bwSfControllerRootPath;
+		this.bwSfExecutorRootPath = bwSfExecutorRootPath;
+	}
+
+	public String getIpAddress() {
+
+		return ipAddress;
 	}
 
 	public String getDefaultConfDir() {
@@ -137,6 +158,16 @@ public class SFExecutorSettings {
 	public void setJettyContextRootPath(String jettyContextRootPath) {
 
 		this.jettyContextRootPath = jettyContextRootPath;
+	}
+
+	public String getZkGroupNode() {
+
+		return zkGroupNode;
+	}
+
+	public String getZkServers() {
+
+		return zkServers;
 	}
 
 }

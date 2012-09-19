@@ -17,17 +17,27 @@ public class SFControllerSettings {
 	private String bwSfControllerRootPath;
 	private String defaultConfDir;
 
+	private String ipAddress;
+
 	/* jetty settings */
 	private String jettyResourceFileName;
 	private String jettyContextDescriptor;
 	private String jettyContextResourceBase;
 	private String jettyContextRootPath;
 
+	/* zookeeper settings */
+	private String zkGroupNode;
+	private String zkServers;
+
+	private static final String BWSFC__IP_ADDR = "bw-controller.ip_address";
 	private static final String BWSFC__DEFAULT_CONF_DIR = "bw-controller.conf.dir";
 	private static final String BWSFC__JETTY__RESOURCE_FILE_NAME = "bw-controller.jetty.resource_file_name";
 	private static final String BWSFC__JETTY__CONTEXT__DESCRIPTOR = "bw-controller.jetty.context.descriptor";
 	private static final String BWSFC__JETTY__CONTEXT__RESOURCE_BASE = "bw-controller.jetty.context.resourcebase";
 	private static final String BWSFC__JETTY__CONTEXT__ROOT_PATH = "bw-controller.jetty.context.rootpath";
+
+	private static final String BWSFC__ZK__GROUP_NODE = "bw-controller.zookeeper.group_node_name";
+	private static final String BWSFC__ZK__SERVER_LIST = "bw-controller.zookeeper.servers";
 
 	static Logger logger = LoggerFactory.getLogger(SFControllerSettings.class);
 
@@ -69,6 +79,7 @@ public class SFControllerSettings {
 
 		{
 			defaultConfDir = propertiesConfiguration.getString(BWSFC__DEFAULT_CONF_DIR, "conf");
+			ipAddress = propertiesConfiguration.getString(BWSFC__IP_ADDR);
 		}
 		{
 			jettyResourceFileName = propertiesConfiguration
@@ -77,6 +88,11 @@ public class SFControllerSettings {
 			jettyContextResourceBase = propertiesConfiguration.getString(BWSFC__JETTY__CONTEXT__RESOURCE_BASE);
 			jettyContextRootPath = propertiesConfiguration.getString(BWSFC__JETTY__CONTEXT__ROOT_PATH);
 		}
+		{
+			zkGroupNode = propertiesConfiguration.getString(BWSFC__ZK__GROUP_NODE, "controller");
+			zkServers = propertiesConfiguration.getString(BWSFC__ZK__SERVER_LIST);
+		}
+
 	}
 
 	public String getBwSfControllerRootPath() {
@@ -87,6 +103,36 @@ public class SFControllerSettings {
 	public void setBwSfControllerRootPath(String bwSfControllerRootPath) {
 
 		this.bwSfControllerRootPath = bwSfControllerRootPath;
+	}
+
+	public String getIpAddress() {
+
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+
+		this.ipAddress = ipAddress;
+	}
+
+	public String getZkGroupNode() {
+
+		return zkGroupNode;
+	}
+
+	public void setZkGroupNode(String zkGroupNode) {
+
+		this.zkGroupNode = zkGroupNode;
+	}
+
+	public String getZkServers() {
+
+		return zkServers;
+	}
+
+	public void setZkServers(String zkServers) {
+
+		this.zkServers = zkServers;
 	}
 
 	public String getDefaultConfDir() {
