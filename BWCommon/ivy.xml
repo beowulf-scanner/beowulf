@@ -84,6 +84,10 @@
 			<exclude org="com.sun.jdmk" name="jmxtools" />
 			<exclude org="com.sun.jmx" name="jmxri" />
 		</dependency>
+		
+		<dependency org="org.mockito" name="mockito-all" rev="1.8.5" conf="test->default"/>
+		<dependency org="org.testng" name="testng" rev="5.12.1" conf="test->default"/>
+		
 
 	</dependencies>
 </ivy-module>

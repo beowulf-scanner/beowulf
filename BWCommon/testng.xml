@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="BW-Common Test Suite" verbose="1">
+
+
+	<test name="BW-Common Unit Tests">
+		<packages>
+			<package name="test.nvarghese.beowulf.common.*" />
+		</packages>
+	</test>
+
+</suite>
