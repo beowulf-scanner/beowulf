@@ -48,6 +48,7 @@
 
 		<dependency org="org.codehaus.jackson" name="jackson-jaxrs" rev="1.9.2" />
 		<dependency org="net.sf.json-lib" name="json-lib" rev="2.4" />
+		<dependency org="org.mozilla" name="rhino" rev="1.7R3"/>
 
 		<!-- resteasy server/client dependencies -->
 		<dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.3.4.Final" />

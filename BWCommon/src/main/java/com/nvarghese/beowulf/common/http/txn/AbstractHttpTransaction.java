@@ -64,6 +64,45 @@ public abstract class AbstractHttpTransaction {
 	}
 
 	/**
+	 * 
+	 * @param name
+	 * @param value
+	 */
+	public void addRequestHeader(String name, String value) {
+
+		httpRequestWrapper.getHttpRequest().addHeader(name, value);
+	}
+
+	/**
+	 * 
+	 * @param name
+	 */
+	public void removeRequestHeaders(String name) {
+
+		httpRequestWrapper.getHttpRequest().removeHeaders(name);
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Header getFirstRequestHeader(String name) {
+
+		return httpRequestWrapper.getHttpRequest().getFirstHeader(name);
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public Header[] getRequestHeaders(String name) {
+
+		return httpRequestWrapper.getHttpRequest().getHeaders(name);
+	}
+
+	/**
 	 * Adds query parameter if encoding is of type x-www-urlencoded
 	 * 
 	 * 
@@ -345,6 +384,32 @@ public abstract class AbstractHttpTransaction {
 			headers = httpResponseWrapper.getHttpResponse().getHeaders(headerName);
 		}
 		return headers;
+	}
+
+	public Header[] getAllResponseHeaders() {
+
+		Header[] headers = new Header[0];
+		if (httpResponseWrapper != null) {
+			headers = httpResponseWrapper.getHttpResponse().getAllHeaders();
+		}
+		return headers;
+	}
+
+	/**
+	 * 
+	 * @return All response headers formated as they would be found in the raw
+	 *         HTTP response.
+	 */
+	public String getAllResponseHeadersAsString() {
+
+		String headers = "";
+		if (httpResponseWrapper != null) {
+			for (Header header : getAllResponseHeaders()) {
+				headers = headers.concat(header.toString()).concat("\r\n");
+			}
+			return headers;
+		}
+		return null;
 	}
 
 	public HttpResponseWrapper getResponseWrapper() {
