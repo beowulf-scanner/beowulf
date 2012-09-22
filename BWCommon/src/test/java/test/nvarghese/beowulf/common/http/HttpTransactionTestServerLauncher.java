@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.ConnectionClosedException;
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
@@ -22,6 +23,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpServerConnection;
 import org.apache.http.HttpStatus;
 import org.apache.http.MethodNotSupportedException;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.ContentProducer;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.EntityTemplate;
@@ -29,6 +31,7 @@ import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.impl.DefaultHttpServerConnection;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.CoreProtocolPNames;
@@ -135,19 +138,78 @@ public class HttpTransactionTestServerLauncher {
 				logger.debug("Incoming entity content (bytes): {}", entityContent.length);
 			}
 
-			final File file = new File(this.docRoot, URLDecoder.decode(target, "UTF-8"));
-			if (!file.exists()) {
+			if (target.endsWith("cookie_test.html")) {
+				handleCookieTest(response);
+			} else if (target.endsWith("cookie_added.html")) {
+				handleCookieAdded(request, response);
+			} else {
 
-				response.setStatusCode(HttpStatus.SC_NOT_FOUND);
+				final File file = new File(this.docRoot, URLDecoder.decode(target, "UTF-8"));
+				if (!file.exists()) {
+
+					response.setStatusCode(HttpStatus.SC_NOT_FOUND);
+					EntityTemplate body = new EntityTemplate(new ContentProducer() {
+
+						public void writeTo(final OutputStream outstream) throws IOException {
+
+							OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
+							writer.write("<html><body><h1>");
+							writer.write("File ");
+							writer.write(file.getPath());
+							writer.write(" not found");
+							writer.write("</h1></body></html>");
+							writer.flush();
+						}
+
+					});
+					body.setContentType("text/html; charset=UTF-8");
+					response.setEntity(body);
+					logger.debug("File " + file.getPath() + " not found");
+
+				} else if (!file.canRead() || file.isDirectory()) {
+
+					response.setStatusCode(HttpStatus.SC_FORBIDDEN);
+					EntityTemplate body = new EntityTemplate(new ContentProducer() {
+
+						public void writeTo(final OutputStream outstream) throws IOException {
+
+							OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
+							writer.write("<html><body><h1>");
+							writer.write("Access denied");
+							writer.write("</h1></body></html>");
+							writer.flush();
+						}
+
+					});
+					body.setContentType("text/html; charset=UTF-8");
+					response.setEntity(body);
+					logger.debug("Cannot read file " + file.getPath());
+
+				} else {
+
+					response.setStatusCode(HttpStatus.SC_OK);
+					FileEntity body = new FileEntity(file, ContentType.TEXT_HTML);
+					response.setEntity(body);
+					logger.debug("Serving file " + file.getPath());
+
+				}
+			}
+		}
+
+		private void handleCookieAdded(HttpRequest request, HttpResponse response) {
+
+			Header cookieHeader = request.getFirstHeader("Cookie");
+
+			if (cookieHeader != null && cookieHeader.getValue().equalsIgnoreCase("c=value")) {
+				response.setStatusCode(HttpStatus.SC_OK);
+				response.addHeader("Set-Cookie", "c3=a; path=/; domain=localhost");
 				EntityTemplate body = new EntityTemplate(new ContentProducer() {
 
 					public void writeTo(final OutputStream outstream) throws IOException {
 
 						OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
 						writer.write("<html><body><h1>");
-						writer.write("File ");
-						writer.write(file.getPath());
-						writer.write(" not found");
+						writer.write("Cookie received and sent");
 						writer.write("</h1></body></html>");
 						writer.flush();
 					}
@@ -155,10 +217,7 @@ public class HttpTransactionTestServerLauncher {
 				});
 				body.setContentType("text/html; charset=UTF-8");
 				response.setEntity(body);
-				logger.debug("File " + file.getPath() + " not found");
-
-			} else if (!file.canRead() || file.isDirectory()) {
-
+			} else {
 				response.setStatusCode(HttpStatus.SC_FORBIDDEN);
 				EntityTemplate body = new EntityTemplate(new ContentProducer() {
 
@@ -166,7 +225,7 @@ public class HttpTransactionTestServerLauncher {
 
 						OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
 						writer.write("<html><body><h1>");
-						writer.write("Access denied");
+						writer.write("Access Forbidden. No cookie present!");
 						writer.write("</h1></body></html>");
 						writer.flush();
 					}
@@ -174,16 +233,29 @@ public class HttpTransactionTestServerLauncher {
 				});
 				body.setContentType("text/html; charset=UTF-8");
 				response.setEntity(body);
-				logger.debug("Cannot read file " + file.getPath());
-
-			} else {
-
-				response.setStatusCode(HttpStatus.SC_OK);
-				FileEntity body = new FileEntity(file, ContentType.TEXT_HTML);
-				response.setEntity(body);
-				logger.debug("Serving file " + file.getPath());
-
 			}
+
+		}
+
+		private void handleCookieTest(HttpResponse response) {
+
+			response.setStatusCode(HttpStatus.SC_OK);
+			response.addHeader("Set-Cookie", "c1=a; path=/; domain=localhost");
+			EntityTemplate body = new EntityTemplate(new ContentProducer() {
+
+				public void writeTo(final OutputStream outstream) throws IOException {
+
+					OutputStreamWriter writer = new OutputStreamWriter(outstream, "UTF-8");
+					writer.write("<html><body><h1>");
+					writer.write("Cookie sent");
+					writer.write("</h1></body></html>");
+					writer.flush();
+				}
+
+			});
+			body.setContentType("text/html; charset=UTF-8");
+			response.setEntity(body);
+
 		}
 
 	}

@@ -95,7 +95,10 @@ public class MultipartEncodedRequestPayload implements RequestPayload {
 
 	public Map<String, ContentBody> getParts() {
 
-		return parts;
+		Map<String, ContentBody> cParts = new HashMap<String, ContentBody>();
+		cParts.putAll(parts);
+
+		return cParts;
 	}
 
 	public boolean removePart(String name) {

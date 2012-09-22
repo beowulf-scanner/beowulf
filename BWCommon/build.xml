@@ -14,30 +14,32 @@
 	<import file="${bw-builder.root}/commontasks.xml" />
 	<property name="dist.dir" location="dist" />
 	<property name="lib.dir" location="${bw-common.root}/lib" />
-	
+
 	<delete dir="${testng.output.dir}" />
 
 	<property name="src.dir" value="src/main/java" />
 	<property name="test.dir" value="src/test/java" />
 	<property name="src.resources.dir" value="src/main/resources" />
 	<property name="test.resources.dir" value="src/test/resources" />
-	
+
 	<!-- - - - - - - - - - - - - - - - - - 
 	 target: init-properties 
 	 - - - - - - - - - - - - - - - - - -->
 	<target name="init-properties">
 		<property name="artifact.name" value="${ant.project.name}" />
-		
-		<property name="build.dir" location="${bw-common.root}/build" />		
+
+		<property name="build.dir" location="${bw-common.root}/build" />
 		<property name="build.classes" location="${build.dir}/classes" />
 		<property name="build.test" location="${build.dir}/test" />
 		<property name="build.integration" location="${build.dir}/integration" />
 
 		<property name="dist.dir" location="${bw-common.root}/dist" />
 		<property name="classpath" location="${lib.dir}" />
-		
+
 		<property name="testng.output.dir" location="test-output"/>
-		
+		<property name="cobertura.dir" location="cobertura" />
+		<property name="instrumented.dir" location="${cobertura.dir}/instrumented" />
+
 		<property name="main-class" value="none" />
 	</target>
 
@@ -61,7 +63,15 @@
 	<target name="ivy-tasks-retrieve" depends="ivy-tasks-resolve">
 		<ivy:retrieve pattern="${lib.dir}/[artifact]-[revision].[ext]" settingsRef="${ant.project.name}" conf="default" />
 	</target>
-	
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	 target: ivy-tasks-retrieve-tests 
+	 - - - - - - - - - - - - - - - - - -->
+
+	<target name="ivy-tasks-retrieve-tests" depends="ivy-tasks-resolve">
+		<ivy:retrieve pattern="${lib.dir}/[artifact]-[revision].[ext]" settingsRef="${ant.project.name}" conf="*" />
+	</target>
+
 	<!-- - - - - - - - - - - - - - - - - - 
 	 target: prepare-compile 
 	 - - - - - - - - - - - - - - - - - -->
@@ -93,7 +103,7 @@
 			<mapping conf="test" scope="test" />
 		</ivy:makepom>
 		<ivy:publish artifactspattern="${dist.dir}/[artifact].[ext]" resolver="beowulf-local-projects" 
-			pubrevision="${beowulf.project.version}-local-${now}" pubdate="${now}" status="integration" forcedeliver="true" overwrite="true">			
+			pubrevision="${beowulf.project.version}-local-${now}" pubdate="${now}" status="integration" forcedeliver="true" overwrite="true">
 		</ivy:publish>
 		<echo message="Project ${ant.project.name} published locally with version ${beowulf.project.version}" />
 	</target>
@@ -124,6 +134,124 @@
 		</path>
 	</target>
 
+	<target name="prepare-compile-tests">
+		<path id="lib.dir.id">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<path id="test.compile.classpath">
+			<pathelement location="${build.classes}" />
+			<path refid="lib.dir.id" />
+		</path>
+
+		<path id="testng.classpath">
+			<pathelement location="${build.classes}" />
+			<pathelement location="${build.test}" />
+			<!--<pathelement location="${build.integration}" /> -->
+		</path>
+
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+		          target: compile-test       
+	- - - - - - - - - - - - - - - - - -->
+	<target name="compile-test" depends="compile-module,ivy-tasks-configure, 
+		ivy-tasks-resolve, ivy-tasks-retrieve-tests , prepare-compile-tests">
+
+		<javac srcdir="${test.dir}" destdir="${build.test}" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="test.compile.classpath" />
+		</javac>
+		<!--<javac srcdir="${integration.dir}" destdir="${build.integration}" encoding="ISO-8859-1" includeantruntime="false">
+			<classpath refid="test.compile.classpath" />
+		</javac> -->
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - - 
+		          target: run-testngsuite       
+		     - - - - - - - - - - - - - - - - - -->
+
+	<target name="run-testngsuite" depends="compile-test" description="--> Runs tests using testng suite">
+		<!--<subant target="run-testng" genericantfile="build.xml">
+			<fileset dir="scanner-core" includes="build.xml" />
+		</subant>
+		<subant target="run-testng" genericantfile="build.xml">
+			<fileset dir="buttercup" includes="build.xml" />
+		</subant> -->
+		<echo message="Running test cases" />
+
+		<path id="lib.dir.id">
+			<fileset dir="${bw-common.root}/lib">
+				<include name="**/*.jar" />
+			</fileset>
+			<!-- <fileset dir="${bw-common.root}/extlib">
+				<include name="**/*.jar" />
+			</fileset> -->
+		</path>
+
+		<path id="testng.classpath">
+			<pathelement location="${bw-common.root}/build/classes" />
+			<pathelement location="${bw-common.root}/build/test" />
+
+			<!-- resources -->
+			<pathelement location="${bw-common.root}/${src.resources.dir}" />
+			<pathelement location="${bw-common.root}/${test.resources.dir}" />
+
+		</path>
+
+		<taskdef name="testng" classpathref="lib.dir.id" classname="org.testng.TestNGAntTask" />
+
+		<testng verbose="5" outputdir="${testng.output.dir}" classpathref="lib.dir.id" haltOnfailure="true">
+
+			<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobertura.dir}/cobertura.ser" />
+
+			<classpath location="${instrumented.dir}" />
+
+			<classpath>
+				<path refid="testng.classpath" />
+			</classpath>
+
+			<xmlfileset includes="testng.xml" dir="${bw-common.root}" />
+
+		</testng>
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+		          target: run-cobertura-instrument       
+	- - - - - - - - - - - - - - - - - -->
+
+	<target name="run-cobertura-instrument" depends="compile-module">
+
+		<echo message="Running cobertura instrument" />
+		<path id="lib.ivy.id">
+			<fileset dir="${ivy.lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+		<mkdir dir="${instrumented.dir}" />
+		<taskdef resource="tasks.properties" classpathref="lib.ivy.id" />
+		<cobertura-instrument datafile="${cobertura.dir}/cobertura.ser" todir="${instrumented.dir}">
+			<fileset dir="${build.classes}">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+	          target: run-cobertura-report           
+	- - - - - - - - - - - - - - - - - -->
+
+	<target name="run-cobertura-report" depends="run-cobertura-instrument, run-testngsuite">
+		<cobertura-report format="xml" datafile="${cobertura.dir}/cobertura.ser" destdir="${cobertura.dir}/coverage">
+			<fileset dir="${bw-common.root}/${src.dir}">
+				<include name="**/*.java" />
+			</fileset>
+		</cobertura-report>
+	</target>
+
 	<!-- - - - - - - - - - - - - - - - - - 
 	 target: clean           
 	- - - - - - - - - - - - - - - - - -->
@@ -132,6 +260,7 @@
 		<delete dir="${dist.dir}" />
 		<delete dir="${lib.dir}" />
 		<delete dir="${testng.output.dir}" />
+		<delete dir="${cobertura.dir}" />
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 
@@ -141,5 +270,6 @@
 		<ivy:info file="${bw-common.root}/ivy.xml" />
 		<delete dir="${ivy.default.ivy.user.dir}/local/${ivy.organisation}/${ivy.module}" />
 	</target>
+
 
 </project>
