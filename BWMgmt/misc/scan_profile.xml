@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Updated: Tue Jan 17 11:25:18 IST 2012  -->
+<profile>
+	<!--  Start Http Client     -->
+	<http_client>
+		<max_redirects>3</max_redirects>
+		<max_consecutive_failed_requests>10</max_consecutive_failed_requests>
+		<max_failed_requests_per_server>500</max_failed_requests_per_server>
+		<max_request_count>100000</max_request_count>
+		<max_request_depth>10</max_request_depth>
+		<max_request_retries>3</max_request_retries>
+		<max_spider_urls>100000</max_spider_urls>
+		<socket_read_timeout>60</socket_read_timeout>
+		<user_agent_string>Mozilla/5.0 (compatible;)</user_agent_string>
+		<character_encoding>ISO-8859-1</character_encoding>
+	</http_client>
+	<!--   End Http Client    -->
+
+	<!--   Start Scan Settings  -->
+	<scan_settings>
+		<response_code_overrides>
+			<override_threshold>80</override_threshold>
+			<test_all_directories>false</test_all_directories>
+			<use_automatic_overrides>true</use_automatic_overrides>
+		</response_code_overrides>
+		<base_uris>
+			<base_uri />
+		</base_uris>
+		<restrictions>
+			<forbidden_parameter_names>
+				<parameter_name>__VIEWSTATE</parameter_name>
+				<parameter_name>__EVENTARGUMENT</parameter_name>
+				<parameter_name>__EVENTTARGET</parameter_name>
+				<parameter_name>__VIEWSTATEENCRYPTED</parameter_name>
+				<parameter_name>__EVENTVALIDATION</parameter_name>
+				<parameter_name>authenticity_token</parameter_name>
+				<parameter_name>M</parameter_name>
+				<parameter_name>D</parameter_name>
+				<parameter_name>S</parameter_name>
+			</forbidden_parameter_names>
+			<irrelevant_parameter_names>
+				<parameter_name />
+			</irrelevant_parameter_names>
+			<forbidden_mime_types>
+				<mime_type_pattern>image/.*</mime_type_pattern>
+			</forbidden_mime_types>
+			<url_blacklist>
+				<url_pattern>logout</url_pattern>
+				<url_pattern>logoff</url_pattern>
+				<url_pattern>exit</url_pattern>
+				<url_pattern>delete</url_pattern>
+				<url_pattern>signout</url_pattern>
+				<url_pattern>
+					\\.(?:bmp|jpe?g|gif|tiff?|png|mpe?g|mov|avi|wmv|mp3|wma|wav)$
+				</url_pattern>
+				<url_pattern>\\.(?:docx?|xlsx?|mdb|rtf|pptx?|pdf)$</url_pattern>
+			</url_blacklist>
+			<url_whitelist>
+				<url_pattern />
+			</url_whitelist>
+		</restrictions>
+		<import_spidered_uris>
+			<uri />
+		</import_spidered_uris>
+	</scan_settings>
+	<!--  End Scan Setting      -->
+
+	<!--  Start Report Settings	-->
+	<report_settings>
+		<filename>report.xml</filename>
+		<min_severity>Informational</min_severity>
+		<auto_report_generation>false</auto_report_generation>
+		<format>xml</format>
+	</report_settings>
+	<!--  End Report Settings	-->
+
+	<!-- Start Session Settings -->
+	<session_settings>
+		<login>
+			<username />
+			<password />
+			<username_field_pattern />
+			<password_field_pattern />
+		</login>
+		<session_tracking>
+			<known_session_idlist>
+				<id_pattern>phpsessid</id_pattern>
+				<id_pattern>jsessionid</id_pattern>
+				<id_pattern>ASPSESSIONID.*</id_pattern>
+				<id_pattern>viewstate</id_pattern>
+				<id_pattern>cftoken</id_pattern>
+				<id_pattern>cfid</id_pattern>
+				<id_pattern>sid</id_pattern>
+				<id_pattern>ASP.NET_SessionId</id_pattern>
+				<id_pattern>SITESERVER</id_pattern>
+				<id_pattern>zenid</id_pattern>
+			</known_session_idlist>
+		</session_tracking>
+	</session_settings>
+
+	<!-- End Session Settings -->
+
+	<!--  Start Performance Settings -->
+	<performance_settings>
+		<max_memory_cache_size>200</max_memory_cache_size>
+	</performance_settings>
+	<!--  End Performance Settings -->
+
+	<!-- Start Test Module Settings	-->
+	<test_modules>
+		<test_module>
+			<module_number>1</module_number>
+			<module_name>URL-Regex</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>2</module_number>
+			<module_name>HTML tag requester</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Request all directories</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>A</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>APPLET</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>AREA</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>BASE</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>EMBED</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>FRAME</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>IFRAME</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>LINK</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>SCRIPT</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>IMG</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>4</module_number>
+			<module_name>Form baseline</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>GET method</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>POST method</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Export Forms</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>5</module_number>
+			<module_name>Directory enumerator</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Small (100 directory names)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Medium (300 directory names)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Large (500 directory names)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Extra large (819 directory names)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Test Unauthorized Contexts Only</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Ignore Forbidden Resources</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>6</module_number>
+			<module_name>File enumerator</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Small (20 filenames)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Medium (40 filenames)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Large (64 filenames)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Small (10 extensions)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (25 extensions)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Large (63 extensions)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Test Unauthorized Contexts Only</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Ignore Forbidden Resources</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>7</module_number>
+			<module_name>Backup file enumerator</module_name>
+			<enabled>false</enabled>
+		</test_module>
+		<test_module>
+			<module_number>8</module_number>
+			<module_name>Private address leakage</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>9</module_number>
+			<module_name>Cookie strength </module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>10</module_number>
+			<module_name>XSS - Query</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Low</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Medium</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>11</module_number>
+			<module_name>Error XSS</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Low</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Medium</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>12</module_number>
+			<module_name>AuthPackageHandler</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>13</module_number>
+			<module_name>Session fixation (cookies)</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>14</module_number>
+			<module_name>URL Session IDs</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>15</module_number>
+			<module_name>Error-based SQL Injection</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>17</module_number>
+			<module_name>Nikto version check</module_name>
+			<enabled>false</enabled>
+		</test_module>
+		<test_module>
+			<module_number>16</module_number>
+			<module_name>"Server" and "X-Powered-By" header recording
+			</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>19</module_number>
+			<module_name>404 directory tester</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>18</module_number>
+			<module_name>General Nikto Tests</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>File uploads</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Misc tests</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Misconfiguration</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Information disclosure</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>XSS</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>File retrieval - web root</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>File retrieval - server wide</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Denial of Service</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Command injection</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>SQL injection</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Authentication bypass</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Software identification</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Generic</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>21</module_number>
+			<module_name>SQL Tautologies</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>20</module_number>
+			<module_name>Token submitter</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>22</module_number>
+			<module_name>CRLF Injection</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>25</module_number>
+			<module_name>CSRF</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Action regex whitelist</option_name>
+				<option_value>.*</option_value>
+			</options>
+			<options>
+				<option_name>Ignore forbidden query parameters</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Test only Authenticated pages</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>24</module_number>
+			<module_name>Input / Output flows</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>27</module_number>
+			<module_name>Directory listings</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>26</module_number>
+			<module_name>Insecure transmission</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>URL regex whitelist</option_name>
+				<option_value>.*</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>29</module_number>
+			<module_name>Website map</module_name>
+			<enabled>true</enabled>
+			<!--
+				Disabled this feature <options> <option_name>Output file
+				name</option_name> <option_value>web-site-map</option_value>
+				</options>
+			-->
+			<options>
+				<option_name>Record URL queries</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Record all files</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>28</module_number>
+			<module_name>Directory traversal</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>31</module_number>
+			<module_name>Robots.txt</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>30</module_number>
+			<module_name>Website mirror</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Output directory</option_name>
+				<option_value>site-mirror</option_value>
+			</options>
+			<options>
+				<option_name>Record URL queries</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Record all files</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Max file size</option_name>
+				<option_value>1000000</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>102</module_number>
+			<module_name>Form Authentication Brute Force</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Low (Intelligence)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (Intelligence)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High (Intelligence)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Low (Depth)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (Depth)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High (Depth)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Username File</option_name>
+				<option_value>username.txt</option_value>
+			</options>
+			<options>
+				<option_name>Password File</option_name>
+				<option_value>password.txt</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>34</module_number>
+			<module_name>Comment lister</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>HTML</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>JavaScript</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Output file name</option_name>
+				<option_value>comments.txt</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>103</module_number>
+			<module_name>Shell Command Exec</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>35</module_number>
+			<module_name>Generic fuzzing</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Ignore original responses with platform error
+					messages
+				</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Plain text fuzzing characters</option_name>
+				<option_value>!@#$%^&amp;*()_+-=`~[]\\{}|;':"</option_value>
+			</options>
+			<options>
+				<option_name>Hex encoded fuzzing characters</option_name>
+				<option_value>00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11
+					12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 7f
+					ff</option_value>
+			</options>
+			<options>
+				<option_name>Fuzzing strings</option_name>
+				<option_value>
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+					..\\ ../ &lt;asdf&gt; &lt;/asdf&gt;</option_value>
+			</options>
+			<options>
+				<option_name>Manual regex error patterns</option_name>
+				<option_value />
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>32</module_number>
+			<module_name>XST</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>101</module_number>
+			<module_name>Direct Object Reference</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Test Unauthenticated Contexts</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>33</module_number>
+			<module_name>Proxy detection</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Test Host</option_name>
+				<option_value>www.ivizsecurity.com</option_value>
+			</options>
+			<options>
+				<option_name>Test Port</option_name>
+				<option_value>443</option_value>
+			</options>
+			<options>
+				<option_name>Test URL</option_name>
+				<option_value>http://www.ivizsecurity.com/proxytest.txt
+				</option_value>
+			</options>
+			<options>
+				<option_name>Response Signature</option_name>
+				<option_value>60106a12b66a41c87a0554874e0e6896</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>38</module_number>
+			<module_name>Search engine recon</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Live.com</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Google.com</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Yahoo.com</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Max results</option_name>
+				<option_value>500</option_value>
+			</options>
+			<options>
+				<option_name>Request delay (ms)</option_name>
+				<option_value>1000</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>36</module_number>
+			<module_name>Platform error messages</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Manual regex error patterns</option_name>
+				<option_value />
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>37</module_number>
+			<module_name>Authentication enforcement</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>POST</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>GET</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>110</module_number>
+			<module_name>Basic Authentication Brute Force</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Low (Intelligence)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (Intelligence)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High (Intelligence)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Low (Depth)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (Depth)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High (Depth)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Username File</option_name>
+				<option_value>username.txt</option_value>
+			</options>
+			<options>
+				<option_name>Password File</option_name>
+				<option_value>password.txt</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>111</module_number>
+			<module_name>Digest Authentication Brute Force</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Low (Intelligence)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (Intelligence)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High (Intelligence)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Low (Depth)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (Depth)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>High (Depth)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Username File</option_name>
+				<option_value>username.txt</option_value>
+			</options>
+			<options>
+				<option_name>Password File</option_name>
+				<option_value>password.txt</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>108</module_number>
+			<module_name>Insecure DAV Access</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Anonymous READ Access</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Anonymous WRITE Access</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>109</module_number>
+			<module_name>Script Executer</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>onclick</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>ondblclick</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>onmousedown</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onmousemove</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onmouseout</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>onmouseover</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onmouseup</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onmouseup</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onkeydown</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>onkeypress</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onkeyup</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>onChange</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onFocus</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onBlur</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>onabort</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>106</module_number>
+			<module_name>Insecure HTTP Methods</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Test PUT</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Test DEL</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Test all Directories</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>107</module_number>
+			<module_name>UserDir Enumeration</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Username File</option_name>
+				<option_value>username.txt</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>104</module_number>
+			<module_name>Foreign Resource Detection</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Report all untrusted foreign resources</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Use Google SafeBrowsing Database</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Custom White List Patterns</option_name>
+				<option_value />
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>105</module_number>
+			<module_name>PHP Info Detect</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>112</module_number>
+			<module_name>Local File Inclusion</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>113</module_number>
+			<module_name>Remote File Inclusion</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Automatic</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Manual</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Remote File URL</option_name>
+				<option_value></option_value>
+			</options>
+			<options>
+				<option_name>File Token</option_name>
+				<option_value>tyjoedszzwr</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>114</module_number>
+			<module_name>Hidden Form Authentication</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>115</module_number>
+			<module_name>Hidden Http Authentication</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>116</module_number>
+			<module_name>Error-based Xpath Injection</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>117</module_number>
+			<module_name>Crossdomain Policy Detection</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>118</module_number>
+			<module_name>SSI Injection</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>119</module_number>
+			<module_name>Confidential Data Detection</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Check for CREDIT CARD patterns</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Check for Email patterns</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Check for SSN patterns</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Do Not Report Unknown Card Providers</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>120</module_number>
+			<module_name>SSL Protocol Module</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>121</module_number>
+			<module_name>Certificate Module</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>122</module_number>
+			<module_name>Site search for GHDB</module_name>
+			<enabled>false</enabled>
+			<options>
+				<option_name>Advisories and Vulnerabilities</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Error Messages</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Files Containing Juicy Info</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Files Containing Passwords</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Files Containing Usernames</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Footholds</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Pages Containing Login Portals</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Pages Containing Network or Vulnerability Data
+				</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Sensitive Directories</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Sensitive Online Shopping Info</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Various Online Devices</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Vulnerable Files</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Vulnerable Servers</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Web Server Detection</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>123</module_number>
+			<module_name>FingerPrinting</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>124</module_number>
+			<module_name>Misconfigured htaccess</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>125</module_number>
+			<module_name>SWF Url Extractor</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Apply Intelligence</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>126</module_number>
+			<module_name>Javascript Lister</module_name>
+			<enabled>false</enabled>
+		</test_module>
+		<test_module>
+			<module_number>127</module_number>
+			<module_name>File Upload Test</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>128</module_number>
+			<module_name>Cookie Attributes</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Check for domain attribute</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Check for path attribute</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Check for expiry attribute</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Check for secure attribute</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Check for httponly attribute</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Session Cookie should expire within</option_name>
+				<option_value>1</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>129</module_number>
+			<module_name>Insecure Password</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>130</module_number>
+			<module_name>URL Redirector Abuse</module_name>
+			<enabled>true</enabled>
+			<options>
+				<option_name>Fake URL to use</option_name>
+				<option_value>http://notreal.fake</option_value>
+			</options>
+			<options>
+				<option_name>Execute redirects through Javascript</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>132</module_number>
+			<module_name>Internal Path Disclosure</module_name>
+			<enabled>true</enabled>
+		</test_module>
+		<test_module>
+			<module_number>134</module_number>
+			<module_name>JSON based SQL Injection</module_name>
+			<enabled>true</enabled>
+		</test_module>
+	</test_modules>
+
+	<!-- End Test Module Settings -->
+</configuration>
+
