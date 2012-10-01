@@ -96,8 +96,7 @@ public class WrapperLayout implements LayoutManager {
 		if (count > 0) {
 			Component child = arg0.getComponent(0);
 			java.awt.Insets insets = arg0.getInsets();
-			child.setBounds(insets.left, insets.top, arg0.getWidth() - insets.left - insets.right, arg0.getHeight()
-					- insets.top - insets.bottom);
+			child.setBounds(insets.left, insets.top, arg0.getWidth() - insets.left - insets.right, arg0.getHeight() - insets.top - insets.bottom);
 		}
 	}
 

@@ -130,7 +130,7 @@ public interface HttpRequest {
 	 * @param value
 	 */
 	public void setRequestHeader(String headerName, String value);
-	
+
 	/**
 	 * Starts an asynchronous request.
 	 * 
@@ -203,8 +203,7 @@ public interface HttpRequest {
 	 * @param password
 	 *            The HTTP authentication password.
 	 */
-	public void open(String method, java.net.URL url, boolean asyncFlag, String userName, String password)
-			throws java.io.IOException;
+	public void open(String method, java.net.URL url, boolean asyncFlag, String userName, String password) throws java.io.IOException;
 
 	/**
 	 * Sends POST content if any.
@@ -216,6 +215,7 @@ public interface HttpRequest {
 	public void send(String content) throws java.io.IOException;
 
 	public boolean wasSend();
+
 	/**
 	 * Adds a listener of ReadyState changes. The listener should be invoked
 	 * even in the case of errors.

@@ -68,8 +68,7 @@ public class Strings {
 				diff = 0;
 			}
 			if (diff == 0) {
-				return compareVersions(version1.substring(v1prefix.length()), version2.substring(v2prefix.length()),
-						false);
+				return compareVersions(version1.substring(v1prefix.length()), version2.substring(v2prefix.length()), false);
 			}
 			return diff;
 		} else {
@@ -85,8 +84,7 @@ public class Strings {
 			}
 			int diff = v1prefix.compareTo(v2prefix);
 			if (diff == 0) {
-				return compareVersions(version1.substring(v1prefix.length()), version2.substring(v2prefix.length()),
-						true);
+				return compareVersions(version1.substring(v1prefix.length()), version2.substring(v2prefix.length()), true);
 			}
 			return diff;
 		}

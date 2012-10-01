@@ -101,9 +101,8 @@ public class Executor {
 		try {
 			Scriptable scope = (Scriptable) doc.getUserData(Executor.SCOPE_KEY);
 			if (scope == null) {
-				throw new IllegalStateException(
-						"Scriptable (scope) instance was expected to be keyed as UserData to document using "
-								+ Executor.SCOPE_KEY);
+				throw new IllegalStateException("Scriptable (scope) instance was expected to be keyed as UserData to document using "
+						+ Executor.SCOPE_KEY);
 			}
 			JavaScript js = JavaScript.getInstance();
 			Scriptable thisScope = (Scriptable) js.getJavascriptObject(thisObject, scope);
@@ -124,8 +123,7 @@ public class Executor {
 		}
 	}
 
-	public static boolean executeFunction(Scriptable thisScope, Function f, java.net.URL codeSource,
-			UserAgentContext ucontext) {
+	public static boolean executeFunction(Scriptable thisScope, Function f, java.net.URL codeSource, UserAgentContext ucontext) {
 
 		Context ctx = createContext(codeSource, ucontext);
 		try {
@@ -136,8 +134,7 @@ public class Executor {
 				}
 				return ((Boolean) result).booleanValue();
 			} catch (Throwable err) {
-				logger.log(Level.WARNING, "executeFunction(): Unable to execute Javascript function "
-						+ f.getClassName() + ".", err);
+				logger.log(Level.WARNING, "executeFunction(): Unable to execute Javascript function " + f.getClassName() + ".", err);
 				return true;
 			}
 		} finally {

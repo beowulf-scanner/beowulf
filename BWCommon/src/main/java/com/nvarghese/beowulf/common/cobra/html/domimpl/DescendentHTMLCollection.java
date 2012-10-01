@@ -141,14 +141,14 @@ public class DescendentHTMLCollection extends AbstractScriptableDelegate impleme
 
 	// private final class NodeCounter implements NodeVisitor {
 	// private int count = 0;
-	//		
+	//
 	// public final void visit(Node node) {
 	// if(nodeFilter.accept(node)) {
 	// this.count++;
 	// throw new SkipVisitorException();
 	// }
 	// }
-	//		
+	//
 	// public int getCount() {
 	// return this.count;
 	// }
@@ -158,11 +158,11 @@ public class DescendentHTMLCollection extends AbstractScriptableDelegate impleme
 	// private int count = 0;
 	// private Node foundNode = null;
 	// private final int targetIndex;
-	//		
+	//
 	// public NodeScanner(int idx) {
 	// this.targetIndex = idx;
 	// }
-	//		
+	//
 	// public final void visit(Node node) {
 	// if(nodeFilter.accept(node)) {
 	// if(this.count == this.targetIndex) {
@@ -173,7 +173,7 @@ public class DescendentHTMLCollection extends AbstractScriptableDelegate impleme
 	// throw new SkipVisitorException();
 	// }
 	// }
-	//		
+	//
 	// public Node getNode() {
 	// return this.foundNode;
 	// }
@@ -183,11 +183,11 @@ public class DescendentHTMLCollection extends AbstractScriptableDelegate impleme
 	// private int count = 0;
 	// private int foundIndex = -1;
 	// private final Node targetNode;
-	//		
+	//
 	// public NodeScanner2(Node node) {
 	// this.targetNode = node;
 	// }
-	//		
+	//
 	// public final void visit(Node node) {
 	// if(nodeFilter.accept(node)) {
 	// if(node == this.targetNode) {
@@ -198,7 +198,7 @@ public class DescendentHTMLCollection extends AbstractScriptableDelegate impleme
 	// throw new SkipVisitorException();
 	// }
 	// }
-	//		
+	//
 	// public int getIndex() {
 	// return this.foundIndex;
 	// }

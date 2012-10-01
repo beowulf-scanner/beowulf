@@ -135,8 +135,7 @@ public class CobraHttpRequest implements HttpRequest {
 	public synchronized void setRequestHeader(String headerName, String value) {
 
 		if (rawTransaction != null) {
-			if (headerName.equalsIgnoreCase(HTTP.CONTENT_TYPE)
-					&& rawTransaction.getRequestHeaders(HTTP.CONTENT_TYPE).length > 0) {
+			if (headerName.equalsIgnoreCase(HTTP.CONTENT_TYPE) && rawTransaction.getRequestHeaders(HTTP.CONTENT_TYPE).length > 0) {
 				rawTransaction.removeRequestHeaders(HTTP.CONTENT_TYPE);
 			}
 			rawTransaction.addRequestHeader(headerName, value);
@@ -183,8 +182,8 @@ public class CobraHttpRequest implements HttpRequest {
 	 * @param password
 	 *            The password of the request (not supported.)
 	 */
-	public void open(final String method, final java.net.URL url, boolean asyncFlag, final String userName,
-			final String password) throws java.io.IOException {
+	public void open(final String method, final java.net.URL url, boolean asyncFlag, final String userName, final String password)
+			throws java.io.IOException {
 
 		this.abort();
 		// Proxy proxy = this.proxy;
@@ -265,8 +264,7 @@ public class CobraHttpRequest implements HttpRequest {
 		try {
 
 			URI uri = this.requestURL.toURI();
-			rawTransaction = HttpTransactionFactory.createTransaction(
-					HttpMethodType.getHttpMethodType(this.requestMethod), uri, null, null);
+			rawTransaction = HttpTransactionFactory.createTransaction(HttpMethodType.getHttpMethodType(this.requestMethod), uri, null, null);
 
 		} catch (URISyntaxException e) {
 			logger.error("Problem with URI syntax at CobraHttpRequest.open: " + e.getMessage(), e);
@@ -479,12 +477,12 @@ public class CobraHttpRequest implements HttpRequest {
 				this.responseHeaders = rawTransaction.getAllResponseHeadersAsString();
 				this.send = true;
 			}
-			this.changeState(HttpRequest.STATE_LOADED, rawTransaction.getResponseStatusCode(), rawTransaction
-					.getResponse().getStatusLine().getReasonPhrase(), null);
-			this.changeState(HttpRequest.STATE_INTERACTIVE, rawTransaction.getResponseStatusCode(), rawTransaction
-					.getResponse().getStatusLine().getReasonPhrase(), null);
-			this.changeState(HttpRequest.STATE_COMPLETE, rawTransaction.getResponseStatusCode(), rawTransaction
-					.getResponse().getStatusLine().getReasonPhrase(), rawTransaction.getResponseBody());
+			this.changeState(HttpRequest.STATE_LOADED, rawTransaction.getResponseStatusCode(), rawTransaction.getResponse().getStatusLine()
+					.getReasonPhrase(), null);
+			this.changeState(HttpRequest.STATE_INTERACTIVE, rawTransaction.getResponseStatusCode(), rawTransaction.getResponse().getStatusLine()
+					.getReasonPhrase(), null);
+			this.changeState(HttpRequest.STATE_COMPLETE, rawTransaction.getResponseStatusCode(), rawTransaction.getResponse().getStatusLine()
+					.getReasonPhrase(), rawTransaction.getResponseBody());
 
 		} catch (URISyntaxException e) {
 			logger.error("Problem with URI syntax at CobraHttpRequest.open: " + e.getMessage(), e);

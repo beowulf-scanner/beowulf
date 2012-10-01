@@ -125,11 +125,11 @@ public class Urls {
 
 		final URLStreamHandler streamHandler = new URLStreamHandler() {
 
-		    @Override
-		    protected URLConnection openConnection(URL u)
-		        throws IOException {
-		        return null;
-		    }
+			@Override
+			protected URLConnection openConnection(URL u) throws IOException {
+
+				return null;
+			}
 
 		};
 		URL newURL = new URL(null, url.toString(), streamHandler);

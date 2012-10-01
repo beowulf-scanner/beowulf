@@ -25,7 +25,7 @@ public class MasterScanConfigDocument extends AbstractDocument {
 	private SessionSettingScanConfigDocument sessionScanConfig;
 
 	@Embedded("test_modules")
-	private Map<Integer, TestModuleScanConfigDocument> testModules;
+	private Map<Long, TestModuleScanConfigDocument> testModules;
 
 	public MasterScanConfigDocument() {
 
@@ -34,7 +34,7 @@ public class MasterScanConfigDocument extends AbstractDocument {
 		settingScanConfig = new SettingScanConfigDocument();
 		reportScanConfig = new ReportScanConfigDocument();
 		sessionScanConfig = new SessionSettingScanConfigDocument();
-		testModules = new HashMap<Integer, TestModuleScanConfigDocument>();
+		testModules = new HashMap<Long, TestModuleScanConfigDocument>();
 
 	}
 
@@ -85,12 +85,12 @@ public class MasterScanConfigDocument extends AbstractDocument {
 		this.sessionScanConfig = sessionScanConfig;
 	}
 
-	public Map<Integer, TestModuleScanConfigDocument> getTestModules() {
+	public Map<Long, TestModuleScanConfigDocument> getTestModules() {
 
 		return testModules;
 	}
 
-	public void setTestModules(Map<Integer, TestModuleScanConfigDocument> testModules) {
+	public void setTestModules(Map<Long, TestModuleScanConfigDocument> testModules) {
 
 		this.testModules = testModules;
 	}

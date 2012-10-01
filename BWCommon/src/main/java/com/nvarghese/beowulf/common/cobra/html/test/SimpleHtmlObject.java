@@ -10,7 +10,8 @@ import com.nvarghese.beowulf.common.cobra.html.HtmlObject;
 import org.w3c.dom.html2.HTMLElement;
 
 /**
- * Simple implementation of {@link com.nvarghese.beowulf.common.cobra.html.HtmlObject}.
+ * Simple implementation of
+ * {@link com.nvarghese.beowulf.common.cobra.html.HtmlObject}.
  */
 public class SimpleHtmlObject extends JComponent implements HtmlObject {
 

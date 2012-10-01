@@ -20,8 +20,7 @@ public class MultipartEncodedRequestPayload implements RequestPayload {
 
 	String boundary;
 
-	private final static char[] MULTIPART_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			.toCharArray();
+	private final static char[] MULTIPART_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 
 	static Logger logger = LoggerFactory.getLogger(MultipartEncodedRequestPayload.class);
 

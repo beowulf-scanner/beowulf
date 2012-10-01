@@ -83,8 +83,8 @@ public class FontFactory {
 	 * @param fontFormat
 	 *            Should be {@link Font#TRUETYPE_FONT}.
 	 */
-	public void registerFont(String fontName, int fontFormat, java.io.InputStream fontStream)
-			throws java.awt.FontFormatException, java.io.IOException {
+	public void registerFont(String fontName, int fontFormat, java.io.InputStream fontStream) throws java.awt.FontFormatException,
+			java.io.IOException {
 
 		Font f = Font.createFont(fontFormat, fontStream);
 		synchronized (this) {
@@ -106,8 +106,7 @@ public class FontFactory {
 		}
 	}
 
-	public Font getFont(String fontFamily, String fontStyle, String fontVariant, String fontWeight, float fontSize,
-			Set locales, Integer superscript) {
+	public Font getFont(String fontFamily, String fontStyle, String fontVariant, String fontWeight, float fontSize, Set locales, Integer superscript) {
 
 		FontKey key = new FontKey(fontFamily, fontStyle, fontVariant, fontWeight, fontSize, locales, superscript);
 		synchronized (this) {
@@ -257,8 +256,8 @@ public class FontFactory {
 		 * @param fontWeight
 		 * @param fontSize
 		 */
-		public FontKey(final String fontFamily, final String fontStyle, final String fontVariant,
-				final String fontWeight, final float fontSize, final Set locales, final Integer superscript) {
+		public FontKey(final String fontFamily, final String fontStyle, final String fontVariant, final String fontWeight, final float fontSize,
+				final Set locales, final Integer superscript) {
 
 			this.fontFamily = fontFamily == null ? null : fontFamily.intern();
 			this.fontStyle = fontStyle == null ? null : fontStyle.intern();
@@ -289,9 +288,8 @@ public class FontFactory {
 				}
 				// Note that we use String.intern() for all string fields,
 				// so we can do instance comparisons.
-				if (this.fontSize == ors.fontSize && this.fontFamily == ors.fontFamily
-						&& this.fontStyle == ors.fontStyle && this.fontWeight == ors.fontWeight
-						&& this.fontVariant == ors.fontVariant && this.superscript == ors.superscript
+				if (this.fontSize == ors.fontSize && this.fontFamily == ors.fontFamily && this.fontStyle == ors.fontStyle
+						&& this.fontWeight == ors.fontWeight && this.fontVariant == ors.fontVariant && this.superscript == ors.superscript
 						&& Objects.equals(this.locales, ors.locales)) {
 					check = true;
 				}
@@ -329,9 +327,8 @@ public class FontFactory {
 
 		public String toString() {
 
-			return "FontKey[family=" + this.fontFamily + ",size=" + this.fontSize + ",style=" + this.fontStyle
-					+ ",weight=" + this.fontWeight + ",variant=" + this.fontVariant + ",superscript="
-					+ this.superscript + "]";
+			return "FontKey[family=" + this.fontFamily + ",size=" + this.fontSize + ",style=" + this.fontStyle + ",weight=" + this.fontWeight
+					+ ",variant=" + this.fontVariant + ",superscript=" + this.superscript + "]";
 		}
 	}
 }

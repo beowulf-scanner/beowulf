@@ -22,7 +22,7 @@
  */
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
-													// org.cobra_grendel.html.style.*;
+// org.cobra_grendel.html.style.*;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;

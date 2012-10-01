@@ -90,13 +90,15 @@ public interface HtmlRendererContext {
 	 * @param enctype
 	 *            The encoding type.
 	 * @param formInputs
-	 *            An array of {@link com.nvarghese.beowulf.common.cobra.html.FormInput}
+	 *            An array of
+	 *            {@link com.nvarghese.beowulf.common.cobra.html.FormInput}
 	 *            instances.
 	 */
 	public void submitForm(String method, URL action, String target, String enctype, FormInput[] formInputs);
 
 	/**
-	 * Creates a {@link com.nvarghese.beowulf.common.cobra.html.BrowserFrame} instance.
+	 * Creates a {@link com.nvarghese.beowulf.common.cobra.html.BrowserFrame}
+	 * instance.
 	 */
 	public BrowserFrame createBrowserFrame();
 
@@ -233,7 +235,8 @@ public interface HtmlRendererContext {
 	 *            The features of the new window (same as in Javascript open
 	 *            method).
 	 * @param replace
-	 * @return A new {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
+	 * @return A new
+	 *         {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
 	 *         instance.
 	 * @deprecated Use {@link #open(URL, String, String, boolean)} instead.
 	 */
@@ -250,7 +253,8 @@ public interface HtmlRendererContext {
 	 *            The features of the new window (same as in Javascript open
 	 *            method).
 	 * @param replace
-	 * @return A new {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
+	 * @return A new
+	 *         {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
 	 *         instance.
 	 */
 	public HtmlRendererContext open(java.net.URL url, String windowName, String windowFeatures, boolean replace);
@@ -334,7 +338,9 @@ public interface HtmlRendererContext {
 	 * Sets the context that opened the current frame/window.
 	 * 
 	 * @param opener
-	 *            A {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}.
+	 *            A
+	 *            {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
+	 *            .
 	 */
 	public void setOpener(HtmlRendererContext opener);
 

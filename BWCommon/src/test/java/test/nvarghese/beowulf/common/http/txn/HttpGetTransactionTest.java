@@ -21,8 +21,7 @@ public class HttpGetTransactionTest {
 	public void testSimpleGetRequest() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/index.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null,
-				null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null, null);
 
 		transaction.execute();
 		String responseString = transaction.getResponseBodyAsString();
@@ -35,8 +34,7 @@ public class HttpGetTransactionTest {
 	public void testSimpleGetCookieRequest() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/cookie_test.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null,
-				null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null, null);
 
 		transaction.execute();
 		String responseString = transaction.getResponseBodyAsString();
@@ -52,8 +50,7 @@ public class HttpGetTransactionTest {
 	public void testAddCookieInRequest() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/cookie_added.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null,
-				null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null, null);
 		BasicClientCookie cookie = new BasicClientCookie("c", "value");
 		cookie.setDomain("localhost");
 		cookie.setPath("/");
@@ -68,7 +65,6 @@ public class HttpGetTransactionTest {
 
 		Assert.assertNotNull(responseString);
 		Assert.assertEquals(statusCode, 200);
-		
 
 	}
 

@@ -27,8 +27,7 @@ public class NetRoutines {
 
 		try {
 			InetAddress address = InetAddress.getByName(host);
-			return address.isAnyLocalAddress() || address.isLinkLocalAddress() || address.isLoopbackAddress()
-					|| address.isSiteLocalAddress();
+			return address.isAnyLocalAddress() || address.isLinkLocalAddress() || address.isLoopbackAddress() || address.isSiteLocalAddress();
 		} catch (java.net.UnknownHostException uhe) {
 			return false;
 		}

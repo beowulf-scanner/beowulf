@@ -28,8 +28,9 @@ import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
 
 /**
  * The <code>SimpleHtmlParserContext</code> is a simple implementation of the
- * {@link com.nvarghese.beowulf.common.cobra.html.HtmlParserContext} interface. Methods in this
- * class should be overridden to provide functionality such as cookies.
+ * {@link com.nvarghese.beowulf.common.cobra.html.HtmlParserContext} interface.
+ * Methods in this class should be overridden to provide functionality such as
+ * cookies.
  * 
  * @author J. H. S.
  */

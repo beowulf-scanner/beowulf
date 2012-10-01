@@ -80,9 +80,10 @@ public class XMLHttpRequest extends AbstractScriptableDelegate {
 
 		return request.getStatusText();
 	}
-	
+
 	public void setRequestHeader(String headerName, String value) {
-		if(request.getReadyState() == HttpRequest.STATE_LOADING && !request.wasSend()) {
+
+		if (request.getReadyState() == HttpRequest.STATE_LOADING && !request.wasSend()) {
 			request.setRequestHeader(headerName, value);
 		} else {
 			throw new DOMException(DOMException.INVALID_STATE_ERR, "Invalid state while setting header");
@@ -94,8 +95,7 @@ public class XMLHttpRequest extends AbstractScriptableDelegate {
 		return Urls.createURL(this.codeSource, relativeUrl);
 	}
 
-	public void open(String method, String url, boolean asyncFlag, String userName, String password)
-			throws java.io.IOException {
+	public void open(String method, String url, boolean asyncFlag, String userName, String password) throws java.io.IOException {
 
 		request.open(method, this.getFullURL(url), asyncFlag, userName, password);
 	}
@@ -157,8 +157,7 @@ public class XMLHttpRequest extends AbstractScriptableDelegate {
 			if (f != null) {
 				Context ctx = Executor.createContext(this.codeSource, this.pcontext);
 				try {
-					Scriptable newScope = (Scriptable) JavaScript.getInstance().getJavascriptObject(
-							XMLHttpRequest.this, this.scope);
+					Scriptable newScope = (Scriptable) JavaScript.getInstance().getJavascriptObject(XMLHttpRequest.this, this.scope);
 					f.call(ctx, newScope, newScope, new Object[0]);
 				} finally {
 					Context.exit();

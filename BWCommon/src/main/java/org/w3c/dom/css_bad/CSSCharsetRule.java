@@ -33,8 +33,8 @@ import org.w3c.dom.DOMException;
  *          <code>CSSCharsetRule</code>.
  *          <p>
  *          See also the <a
- *          href='http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113'>Docume
- *          n t Object Model (DOM) Level 2 Style Specification</a>.
+ *          href='http://www.w3.org/TR/2000/REC-DOM-Level-2-Style-20001113'>Docum
+ *          e n t Object Model (DOM) Level 2 Style Specification</a>.
  * @since DOM Level 2
  */
 public interface CSSCharsetRule extends CSSRule {

@@ -6,6 +6,7 @@
 
 	<property name="bw-smf.root" location="${basedir}" />
 	<property name="bw-builder.root" location="${basedir}/../BWBuilder/" />
+	<property name="bw-common.root" location="${basedir}/../BWCommon/" />
 	<property file="build.properties" />
 	<property file="${bw-builder.root}/build-common.properties" />
 	<import file="${bw-builder.root}/commontasks.xml" />
@@ -115,6 +116,7 @@
 			<zipfileset dir="${src.resources.dir}" prefix="${artifact.name}-${beowulf.project.version}/${resources.export.dir.name}" />
 			<!-- <zipfileset dir="extlib" prefix="${project.name}-${project.version}/extlib" /> -->
 			<zipfileset dir="webapp" prefix="${artifact.name}-${beowulf.project.version}/webapp" />
+			<zipfileset file="${bw-common.root}/src/main/resources/bw-common.conf" prefix="${artifact.name}-${beowulf.project.version}/webapp/WEB-INF"/>
 			<!--<zipfileset dir="${dist.dir}/docs/api/" prefix="${project.name}-${project.version}/docs/api" /> -->
 			<zipfileset file="${dist.dir}/${artifact.name}.jar" prefix="${artifact.name}-${beowulf.project.version}" />
 		</zip>

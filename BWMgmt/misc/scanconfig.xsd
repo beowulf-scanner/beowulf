@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+	<xs:element name="profile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="http_client" />
+				<xs:element ref="scan_settings" />
+				<xs:element ref="report_settings" />
+				<xs:element ref="session_settings" />				
+				<xs:element ref="test_modules" />
+			</xs:sequence>
+			<xs:attribute name="version" use="required" type="xs:decimal" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="http_client">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="max_redirects" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_consecutive_failed_requests" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_failed_requests_per_server" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_request_count" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_request_depth" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_request_retries" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_spider_urls" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="max_total_connections" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="socket_read_timeout" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="user_agent_string" type="xs:string" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="character_encoding" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="scan_settings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="response_code_overrides" />
+				<xs:element ref="base_uris" />
+				<xs:element ref="restrictions" />
+				<xs:element ref="import_spidered_uris" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="response_code_overrides">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="override_threshold" type="xs:integer" />
+				<xs:element name="test_all_directories" type="xs:boolean" />
+				<xs:element name="use_automatic_overrides" type="xs:boolean" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="base_uris">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="base_uri" maxOccurs="unbounded" type="xs:string" minOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="restrictions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="forbidden_parameter_names" />
+				<xs:element ref="irrelevant_parameter_names" />
+				<xs:element ref="forbidden_mime_types" />
+				<xs:element ref="url_blacklist" />
+				<xs:element ref="url_whitelist" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="forbidden_parameter_names">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" name="parameter_name"
+					type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="irrelevant_parameter_names">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" name="parameter_name"
+					type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="forbidden_mime_types">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="mime_type_pattern" type="xs:string" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="url_blacklist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="url_pattern" type="xs:string"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="url_whitelist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="url_pattern" type="xs:string"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="import_spidered_uris">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="uri" type="xs:string" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="report_settings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="filename" type="xs:string" />
+				<xs:element name="min_severity" type="xs:string" />
+				<xs:element name="auto_report_generation" type="xs:boolean" /> 
+				<xs:element name="format" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="session_settings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="login" />
+				<xs:element ref="session_tracking" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="login">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="username" type="xs:string" />
+				<xs:element name="password" type="xs:string" />
+				<xs:element name="username_field_pattern" type="xs:string" />
+				<xs:element name="password_field_pattern" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="session_tracking">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="use_logged_out_detection" type="xs:boolean" />
+				<xs:element ref="known_session_idlist" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="known_session_idlist">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id_pattern" type="xs:string" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="test_modules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="test_module" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="test_module">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="module_number" type="xs:integer" />
+				<xs:element name="module_name" type="xs:string" />
+				<xs:element name="enabled" type="xs:boolean" />
+				<xs:element minOccurs="0" maxOccurs="unbounded" ref="options" />
+			</xs:sequence>
+			<xs:attribute name="modulegroup" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="options">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="option_name" type="xs:string" />
+				<xs:element name="option_value" type="xs:string" />					
+			</xs:sequence>
+			<xs:attribute name="group" type="xs:string" />
+			<xs:attribute name="type" type="xs:string" />
+		</xs:complexType>		
+	</xs:element>
+</xs:schema>

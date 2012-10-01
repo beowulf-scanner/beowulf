@@ -11,7 +11,7 @@ public class BasicClientConnectionManagerFactory implements ClientConnectionMana
 	@Override
 	public ClientConnectionManager newInstance(HttpParams params, SchemeRegistry scheme) {
 
-		ClientConnectionManager connMrg = new BasicClientConnectionManager(scheme);		
+		ClientConnectionManager connMrg = new BasicClientConnectionManager(scheme);
 		return connMrg;
 	}
 

@@ -51,8 +51,9 @@ import org.xml.sax.SAXException;
 /**
  * The <code>HtmlParser</code> class is an HTML DOM parser. This parser provides
  * the functionality for the standard DOM parser implementation
- * {@link com.nvarghese.beowulf.common.cobra.html.parser.DocumentBuilderImpl}. This parser class
- * may be used directly when a different DOM implementation is preferred.
+ * {@link com.nvarghese.beowulf.common.cobra.html.parser.DocumentBuilderImpl}.
+ * This parser class may be used directly when a different DOM implementation is
+ * preferred.
  */
 public class HtmlParser {
 
@@ -463,8 +464,7 @@ public class HtmlParser {
 	 * @param systemId
 	 *            The system ID of the document.
 	 */
-	public HtmlParser(UserAgentContext ucontext, Document document, ErrorHandler errorHandler, String publicId,
-			String systemId) {
+	public HtmlParser(UserAgentContext ucontext, Document document, ErrorHandler errorHandler, String publicId, String systemId) {
 
 		this.ucontext = ucontext;
 		this.document = document;
@@ -630,8 +630,8 @@ public class HtmlParser {
 	 * @throws StopException
 	 * @throws SAXException
 	 */
-	private final int parseToken(Node parent, LineNumberReader reader, Set stopTags, LinkedList ancestors)
-			throws IOException, StopException, SAXException {
+	private final int parseToken(Node parent, LineNumberReader reader, Set stopTags, LinkedList ancestors) throws IOException, StopException,
+			SAXException {
 
 		Document doc = this.document;
 		StringBuffer textSb = this.readUpToTagBegin(reader);
@@ -726,25 +726,21 @@ public class HtmlParser {
 											if (einfo != null && einfo.noScriptElement) {
 												UserAgentContext ucontext = this.ucontext;
 												if (ucontext == null || ucontext.isScriptingEnabled()) {
-													token = this.parseForEndTag(parent, reader, tag, false,
-															einfo.decodeEntities);
+													token = this.parseForEndTag(parent, reader, tag, false, einfo.decodeEntities);
 												} else {
 													token = this.parseToken(element, reader, newStopSet, ancestors);
 												}
 											} else {
-												token = childrenOk ? this.parseToken(element, reader, newStopSet,
-														ancestors) : this.parseForEndTag(element, reader, tag, true,
-														einfo.decodeEntities);
+												token = childrenOk ? this.parseToken(element, reader, newStopSet, ancestors) : this.parseForEndTag(
+														element, reader, tag, true, einfo.decodeEntities);
 											}
 											if (token == TOKEN_END_ELEMENT) {
 												String normalLastTag = this.normalLastTag;
 												if (normalTag.equals(normalLastTag)) {
 													return TOKEN_FULL_ELEMENT;
 												} else {
-													ElementInfo closeTagInfo = (ElementInfo) ELEMENT_INFOS
-															.get(normalLastTag);
-													if (closeTagInfo == null
-															|| closeTagInfo.endElementType != ElementInfo.END_ELEMENT_FORBIDDEN) {
+													ElementInfo closeTagInfo = (ElementInfo) ELEMENT_INFOS.get(normalLastTag);
+													if (closeTagInfo == null || closeTagInfo.endElementType != ElementInfo.END_ELEMENT_FORBIDDEN) {
 														// TODO: Rather
 														// inefficient
 														// algorithm, but it's
@@ -783,8 +779,7 @@ public class HtmlParser {
 												throw se;
 											}
 											einfo = (ElementInfo) ELEMENT_INFOS.get(normalTag);
-											endTagType = einfo == null ? ElementInfo.END_ELEMENT_REQUIRED
-													: einfo.endElementType;
+											endTagType = einfo == null ? ElementInfo.END_ELEMENT_REQUIRED : einfo.endElementType;
 											childrenOk = einfo == null ? true : einfo.childElementOk;
 											newStopSet = einfo == null ? null : einfo.stopTags;
 											if (newStopSet == null) {
@@ -874,8 +869,8 @@ public class HtmlParser {
 	 * @return
 	 * @throws IOException
 	 */
-	private final int parseForEndTag(Node parent, LineNumberReader reader, String tagName, boolean addTextNode,
-			boolean decodeEntities) throws IOException, SAXException {
+	private final int parseForEndTag(Node parent, LineNumberReader reader, String tagName, boolean addTextNode, boolean decodeEntities)
+			throws IOException, SAXException {
 
 		Document doc = this.document;
 		int intCh;

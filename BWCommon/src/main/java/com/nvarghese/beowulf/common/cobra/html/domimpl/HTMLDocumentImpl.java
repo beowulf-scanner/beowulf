@@ -22,7 +22,7 @@
  */
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
-													// org.cobra_grendel.html.style.*;
+// org.cobra_grendel.html.style.*;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
@@ -110,8 +110,7 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 		this(ucontext, null, null, null);
 	}
 
-	public HTMLDocumentImpl(final UserAgentContext ucontext, final HtmlRendererContext rcontext,
-			WritableLineReader reader, String documentURI) {
+	public HTMLDocumentImpl(final UserAgentContext ucontext, final HtmlRendererContext rcontext, WritableLineReader reader, String documentURI) {
 
 		this.factory = ElementFactory.getInstance();
 		this.rcontext = rcontext;
@@ -283,8 +282,7 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 		if (oldDomain != null && Domains.isValidCookieDomain(domain, oldDomain)) {
 			this.domain = domain;
 		} else {
-			throw new SecurityException("Cannot set domain to '" + domain + "' when current domain is '" + oldDomain
-					+ "'");
+			throw new SecurityException("Cannot set domain to '" + domain + "' when current domain is '" + oldDomain + "'");
 		}
 	}
 
@@ -895,11 +893,11 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 			String baseURI = this.getBaseURI();
 			final URLStreamHandler streamHandler = new URLStreamHandler() {
 
-			    @Override
-			    protected URLConnection openConnection(URL u)
-			        throws IOException {
-			        return null;
-			    }
+				@Override
+				protected URLConnection openConnection(URL u) throws IOException {
+
+					return null;
+				}
 			};
 			URL documentURL = baseURI == null ? null : new URL(null, baseURI, streamHandler);
 			return Urls.createURL(documentURL, uri);
@@ -908,16 +906,15 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 			try {
 				final URLStreamHandler streamHandler = new URLStreamHandler() {
 
-				    @Override
-				    protected URLConnection openConnection(URL u)
-				        throws IOException {
-				        return null;
-				    }
+					@Override
+					protected URLConnection openConnection(URL u) throws IOException {
+
+						return null;
+					}
 				};
 				return new URL(null, uri, streamHandler);
 			} catch (MalformedURLException mfu2) {
-				logger.log(Level.WARNING, "Unable to create URL for URI=[" + uri + "], with base=[" + this.getBaseURI()
-						+ "].", mfu);
+				logger.log(Level.WARNING, "Unable to create URL for URI=[" + uri + "], with base=[" + this.getBaseURI() + "].", mfu);
 				return null;
 			}
 		}
@@ -1260,8 +1257,7 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 
 						if (httpRequest.getReadyState() == HttpRequest.STATE_COMPLETE) {
 							java.awt.Image newImage = httpRequest.getResponseImage();
-							ImageEvent newEvent = newImage == null ? null : new ImageEvent(HTMLDocumentImpl.this,
-									newImage);
+							ImageEvent newEvent = newImage == null ? null : new ImageEvent(HTMLDocumentImpl.this, newImage);
 							ImageListener[] listeners;
 							synchronized (map) {
 								newInfo.imageEvent = newEvent;
@@ -1409,8 +1405,7 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 
 		public boolean accept(Node node) {
 
-			return node instanceof org.w3c.dom.html2.HTMLFrameElement
-					|| node instanceof org.w3c.dom.html2.HTMLIFrameElement;
+			return node instanceof org.w3c.dom.html2.HTMLFrameElement || node instanceof org.w3c.dom.html2.HTMLIFrameElement;
 		}
 	}
 
@@ -1530,8 +1525,7 @@ public class HTMLDocumentImpl extends NodeImpl implements HTMLDocument, Document
 
 	/**
 	 * Gets the collection of elements whose <code>name</code> attribute is
-	 * <code>elementName</code>.
-	 * <br>
+	 * <code>elementName</code>. <br>
 	 * <b>Note:</b> This is not a standard API
 	 */
 	public NodeList getElementsByAtrributeName(String attributeName) {

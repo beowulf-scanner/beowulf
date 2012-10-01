@@ -26,7 +26,8 @@ import java.util.EventListener;
 
 /**
  * The <code>ReadyStateChangeListener</code> interface is implemented to receive
- * ReadyState change events from {@link com.nvarghese.beowulf.common.cobra.html.HttpRequest}.
+ * ReadyState change events from
+ * {@link com.nvarghese.beowulf.common.cobra.html.HttpRequest}.
  * 
  * @see com.nvarghese.beowulf.common.cobra.html.HttpRequest#addReadyStateChangeListener(ReadyStateChangeListener)
  * @author J. H. S.

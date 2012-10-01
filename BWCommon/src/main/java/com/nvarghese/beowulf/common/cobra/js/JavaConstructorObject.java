@@ -57,8 +57,8 @@ public class JavaConstructorObject extends ScriptableObject implements Function 
 	public Scriptable construct(final Context cx, final Scriptable scope, final Object[] args) {
 
 		try {
-			if(instantiator == null)
-				instantiator =  new SimpleInstantiator(classWrapper);
+			if (instantiator == null)
+				instantiator = new SimpleInstantiator(classWrapper);
 			Object javaObject = this.instantiator.newInstance();
 			Scriptable newObject = new JavaObjectWrapper(this.classWrapper, javaObject);
 			newObject.setParentScope(scope);

@@ -90,8 +90,7 @@ public class HttpTransactionFactory {
 	 * @param referer
 	 * @return
 	 */
-	public static AbstractHttpTransaction createTransaction(HttpMethodType method, URI uri, HttpEntity entity,
-			String referer) {
+	public static AbstractHttpTransaction createTransaction(HttpMethodType method, URI uri, HttpEntity entity, String referer) {
 
 		return createTransaction(createHttpRequest(method, uri, null, entity), referer);
 	}

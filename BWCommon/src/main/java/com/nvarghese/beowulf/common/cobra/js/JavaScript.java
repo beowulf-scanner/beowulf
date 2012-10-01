@@ -60,8 +60,7 @@ public class JavaScript {
 			synchronized (this) {
 				Scriptable javascriptObject = ((ScriptableDelegate) raw).getScriptable();
 				if (javascriptObject == null) {
-					JavaObjectWrapper jow = new JavaObjectWrapper(JavaClassWrapperFactory.getInstance()
-							.getClassWrapper(raw.getClass()), raw);
+					JavaObjectWrapper jow = new JavaObjectWrapper(JavaClassWrapperFactory.getInstance().getClassWrapper(raw.getClass()), raw);
 					javascriptObject = jow;
 					jow.setParentScope(scope);
 					((ScriptableDelegate) raw).setScriptable(jow);

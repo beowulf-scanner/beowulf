@@ -9,8 +9,7 @@ public class HttpPostTransaction extends AbstractHttpTransaction {
 
 	public HttpPostTransaction(HttpPost post, String referer) {
 
-		super(new HttpRequestWrapper(HttpMethodType.GET, post, RequestPayloadFactory.createRequestPayload(post)),
-				referer);
+		super(new HttpRequestWrapper(HttpMethodType.GET, post, RequestPayloadFactory.createRequestPayload(post)), referer);
 
 	}
 }

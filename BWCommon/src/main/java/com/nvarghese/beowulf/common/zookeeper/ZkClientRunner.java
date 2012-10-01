@@ -39,9 +39,8 @@ public class ZkClientRunner implements Runnable {
 		thread = new Thread(this, "zkClientRunner");
 	}
 
-	
 	public String getGroupName() {
-	
+
 		return groupName;
 	}
 

@@ -54,7 +54,7 @@ public class JavaClassWrapper implements Serializable {
 	}
 
 	public Function getFunction(final String name) {
-		
+
 		/* methods are not persisted when stored to DB */
 		scanMethods();
 		return (Function) this.functions.get(name);
@@ -98,8 +98,7 @@ public class JavaClassWrapper implements Serializable {
 
 	private boolean isIntegerIndexer(final String name, final Method method) {
 
-		return ("item".equals(name) && method.getParameterTypes().length == 1)
-				|| ("setItem".equals(name) && method.getParameterTypes().length == 2);
+		return ("item".equals(name) && method.getParameterTypes().length == 1) || ("setItem".equals(name) && method.getParameterTypes().length == 2);
 	}
 
 	private void updateNameIndexer(final String methodName, final Method method) {

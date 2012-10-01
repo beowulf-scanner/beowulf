@@ -233,16 +233,16 @@ public class LRUCache /* implements java.io.Serializable */{
 			}
 			return hc1 - hc2;
 		}
-		
+
 		@Override
 		public boolean equals(Object obj) {
-		
+
 			return super.equals(obj);
 		}
-		
+
 		@Override
 		public int hashCode() {
-		
+
 			return super.hashCode();
 		}
 	}

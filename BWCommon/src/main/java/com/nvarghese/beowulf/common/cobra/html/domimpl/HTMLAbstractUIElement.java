@@ -18,8 +18,8 @@ import org.w3c.dom.Document;
  */
 public class HTMLAbstractUIElement extends HTMLElementImpl {
 
-	private Function onfocus, onblur, onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove,
-			onmouseout, onkeypress, onkeydown, onkeyup, oncontextmenu;
+	private Function onfocus, onblur, onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown,
+			onkeyup, oncontextmenu;
 
 	public HTMLAbstractUIElement(String name) {
 
@@ -195,8 +195,7 @@ public class HTMLAbstractUIElement extends HTMLElementImpl {
 				if (attributeValue == null || attributeValue.length() == 0) {
 					f = null;
 				} else {
-					String functionCode = "function " + normalAttributeName + "_" + System.identityHashCode(this)
-							+ "() { " + attributeValue + " }";
+					String functionCode = "function " + normalAttributeName + "_" + System.identityHashCode(this) + "() { " + attributeValue + " }";
 					Document doc = this.document;
 					if (doc == null) {
 						throw new IllegalStateException("Element does not belong to a document.");
@@ -205,20 +204,18 @@ public class HTMLAbstractUIElement extends HTMLElementImpl {
 					try {
 						Scriptable scope = (Scriptable) doc.getUserData(Executor.SCOPE_KEY);
 						if (scope == null) {
-							throw new IllegalStateException(
-									"Scriptable (scope) instance was expected to be keyed as UserData to document using "
-											+ Executor.SCOPE_KEY);
+							throw new IllegalStateException("Scriptable (scope) instance was expected to be keyed as UserData to document using "
+									+ Executor.SCOPE_KEY);
 						}
 						Scriptable thisScope = (Scriptable) JavaScript.getInstance().getJavascriptObject(this, scope);
 						try {
 							// TODO: Get right line number for script. //TODO:
 							// Optimize this in case it's called multiple times?
 							// Is that done?
-							f = ctx.compileFunction(thisScope, functionCode, this.getTagName() + "[" + this.getId()
-									+ "]." + attributeName, 1, null);
+							f = ctx.compileFunction(thisScope, functionCode, this.getTagName() + "[" + this.getId() + "]." + attributeName, 1, null);
 						} catch (EcmaError ecmaError) {
-							logger.log(Level.WARNING, "Javascript error at " + ecmaError.getSourceName() + ":"
-									+ ecmaError.getLineNumber() + ": " + ecmaError.getMessage(), ecmaError);
+							logger.log(Level.WARNING, "Javascript error at " + ecmaError.getSourceName() + ":" + ecmaError.getLineNumber() + ": "
+									+ ecmaError.getMessage(), ecmaError);
 							f = null;
 						} catch (Throwable err) {
 							logger.log(Level.WARNING, "Unable to evaluate Javascript code", err);

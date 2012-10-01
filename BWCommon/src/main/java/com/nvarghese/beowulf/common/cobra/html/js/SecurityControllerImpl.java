@@ -47,8 +47,8 @@ public class SecurityControllerImpl extends SecurityController {
 		this.codesource = new CodeSource(this.url, (java.security.cert.Certificate[]) null);
 	}
 
-	public Object callWithDomain(Object securityDomain, final Context ctx, final Callable callable,
-			final Scriptable scope, final Scriptable thisObj, final Object[] args) {
+	public Object callWithDomain(Object securityDomain, final Context ctx, final Callable callable, final Scriptable scope, final Scriptable thisObj,
+			final Object[] args) {
 
 		if (securityDomain == null) {
 			return callable.call(ctx, scope, thisObj, args);
@@ -60,8 +60,7 @@ public class SecurityControllerImpl extends SecurityController {
 					return callable.call(ctx, scope, thisObj, args);
 				}
 			};
-			AccessControlContext acctx = new AccessControlContext(
-					new ProtectionDomain[] { (ProtectionDomain) securityDomain });
+			AccessControlContext acctx = new AccessControlContext(new ProtectionDomain[] { (ProtectionDomain) securityDomain });
 			return AccessController.doPrivileged(action, acctx);
 		}
 	}

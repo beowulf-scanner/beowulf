@@ -6,12 +6,11 @@ import org.apache.http.params.HttpParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class HttpClientUtil {
-	
+
 	/* logger */
 	static Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
-	
+
 	/**
 	 * Creates the customized set of http params
 	 * 

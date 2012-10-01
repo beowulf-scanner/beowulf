@@ -90,8 +90,8 @@ public class IORoutines {
 		int intBufferSize;
 		if (initialBufferSize == 0) {
 			intBufferSize = 1;
-		}else{
-			intBufferSize = initialBufferSize ;
+		} else {
+			intBufferSize = initialBufferSize;
 		}
 		byte[] buffer = new byte[intBufferSize];
 		int offset = 0;
@@ -186,16 +186,17 @@ public class IORoutines {
 	}
 
 	public static void touch(final File file) {
-		long currentTime = System.currentTimeMillis() ;
-		if(currentTime>0){
-			try{
+
+		long currentTime = System.currentTimeMillis();
+		if (currentTime > 0) {
+			try {
 				file.setLastModified(currentTime);
-			}catch (SecurityException e) {
+			} catch (SecurityException e) {
 				// do nothing
 			}
-			
+
 		}
-		
+
 	}
 
 	public static void saveStrings(final File file, final java.util.Collection list) throws IOException {
@@ -220,7 +221,7 @@ public class IORoutines {
 
 		java.util.List list = new java.util.LinkedList();
 		InputStream in = new FileInputStream(file);
-		BufferedReader reader = null ;
+		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(in));
 			String line;
@@ -229,7 +230,7 @@ public class IORoutines {
 			}
 			return list;
 		} finally {
-			reader.close() ;
+			reader.close();
 		}
 	}
 

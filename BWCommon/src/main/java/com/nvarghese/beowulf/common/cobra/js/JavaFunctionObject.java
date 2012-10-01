@@ -59,7 +59,7 @@ public class JavaFunctionObject extends ScriptableObject implements Function {
 	private String getTypeName(final Object object) {
 
 		return object == null ? "[null]" : object.getClass().getName();
-	}	
+	}
 
 	private Method getBestMethod(final Object[] args) {
 
@@ -95,8 +95,7 @@ public class JavaFunctionObject extends ScriptableObject implements Function {
 		JavaObjectWrapper jcw = (JavaObjectWrapper) thisObj;
 		Method method = this.getBestMethod(args);
 		if (method == null) {
-			throw new EvaluatorException("No method matching " + this.className + " with "
-					+ (args == null ? 0 : args.length) + " arguments.");
+			throw new EvaluatorException("No method matching " + this.className + " with " + (args == null ? 0 : args.length) + " arguments.");
 		}
 		Class[] actualArgTypes = method.getParameterTypes();
 		int numParams = actualArgTypes.length;
@@ -104,17 +103,15 @@ public class JavaFunctionObject extends ScriptableObject implements Function {
 		boolean linfo = loggableInfo;
 		if (linfo) {
 			Object javaObject = jcw.getJavaObject();
-			logger.info("call(): Calling method " + method.getName() + " on object " + javaObject + " of type "
-					+ this.getTypeName(javaObject));
+			logger.info("call(): Calling method " + method.getName() + " on object " + javaObject + " of type " + this.getTypeName(javaObject));
 		}
 		JavaScript manager = JavaScript.getInstance();
 		for (int i = 0; i < numParams; i++) {
 			Object arg = args[i];
 			Object actualArg = manager.getJavaObject(arg, actualArgTypes[i]);
 			if (linfo) {
-				logger.info("call(): For method=" + method.getName() + ": Converted arg=" + arg + " (type="
-						+ this.getTypeName(arg) + ") into actualArg=" + actualArg + ". Type expected by method is "
-						+ actualArgTypes[i].getName() + ".");
+				logger.info("call(): For method=" + method.getName() + ": Converted arg=" + arg + " (type=" + this.getTypeName(arg)
+						+ ") into actualArg=" + actualArg + ". Type expected by method is " + actualArgTypes[i].getName() + ".");
 			}
 			actualArgs[i] = actualArg;
 		}
@@ -124,8 +121,8 @@ public class JavaFunctionObject extends ScriptableObject implements Function {
 		} catch (IllegalAccessException iae) {
 			throw new IllegalStateException("Unable to call " + this.className + ".", iae);
 		} catch (InvocationTargetException ite) {
-			throw new WrappedException(new InvocationTargetException(ite.getCause(), "Unable to call " + this.className
-					+ " on " + jcw.getJavaObject() + "."));
+			throw new WrappedException(new InvocationTargetException(ite.getCause(), "Unable to call " + this.className + " on "
+					+ jcw.getJavaObject() + "."));
 		} catch (IllegalArgumentException iae) {
 			StringBuffer argTypes = new StringBuffer();
 			for (int i = 0; i < actualArgs.length; i++) {
@@ -134,8 +131,7 @@ public class JavaFunctionObject extends ScriptableObject implements Function {
 				}
 				argTypes.append(actualArgs[i] == null ? "<null>" : actualArgs[i].getClass().getName());
 			}
-			throw new WrappedException(new IllegalArgumentException("Unable to call " + this.className
-					+ ". Argument types: " + argTypes + ".", iae));
+			throw new WrappedException(new IllegalArgumentException("Unable to call " + this.className + ". Argument types: " + argTypes + ".", iae));
 		}
 	}
 

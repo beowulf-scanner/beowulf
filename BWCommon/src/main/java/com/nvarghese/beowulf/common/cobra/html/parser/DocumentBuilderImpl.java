@@ -61,9 +61,11 @@ public class DocumentBuilderImpl extends DocumentBuilder {
 	 * used when only the parsing functionality (without rendering) is required.
 	 * 
 	 * @param context
-	 *            An instance of {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}
+	 *            An instance of
+	 *            {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}
 	 *            , which may be an instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleUserAgentContext}.
+	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleUserAgentContext}
+	 *            .
 	 */
 	public DocumentBuilderImpl(UserAgentContext context) {
 
@@ -76,14 +78,17 @@ public class DocumentBuilderImpl extends DocumentBuilder {
 	 * used when rendering is expected.
 	 * 
 	 * @param ucontext
-	 *            An instance of {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}
+	 *            An instance of
+	 *            {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}
 	 *            , which may be an instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleUserAgentContext}.
+	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleUserAgentContext}
+	 *            .
 	 * @param rcontext
 	 *            An instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}, which may
-	 *            be an instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleHtmlRendererContext}.
+	 *            {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
+	 *            , which may be an instance of
+	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleHtmlRendererContext}
+	 *            .
 	 */
 	public DocumentBuilderImpl(UserAgentContext ucontext, HtmlRendererContext rcontext) {
 
@@ -97,9 +102,10 @@ public class DocumentBuilderImpl extends DocumentBuilder {
 	 * 
 	 * @param rcontext
 	 *            An instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}, which may
-	 *            be an instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleHtmlRendererContext}.
+	 *            {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
+	 *            , which may be an instance of
+	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleHtmlRendererContext}
+	 *            .
 	 */
 	public DocumentBuilderImpl(HtmlRendererContext rcontext) {
 
@@ -113,7 +119,8 @@ public class DocumentBuilderImpl extends DocumentBuilder {
 	 * 
 	 * @param is
 	 *            The input source, which may be an instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.parser.InputSourceImpl}.
+	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.parser.InputSourceImpl}
+	 *            .
 	 * @see #createDocument(InputSource)
 	 */
 	public Document parse(InputSource is) throws org.xml.sax.SAXException, IOException {
@@ -129,8 +136,9 @@ public class DocumentBuilderImpl extends DocumentBuilder {
 	 * 
 	 * @param is
 	 *            The input source, which may be an instance of
-	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.parser.InputSourceImpl}. The
-	 *            input source must provide either an input stream or a reader.
+	 *            {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.parser.InputSourceImpl}
+	 *            . The input source must provide either an input stream or a
+	 *            reader.
 	 * @see HTMLDocumentImpl#load()
 	 */
 	public Document createDocument(InputSource is) throws SAXException, IOException {
@@ -165,8 +173,7 @@ public class DocumentBuilderImpl extends DocumentBuilder {
 				 * new WritableLineReader(new InputStreamReader(in, charset));
 				 */
 			} else {
-				throw new IllegalArgumentException(
-						"The InputSource must have either a reader, an input stream or a URI.");
+				throw new IllegalArgumentException("The InputSource must have either a reader, an input stream or a URI.");
 			}
 		}
 		HTMLDocumentImpl document = new HTMLDocumentImpl(this.bcontext, this.rcontext, wis, uri);

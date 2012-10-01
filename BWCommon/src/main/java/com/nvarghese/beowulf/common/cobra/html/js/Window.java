@@ -71,8 +71,7 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 	private static final Map CONTEXT_WINDOWS = new WeakHashMap();
 	// private static final JavaClassWrapper IMAGE_WRAPPER =
 	// JavaClassWrapperFactory.getInstance().getClassWrapper(Image.class);
-	private static final JavaClassWrapper XMLHTTPREQUEST_WRAPPER = JavaClassWrapperFactory.getInstance()
-			.getClassWrapper(XMLHttpRequest.class);
+	private static final JavaClassWrapper XMLHTTPREQUEST_WRAPPER = JavaClassWrapperFactory.getInstance().getClassWrapper(XMLHttpRequest.class);
 
 	private static int timerIdCounter = 0;
 
@@ -368,9 +367,8 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 		try {
 			Scriptable scope = this.getWindowScope();
 			if (scope == null) {
-				throw new IllegalStateException(
-						"Scriptable (scope) instance was expected to be keyed as UserData to document using "
-								+ Executor.SCOPE_KEY);
+				throw new IllegalStateException("Scriptable (scope) instance was expected to be keyed as UserData to document using "
+						+ Executor.SCOPE_KEY);
 			}
 			String scriptURI = "window.eval";
 			if (logger.isLoggable(Level.INFO)) {
@@ -406,8 +404,7 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 				try {
 					hd = (HTMLDocumentImpl) d;
 				} catch (ClassCastException err) {
-					throw new IllegalStateException("Cannot perform operation with documents of type "
-							+ d.getClass().getName() + ".");
+					throw new IllegalStateException("Cannot perform operation with documents of type " + d.getClass().getName() + ".");
 				}
 				return new XMLHttpRequest(uaContext, hd.getDocumentURL(), ws);
 			}
@@ -446,8 +443,8 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 		}
 	}
 
-	private final void defineElementClass(Scriptable scope, final Document document, final String jsClassName,
-			final String elementName, Class javaClass) {
+	private final void defineElementClass(Scriptable scope, final Document document, final String jsClassName, final String elementName,
+			Class javaClass) {
 
 		JavaInstantiator ji = new JavaInstantiator() {
 
@@ -682,16 +679,16 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 			HTMLDocumentImpl doc = document;
 			Context ctx = Executor.createContext(doc.getDocumentURL(), uaContext);
 			try {
-				Scriptable thisScope = (Scriptable) JavaScript.getInstance()
-						.getJavascriptObject(getWindowScope(), null);
+				Scriptable thisScope = (Scriptable) JavaScript.getInstance().getJavascriptObject(getWindowScope(), null);
 				try {
 					// TODO: Get right line number for script. //TODO: Optimize
 					// this in case it's called multiple times? Is that done?
 
 					jFn = ctx.compileFunction(thisScope, expr.trim(), sourceName, 1, null);
 				} catch (EcmaError ecmaError) {
-					logger4J.error("Javascript error at " + ecmaError.getSourceName() + ":" + ecmaError.getLineNumber()
-							+ ": " + ecmaError.getMessage(), ecmaError);
+					logger4J.error(
+							"Javascript error at " + ecmaError.getSourceName() + ":" + ecmaError.getLineNumber() + ": " + ecmaError.getMessage(),
+							ecmaError);
 
 				} catch (Throwable err) {
 					logger4J.error("Unable to evaluate Javascript code: " + err.getMessage(), err);
@@ -970,7 +967,7 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 	 */
 
 	public Function getOnload() {
-		
+
 		return this.document.getOnloadHandler();
 	}
 
@@ -1070,8 +1067,7 @@ public class Window extends AbstractScriptableDelegate implements AbstractView {
 				if (function == null) {
 					throw new IllegalStateException("Cannot perform operation. Function is no longer available.");
 				}
-				Executor.executeFunction(window.getWindowScope(), function, doc.getDocumentURL(), window
-						.getUserAgentContext());
+				Executor.executeFunction(window.getWindowScope(), function, doc.getDocumentURL(), window.getUserAgentContext());
 			} catch (Throwable err) {
 				logger.log(Level.WARNING, "actionPerformed()", err);
 			}

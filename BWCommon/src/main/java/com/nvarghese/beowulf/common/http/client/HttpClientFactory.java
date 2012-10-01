@@ -27,8 +27,8 @@ public class HttpClientFactory {
 	}
 
 	/**
-	 * Creates HttpClient with default schemes 
-	 * (http -> tcp/80 & https -> tcp/443)
+	 * Creates HttpClient with default schemes (http -> tcp/80 & https ->
+	 * tcp/443)
 	 * 
 	 * @param params
 	 * @return
@@ -38,7 +38,7 @@ public class HttpClientFactory {
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
 		schemeRegistry.register(new Scheme("http", 80, PlainSocketFactory.getSocketFactory()));
 		schemeRegistry.register(new Scheme("https", 443, SSLSocketFactory.getSocketFactory()));
-		
+
 		return createHttpClient(params, schemeRegistry);
 	}
 

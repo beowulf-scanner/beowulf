@@ -274,8 +274,7 @@ public abstract class NodeImpl extends AbstractScriptableDelegate implements Nod
 					for (Iterator handlers = userDataHandlers.entrySet().iterator(); handlers.hasNext();) {
 						Map.Entry entry = (Map.Entry) handlers.next();
 						UserDataHandler handler = (UserDataHandler) entry.getValue();
-						handler.handle(UserDataHandler.NODE_CLONED, (String) entry.getKey(), userData.get(entry
-								.getKey()), this, newNode);
+						handler.handle(UserDataHandler.NODE_CLONED, (String) entry.getKey(), userData.get(entry.getKey()), this, newNode);
 					}
 				}
 			}
@@ -608,7 +607,7 @@ public abstract class NodeImpl extends AbstractScriptableDelegate implements Nod
 	public Object setUserData(String key, Object data, UserDataHandler handler) {
 
 		if (com.nvarghese.beowulf.common.cobra.html.parser.HtmlParser.MODIFYING_KEY.equals(key)) {
-			//boolean ns = (Boolean.TRUE == data);
+			// boolean ns = (Boolean.TRUE == data);
 			boolean ns = false;
 			this.notificationsSuspended = ns;
 			if (!ns) {
@@ -893,10 +892,8 @@ public abstract class NodeImpl extends AbstractScriptableDelegate implements Nod
 
 	public boolean isEqualNode(Node arg) {
 
-		return arg instanceof NodeImpl && this.getNodeType() == arg.getNodeType()
-				&& Objects.equals(this.getNodeName(), arg.getNodeName())
-				&& Objects.equals(this.getNodeValue(), arg.getNodeValue())
-				&& Objects.equals(this.getLocalName(), arg.getLocalName())
+		return arg instanceof NodeImpl && this.getNodeType() == arg.getNodeType() && Objects.equals(this.getNodeName(), arg.getNodeName())
+				&& Objects.equals(this.getNodeValue(), arg.getNodeValue()) && Objects.equals(this.getLocalName(), arg.getLocalName())
 				&& Objects.equals(this.nodeList, ((NodeImpl) arg).nodeList) && this.equalAttributes(arg);
 	}
 

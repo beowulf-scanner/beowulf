@@ -81,18 +81,13 @@ public class HttpTransactionTestServerLauncher {
 
 	}
 
-	private String generateFile(String docRoot, String filename) throws IOException {
+	private void generateFile(String docRoot, String filename) throws IOException {
 
 		String htmlContent = null;
 
 		htmlContent = "<html><body><h1>" + "Content Generated</h1>" + "<br>" + "<pre> sample text </pre></body></html>";
 
 		FileUtils.writeStringToFile(new File(docRoot + File.separator + filename), htmlContent);
-
-		/*
-		 * The file name can be randomized if required
-		 */
-		return File.separator + "RFI.html";
 
 	}
 
@@ -123,8 +118,7 @@ public class HttpTransactionTestServerLauncher {
 			this.docRoot = docRoot;
 		}
 
-		public void handle(final HttpRequest request, final HttpResponse response, final HttpContext context)
-				throws HttpException, IOException {
+		public void handle(final HttpRequest request, final HttpResponse response, final HttpContext context) throws HttpException, IOException {
 
 			String method = request.getRequestLine().getMethod().toUpperCase(Locale.ENGLISH);
 			if (!method.equals("GET") && !method.equals("HEAD") && !method.equals("POST")) {
@@ -276,11 +270,9 @@ public class HttpTransactionTestServerLauncher {
 			this.serversocket = new ServerSocket(port);
 			this.thread = new Thread(this, "HTTPServerThread-" + this.serversocket.getLocalPort());
 			this.params = new BasicHttpParams();
-			this.params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 5000)
-					.setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, 8 * 1024)
+			this.params.setIntParameter(CoreConnectionPNames.SO_TIMEOUT, 5000).setIntParameter(CoreConnectionPNames.SOCKET_BUFFER_SIZE, 8 * 1024)
 					.setBooleanParameter(CoreConnectionPNames.STALE_CONNECTION_CHECK, false)
-					.setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, true)
-					.setParameter(CoreProtocolPNames.ORIGIN_SERVER, "HttpComponents/1.1");
+					.setBooleanParameter(CoreConnectionPNames.TCP_NODELAY, true).setParameter(CoreProtocolPNames.ORIGIN_SERVER, "HttpComponents/1.1");
 
 			// Set up the HTTP protocol processor
 			BasicHttpProcessor httpproc = new BasicHttpProcessor();
@@ -294,8 +286,7 @@ public class HttpTransactionTestServerLauncher {
 			registry.register("*", new HttpFileHandler(docroot));
 
 			// Set up the HTTP service
-			this.httpService = new HttpService(httpproc, new DefaultConnectionReuseStrategy(),
-					new DefaultHttpResponseFactory(), registry, params);
+			this.httpService = new HttpService(httpproc, new DefaultConnectionReuseStrategy(), new DefaultHttpResponseFactory(), registry, params);
 		}
 
 		public void start() {
@@ -334,7 +325,7 @@ public class HttpTransactionTestServerLauncher {
 		public void shutDownWorkerThreads() {
 
 			for (Thread workerThread : workerThreads) {
-				logger.debug("Shutting down RFI workerThread: " + workerThread.getName());
+				logger.debug("Shutting down workerThread: " + workerThread.getName());
 				workerThread.interrupt();
 			}
 

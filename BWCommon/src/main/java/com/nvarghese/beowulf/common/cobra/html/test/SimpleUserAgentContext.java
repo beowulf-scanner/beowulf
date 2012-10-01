@@ -10,11 +10,12 @@ import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
 import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
 
 /**
- * Simple implementation of {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}.
- * This class is provided for user convenience. Usually this class should be
- * extended in order to provide appropriate user agent information and more
- * robust content loading routines. Its setters can be called to modify certain
- * user agent defaults.
+ * Simple implementation of
+ * {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}. This class
+ * is provided for user convenience. Usually this class should be extended in
+ * order to provide appropriate user agent information and more robust content
+ * loading routines. Its setters can be called to modify certain user agent
+ * defaults.
  */
 public class SimpleUserAgentContext implements UserAgentContext {
 
@@ -40,11 +41,12 @@ public class SimpleUserAgentContext implements UserAgentContext {
 	}
 
 	/**
-	 * Creates a {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleHttpRequest} instance.
-	 * The {@link com.nvarghese.beowulf.common.cobra.html.HttpRequest} object returned by
-	 * this method is used to load images, scripts, style sheets, and to
-	 * implement the Javascript XMLHttpRequest class. Override if a custom
-	 * mechanism to make requests is needed.
+	 * Creates a
+	 * {@link com.nvarghese.beowulf.common.cobra.com.nvarghese.beowulf.common.cobra.html.test.SimpleHttpRequest}
+	 * instance. The {@link com.nvarghese.beowulf.common.cobra.html.HttpRequest}
+	 * object returned by this method is used to load images, scripts, style
+	 * sheets, and to implement the Javascript XMLHttpRequest class. Override if
+	 * a custom mechanism to make requests is needed.
 	 */
 	public HttpRequest createHttpRequest() {
 

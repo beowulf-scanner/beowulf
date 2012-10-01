@@ -56,10 +56,10 @@ import org.xml.sax.InputSource;
 
 /**
  * The <code>SimpleHtmlRendererContext</code> class implements the
- * {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext} interface. Note that this
- * class provides rudimentary implementations of most callback methods.
- * Overridding some of the methods in this class will usually be necessary in a
- * professional application.
+ * {@link com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext}
+ * interface. Note that this class provides rudimentary implementations of most
+ * callback methods. Overridding some of the methods in this class will usually
+ * be necessary in a professional application.
  * <p>
  * A simple way to load a URL into the {@link HtmlPanel} of the renderer context
  * is to invoke {@link #navigate(String)}.
@@ -287,120 +287,133 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 		final long time0 = System.currentTimeMillis();
 		if (requestURI != null) {
 
-//			try {
-//
-//				username = "";
-//				//TODO:
-//				//username = uaContext.getScan().getTransactionRecord().getTransaction(uaContext.getId()).getUsername();
-//				
-//				if(username != null && !username.equalsIgnoreCase("")) {
-				
-//					transactionId = uaContext.getScan().getTransactionRecord().getTransactionId("GET",
-//						finalURLForLoading.toString(), username);
-//					
-//					wasRequested = uaContext.getScan().getTransactionRecord().isUriRequested("GET",
-//						finalURLForLoading.toString(), username, false);
-//				} else {
-//					transactionId = uaContext.getScan().getTransactionRecord().getTransactionId("GET",
-//							finalURLForLoading.toString(), null);
-//						
-//						wasRequested = uaContext.getScan().getTransactionRecord().isUriRequested("GET",
-//							finalURLForLoading.toString(), null, false);
-					
-//				}
-//				
+			// try {
+			//
+			// username = "";
+			// //TODO:
+			// //username =
+			// uaContext.getScan().getTransactionRecord().getTransaction(uaContext.getId()).getUsername();
+			//
+			// if(username != null && !username.equalsIgnoreCase("")) {
 
-				/*
-				 * Possibility of 4 cases Case 1: wasRequested = True,
-				 * transactionId > 0 This means we can fetch the request from
-				 * Cache/DB Case 2: wasRequested = False, transactionId < 0 This
-				 * means the request is new. So we have to take care of it here
-				 * and also add it for spidering Case 3: wasRequested = False,
-				 * transactionId > 0 This is a Race condition. Very uncertain,
-				 * unpredicatble and with low probability. Case 4: wasRequested
-				 * = True, transactionId < 0 This is also a Race condition. This
-				 * state happens when spidering added the URL and before the
-				 * transaction was saved to DB. Cache DB add/update/refresh
-				 * happens just after the transaction is saved to DB
-				 */
+			// transactionId =
+			// uaContext.getScan().getTransactionRecord().getTransactionId("GET",
+			// finalURLForLoading.toString(), username);
+			//
+			// wasRequested =
+			// uaContext.getScan().getTransactionRecord().isUriRequested("GET",
+			// finalURLForLoading.toString(), username, false);
+			// } else {
+			// transactionId =
+			// uaContext.getScan().getTransactionRecord().getTransactionId("GET",
+			// finalURLForLoading.toString(), null);
+			//
+			// wasRequested =
+			// uaContext.getScan().getTransactionRecord().isUriRequested("GET",
+			// finalURLForLoading.toString(), null, false);
 
-//				if (transactionId == -1 && !wasRequested) {
-//					/*
-//					 * Solves Case 2 If the transaction is not in cache and if
-//					 * it was not requested before, add it to the requester
-//					 * queue for spidering
-//					 */
-//					rawTransaction = HttpTransactionFactory.createTransaction(uaContext.getScan(), "GET", requestURI,
-//							uaContext.getId(), TransactionSource.COBRA);
-//					// Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
-//					// " rawUri: " + rawTransaction.getMethod() + " " +
-//					// rawTransaction.getAbsoluteUriString() +
-//					// " Reason_ren: No cache");
-//					TransactionSource referenceTransactionSource = uaContext.getScan().getTransactionRecord()
-//							.getTransaction(uaContext.getId()).getSource();
-//					if (referenceTransactionSource != TransactionSource.TEST) {
-//						uaContext.getScan().getRequesterQueue().addSpiderRequest(rawTransaction, false,
-//								"Javascript: Asynchronous Requests ");
-//					}
-//
-//				} else if (transactionId > 0) {
-//					/*
-//					 * Solves Case 1 and Case 3 If the request is found in
-//					 * cache, then fetch it and continue
-//					 */
-//					rawTransaction = uaContext.getScan().getTransactionRecord().getTransaction(transactionId);
-//					// Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
-//					// " rawUri: " + rawTransaction.getMethod() + " "
-//					// +rawTransaction.getAbsoluteUriString() +
-//					// " Reason_ren: Cache hit");
-//
-//				} else if (transactionId == -1 && wasRequested) {
-//					/*
-//					 * Solves Case 4 1. Wait to complete the processing by
-//					 * requesterThread? or 2. Duplicate request Currently
-//					 * duplicating.
-//					 */
-//					rawTransaction = HttpTransactionFactory.createTransaction(uaContext.getScan(), "GET", requestURI,
-//							uaContext.getId(), TransactionSource.COBRA);
-//					// Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
-//					// " rawUri: " + rawTransaction.getMethod() + " " +
-//					// rawTransaction.getAbsoluteUriString() +
-//					// " Reason_ren: No cache, but requested");
-//				}
-//
-//				if (rawTransaction != null) {
-//					synchronized (rawTransaction) {
-//
-//						/*
-//						 * Solves uncertain conditions
-//						 */
-//
-//						if (!rawTransaction.isResponsePresent() || !rawTransaction.isSuccessfullExecution()) {
-//						
-//							/*
-//							 * This should solve uncertain conditions like -
-//							 * Transaction from cache/DB might not have response
-//							 * - A newly created transaction which is not
-//							 * executed
-//							 */
-//
-//							rawTransaction.execute("CobraHttpRequest", false);
-//
-//						} else {
-//							
-//
-//							/*
-//							 * Load it from cache
-//							 */
-//
-//						}
-//					}
-//				}
-//
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
-//
+			// }
+			//
+
+			/*
+			 * Possibility of 4 cases Case 1: wasRequested = True, transactionId
+			 * > 0 This means we can fetch the request from Cache/DB Case 2:
+			 * wasRequested = False, transactionId < 0 This means the request is
+			 * new. So we have to take care of it here and also add it for
+			 * spidering Case 3: wasRequested = False, transactionId > 0 This is
+			 * a Race condition. Very uncertain, unpredicatble and with low
+			 * probability. Case 4: wasRequested = True, transactionId < 0 This
+			 * is also a Race condition. This state happens when spidering added
+			 * the URL and before the transaction was saved to DB. Cache DB
+			 * add/update/refresh happens just after the transaction is saved to
+			 * DB
+			 */
+
+			// if (transactionId == -1 && !wasRequested) {
+			// /*
+			// * Solves Case 2 If the transaction is not in cache and if
+			// * it was not requested before, add it to the requester
+			// * queue for spidering
+			// */
+			// rawTransaction =
+			// HttpTransactionFactory.createTransaction(uaContext.getScan(),
+			// "GET", requestURI,
+			// uaContext.getId(), TransactionSource.COBRA);
+			// // Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
+			// // " rawUri: " + rawTransaction.getMethod() + " " +
+			// // rawTransaction.getAbsoluteUriString() +
+			// // " Reason_ren: No cache");
+			// TransactionSource referenceTransactionSource =
+			// uaContext.getScan().getTransactionRecord()
+			// .getTransaction(uaContext.getId()).getSource();
+			// if (referenceTransactionSource != TransactionSource.TEST) {
+			// uaContext.getScan().getRequesterQueue().addSpiderRequest(rawTransaction,
+			// false,
+			// "Javascript: Asynchronous Requests ");
+			// }
+			//
+			// } else if (transactionId > 0) {
+			// /*
+			// * Solves Case 1 and Case 3 If the request is found in
+			// * cache, then fetch it and continue
+			// */
+			// rawTransaction =
+			// uaContext.getScan().getTransactionRecord().getTransaction(transactionId);
+			// // Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
+			// // " rawUri: " + rawTransaction.getMethod() + " "
+			// // +rawTransaction.getAbsoluteUriString() +
+			// // " Reason_ren: Cache hit");
+			//
+			// } else if (transactionId == -1 && wasRequested) {
+			// /*
+			// * Solves Case 4 1. Wait to complete the processing by
+			// * requesterThread? or 2. Duplicate request Currently
+			// * duplicating.
+			// */
+			// rawTransaction =
+			// HttpTransactionFactory.createTransaction(uaContext.getScan(),
+			// "GET", requestURI,
+			// uaContext.getId(), TransactionSource.COBRA);
+			// // Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
+			// // " rawUri: " + rawTransaction.getMethod() + " " +
+			// // rawTransaction.getAbsoluteUriString() +
+			// // " Reason_ren: No cache, but requested");
+			// }
+			//
+			// if (rawTransaction != null) {
+			// synchronized (rawTransaction) {
+			//
+			// /*
+			// * Solves uncertain conditions
+			// */
+			//
+			// if (!rawTransaction.isResponsePresent() ||
+			// !rawTransaction.isSuccessfullExecution()) {
+			//
+			// /*
+			// * This should solve uncertain conditions like -
+			// * Transaction from cache/DB might not have response
+			// * - A newly created transaction which is not
+			// * executed
+			// */
+			//
+			// rawTransaction.execute("CobraHttpRequest", false);
+			//
+			// } else {
+			//
+			//
+			// /*
+			// * Load it from cache
+			// */
+			//
+			// }
+			// }
+			// }
+			//
+			// } catch (Exception e) {
+			// // TODO: handle exception
+			// }
+			//
 		}
 
 		final AbstractHttpTransaction finalTransaction = rawTransaction;
@@ -418,32 +431,40 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 
 					if (finalTransaction != null) {
 
-//						try {
-//							sourceCode = null;
-//							long time1 = System.currentTimeMillis();
-//							byte[] input = finalTransaction.getResponseBody();
-//							if (input != null) {
-//								ByteArrayInputStream inputStream = new ByteArrayInputStream(input);
-//								InputSource inputSource = new InputSourceImpl(inputStream, finalTransaction.getURI()
-//										, finalTransaction.getContentType().getCharset());
-//
-//								DocumentBuilderImpl builder = new DocumentBuilderImpl(SimpleHtmlRendererContext.this
-//										.getUserAgentContext(), SimpleHtmlRendererContext.this);
-//
-//								if (inputSource != null) {
-//									HTMLDocumentImpl document = (HTMLDocumentImpl) builder.createDocument(inputSource);
-//									// Now start loading.
-//									document.load();
-//									long time2 = System.currentTimeMillis();
-//									logger.info("Parsed URI=[" + uri + "]: Parse elapsed: " + (time2 - time1)
-//											+ " ms. Fetched from Cache/DB: " + (time1 - time0) + " ms.");
-//									sourceCode = inputStream.toString();
-//								}
-//
-//							}
-//						} finally {
-//
-//						}
+						// try {
+						// sourceCode = null;
+						// long time1 = System.currentTimeMillis();
+						// byte[] input = finalTransaction.getResponseBody();
+						// if (input != null) {
+						// ByteArrayInputStream inputStream = new
+						// ByteArrayInputStream(input);
+						// InputSource inputSource = new
+						// InputSourceImpl(inputStream,
+						// finalTransaction.getURI()
+						// , finalTransaction.getContentType().getCharset());
+						//
+						// DocumentBuilderImpl builder = new
+						// DocumentBuilderImpl(SimpleHtmlRendererContext.this
+						// .getUserAgentContext(),
+						// SimpleHtmlRendererContext.this);
+						//
+						// if (inputSource != null) {
+						// HTMLDocumentImpl document = (HTMLDocumentImpl)
+						// builder.createDocument(inputSource);
+						// // Now start loading.
+						// document.load();
+						// long time2 = System.currentTimeMillis();
+						// logger.info("Parsed URI=[" + uri +
+						// "]: Parse elapsed: " + (time2 - time1)
+						// + " ms. Fetched from Cache/DB: " + (time1 - time0) +
+						// " ms.");
+						// sourceCode = inputStream.toString();
+						// }
+						//
+						// }
+						// } finally {
+						//
+						// }
 
 					} else {
 						/*
@@ -473,12 +494,11 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 							// SimpleUserAgentContext ucontext = new
 							// SimpleUserAgentContext();
 
-							DocumentBuilderImpl builder = new DocumentBuilderImpl(SimpleHtmlRendererContext.this
-									.getUserAgentContext(), SimpleHtmlRendererContext.this);
+							DocumentBuilderImpl builder = new DocumentBuilderImpl(SimpleHtmlRendererContext.this.getUserAgentContext(),
+									SimpleHtmlRendererContext.this);
 							String actualURI = uri.toExternalForm();
 							// Only create document, don't parse.
-							HTMLDocumentImpl document = (HTMLDocumentImpl) builder.createDocument(new InputSourceImpl(
-									bin, actualURI, "ISO-8859-1"));
+							HTMLDocumentImpl document = (HTMLDocumentImpl) builder.createDocument(new InputSourceImpl(bin, actualURI, "ISO-8859-1"));
 							// Set document in HtmlPanel. Safe to call outside
 							// GUI
 							// thread.
@@ -487,8 +507,8 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 							// Now start loading.
 							document.load();
 							long time2 = System.currentTimeMillis();
-							logger.info("Parsed URI=[" + uri + "]: Parse elapsed: " + (time2 - time1)
-									+ " ms. Connection elapsed: " + (time1 - time0) + " ms.");
+							logger.info("Parsed URI=[" + uri + "]: Parse elapsed: " + (time2 - time1) + " ms. Connection elapsed: " + (time1 - time0)
+									+ " ms.");
 							sourceCode = rin.getString("ISO-8859-1");
 						} finally {
 							in.close();
@@ -551,38 +571,49 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 		 * "; action=" + action + "; target=" + target // + "; enctype=" +
 		 * enctype + lineBreak + sb);
 		 */
-//		URI actionURI = null;
-//		AbstractStandardHttpTransaction request = null;
-//		CobraUserAgent uaContext = (CobraUserAgent) this.getUserAgentContext();
-//		try {
-//			actionURI = action.toURI();
-//		} catch (URISyntaxException e) {
-//			this.warn("submitForm(): Error in converting URL to URI for action=" + action);
-//
-//		}
-//
-//		try {
-//			request = HttpTransactionFactory.createTransaction(uaContext.getScan(), method, actionURI, uaContext
-//					.getId(), TransactionSource.SPIDER);
-//			if (formInputs != null) {
-//				String defaultText = ConfigurationManager.getString("default_form_values.default_text");
-//				List<String> formParamsList = ConfigurationManager.getList("default_form_values.params_list");
-//				for (int i = 0; i < formInputs.length; i++) {
-//					if (formInputs[i].isText() && !(formInputs[i].getTextValue().equalsIgnoreCase(""))) {
-//						request.addQueryParameter(formInputs[i].getName(), formInputs[i].getTextValue());
-//					} else {
-//						request.addQueryParameter(formInputs[i].getName(), ConfigurationManager.getString(
-//								"default_form_values." + getConfigparam(formInputs[i].getName(), formParamsList),
-//								formInputs[i].getName() + defaultText));
-//					}
-//				}
-//			}
-//
-//			uaContext.getScan().getRequesterQueue().addSpiderRequest(request, false, "Javascript: Form Submit() ");
-//		} catch (URISyntaxException e) {
-//
-//			this.warn("URI syntax problem in (" + action + "): " + e.toString());
-//		}
+		// URI actionURI = null;
+		// AbstractStandardHttpTransaction request = null;
+		// CobraUserAgent uaContext = (CobraUserAgent)
+		// this.getUserAgentContext();
+		// try {
+		// actionURI = action.toURI();
+		// } catch (URISyntaxException e) {
+		// this.warn("submitForm(): Error in converting URL to URI for action="
+		// + action);
+		//
+		// }
+		//
+		// try {
+		// request =
+		// HttpTransactionFactory.createTransaction(uaContext.getScan(), method,
+		// actionURI, uaContext
+		// .getId(), TransactionSource.SPIDER);
+		// if (formInputs != null) {
+		// String defaultText =
+		// ConfigurationManager.getString("default_form_values.default_text");
+		// List<String> formParamsList =
+		// ConfigurationManager.getList("default_form_values.params_list");
+		// for (int i = 0; i < formInputs.length; i++) {
+		// if (formInputs[i].isText() &&
+		// !(formInputs[i].getTextValue().equalsIgnoreCase(""))) {
+		// request.addQueryParameter(formInputs[i].getName(),
+		// formInputs[i].getTextValue());
+		// } else {
+		// request.addQueryParameter(formInputs[i].getName(),
+		// ConfigurationManager.getString(
+		// "default_form_values." + getConfigparam(formInputs[i].getName(),
+		// formParamsList),
+		// formInputs[i].getName() + defaultText));
+		// }
+		// }
+		// }
+		//
+		// uaContext.getScan().getRequesterQueue().addSpiderRequest(request,
+		// false, "Javascript: Form Submit() ");
+		// } catch (URISyntaxException e) {
+		//
+		// this.warn("URI syntax problem in (" + action + "): " + e.toString());
+		// }
 
 	}
 
@@ -768,11 +799,9 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 	 * @throws IOException
 	 * @throws org.xml.sax.SAXException
 	 */
-	protected HTMLDocumentImpl createDocument(final org.xml.sax.InputSource inputSource) throws IOException,
-			org.xml.sax.SAXException {
+	protected HTMLDocumentImpl createDocument(final org.xml.sax.InputSource inputSource) throws IOException, org.xml.sax.SAXException {
 
-		DocumentBuilderImpl builder = new DocumentBuilderImpl(this.getUserAgentContext(),
-				SimpleHtmlRendererContext.this);
+		DocumentBuilderImpl builder = new DocumentBuilderImpl(this.getUserAgentContext(), SimpleHtmlRendererContext.this);
 		return (HTMLDocumentImpl) builder.createDocument(inputSource);
 	}
 
@@ -880,41 +909,48 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 
 		if (url != null) {
 
-//			try {
-//
-//				String username = uaContext.getScan().getTransactionRecord().getTransaction(uaContext.getId()).getUsername();
-//				if(username == null) {
-//					username = "";
-//				}
-//				wasRequested = uaContext.getScan().getTransactionRecord().isUriRequested("GET", url.toString(), username, false);
-//
-//				/*
-//				 * A cache look-up is not required here
-//				 */
-//
-//				if (!wasRequested) {
-//					/*
-//					 * If the request was not requested before, add it to the
-//					 * requester queue for spidering
-//					 */
-//					rawTransaction = HttpTransactionFactory.createTransaction(uaContext.getScan(), "GET", url.toURI(),
-//							uaContext.getId(), TransactionSource.COBRA);
-//					// Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
-//					// " rawUri: " + rawTransaction.getMethod() + " " +
-//					// rawTransaction.getAbsoluteUriString() +
-//					// " Reason_ren: No cache");
-//					TransactionSource referenceTransactionSource = uaContext.getScan().getTransactionRecord()
-//							.getTransaction(uaContext.getId()).getSource();
-//					if (referenceTransactionSource != TransactionSource.TEST) {
-//						uaContext.getScan().getRequesterQueue().addSpiderRequest(rawTransaction, false,
-//								"Javascript: Window.open ");
-//					}
-//
-//				}
-//
-//			} catch (Exception e) {
-//				// TODO: handle exception
-//			}
+			// try {
+			//
+			// String username =
+			// uaContext.getScan().getTransactionRecord().getTransaction(uaContext.getId()).getUsername();
+			// if(username == null) {
+			// username = "";
+			// }
+			// wasRequested =
+			// uaContext.getScan().getTransactionRecord().isUriRequested("GET",
+			// url.toString(), username, false);
+			//
+			// /*
+			// * A cache look-up is not required here
+			// */
+			//
+			// if (!wasRequested) {
+			// /*
+			// * If the request was not requested before, add it to the
+			// * requester queue for spidering
+			// */
+			// rawTransaction =
+			// HttpTransactionFactory.createTransaction(uaContext.getScan(),
+			// "GET", url.toURI(),
+			// uaContext.getId(), TransactionSource.COBRA);
+			// // Debug.debug("Debug: raw ID: " + rawTransaction.getId() +
+			// // " rawUri: " + rawTransaction.getMethod() + " " +
+			// // rawTransaction.getAbsoluteUriString() +
+			// // " Reason_ren: No cache");
+			// TransactionSource referenceTransactionSource =
+			// uaContext.getScan().getTransactionRecord()
+			// .getTransaction(uaContext.getId()).getSource();
+			// if (referenceTransactionSource != TransactionSource.TEST) {
+			// uaContext.getScan().getRequesterQueue().addSpiderRequest(rawTransaction,
+			// false,
+			// "Javascript: Window.open ");
+			// }
+			//
+			// }
+			//
+			// } catch (Exception e) {
+			// // TODO: handle exception
+			// }
 
 		}
 
@@ -1083,9 +1119,10 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 	private UserAgentContext bcontext = null;
 
 	/**
-	 * If a {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext} instance was
-	 * provided in the constructor, then that instance is returned. Otherwise,
-	 * an instance of {@link SimpleUserAgentContext} is created and returned.
+	 * If a {@link com.nvarghese.beowulf.common.cobra.html.UserAgentContext}
+	 * instance was provided in the constructor, then that instance is returned.
+	 * Otherwise, an instance of {@link SimpleUserAgentContext} is created and
+	 * returned.
 	 * <p>
 	 * The context returned by this method is used by local request facilities
 	 * and other parts of the renderer.
@@ -1094,8 +1131,7 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 
 		synchronized (this) {
 			if (this.bcontext == null) {
-				this
-						.warn("getUserAgentContext(): UserAgentContext not provided in constructor. Creating a simple one.");
+				this.warn("getUserAgentContext(): UserAgentContext not provided in constructor. Creating a simple one.");
 				this.bcontext = new SimpleUserAgentContext();
 			}
 			return this.bcontext;
@@ -1249,7 +1285,7 @@ public class SimpleHtmlRendererContext implements HtmlRendererContext {
 	}
 
 	@Override
-	public void scroll(final int x,final  int y) {
+	public void scroll(final int x, final int y) {
 
 		// TODO Auto-generated method stub
 

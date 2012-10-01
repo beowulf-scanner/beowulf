@@ -3,15 +3,24 @@ package com.nvarghese.beowulf.common.scan.model;
 import java.util.List;
 
 import com.google.code.morphia.annotations.Embedded;
+import com.google.code.morphia.annotations.Property;
 
 @Embedded
 public class SessionSettingScanConfigDocument {
 
+	@Property("username")
 	private String userName;
+
+	@Property("password")
 	private String password;
+
+	@Property("username_field_pattern")
 	private String usernameFieldPattern;
+
+	@Property("password_field_pattern")
 	private String passwordFieldPattern;
 
+	@Property("known_session_id_patterns")
 	private List<String> knownSessionIdPatterns;
 
 	public String getUserName() {

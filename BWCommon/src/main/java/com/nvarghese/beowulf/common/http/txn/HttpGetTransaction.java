@@ -10,8 +10,8 @@ public class HttpGetTransaction extends AbstractHttpTransaction {
 
 	public HttpGetTransaction(HttpGet get, String referer) {
 
-		super(new HttpRequestWrapper(HttpMethodType.GET, get, new UrlEncodedRequestPayload(URLEncodedUtils.parse(
-				get.getURI(), "ISO-8559-1"))), referer);
+		super(new HttpRequestWrapper(HttpMethodType.GET, get, new UrlEncodedRequestPayload(URLEncodedUtils.parse(get.getURI(), "ISO-8559-1"))),
+				referer);
 
 	}
 

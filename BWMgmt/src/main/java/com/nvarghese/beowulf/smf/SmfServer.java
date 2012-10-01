@@ -160,9 +160,9 @@ public class SmfServer {
 		// PropertyConfigurator.configure("log4j.properties");
 		SmfSettings settings = handleCommandLine(args);
 
-		logger.info("SFExecutorServer Server initializing...");
-		final SmfServer sfeServer = initializeServer(settings);
-		SmfManager.initialize(sfeServer, settings, false);
+		logger.info("SmfServer Server initializing...");
+		final SmfServer smfServer = initializeServer(settings);
+		SmfManager.initialize(smfServer, settings, false);
 
 		// add shutdown hook
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -170,15 +170,15 @@ public class SmfServer {
 			@Override
 			public void run() {
 
-				logger.info("Kill signal received for SFExecutorServer to shutdown");
-				boolean shutdown = sfeServer.shutdown();
+				logger.info("Kill signal received for SmfServer to shutdown");
+				boolean shutdown = smfServer.shutdown();
 				if (shutdown)
-					logger.info("SFExecutorServer shutdown completed gracefully");
+					logger.info("SmfServer shutdown completed gracefully");
 				else
-					logger.warn("SFExecutorServer shutdown failed. Try killing manually");
+					logger.warn("SmfServer shutdown failed. Try killing manually");
 			}
 		});
 
-		sfeServer.startServer(true);
+		smfServer.startServer(true);
 	}
 }

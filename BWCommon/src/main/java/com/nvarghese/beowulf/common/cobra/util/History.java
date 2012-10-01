@@ -231,16 +231,16 @@ public class History /* implements java.io.Serializable */{
 
 		public boolean equals(final Object obj) {
 
-			if(obj != null){
+			if (obj != null) {
 				TimedEntry other = (TimedEntry) obj;
 				return other.value.equals(this.value);
 			}
 			return false;
 		}
-		
+
 		@Override
 		public int hashCode() {
-		
+
 			return super.hashCode();
 		}
 

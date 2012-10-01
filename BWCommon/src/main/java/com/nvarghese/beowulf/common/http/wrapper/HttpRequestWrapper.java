@@ -68,8 +68,8 @@ public class HttpRequestWrapper extends HttpMessageWrapper {
 			Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, requestPayload.getContentType().getMimeType());
 			headersList.add(contentTypeHeader);
 		}
-		HttpRequest newHttpRequest = HttpTransactionFactory.createHttpRequest(method, uri,
-				headersList.toArray(new Header[0]), requestPayload.toHttpEntity());
+		HttpRequest newHttpRequest = HttpTransactionFactory.createHttpRequest(method, uri, headersList.toArray(new Header[0]),
+				requestPayload.toHttpEntity());
 		this.httpRequest = newHttpRequest;
 
 	}

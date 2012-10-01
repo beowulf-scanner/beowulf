@@ -13,10 +13,10 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 
 	static Logger logger = LoggerFactory.getLogger(WebScanDAO.class);
 
-	public WebScanDAO(Class<WebScanDocument> entityClass, Datastore ds) {
+	public WebScanDAO(Datastore ds) {
 
-		super(entityClass, ds);
-		// TODO Auto-generated constructor stub
+		super(WebScanDocument.class, ds);
+
 	}
 
 	/**

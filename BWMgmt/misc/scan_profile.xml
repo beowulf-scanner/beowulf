@@ -100,12 +100,6 @@
 
 	<!-- End Session Settings -->
 
-	<!--  Start Performance Settings -->
-	<performance_settings>
-		<max_memory_cache_size>200</max_memory_cache_size>
-	</performance_settings>
-	<!--  End Performance Settings -->
-
 	<!-- Start Test Module Settings	-->
 	<test_modules>
 		<test_module>
@@ -1105,5 +1099,5 @@
 	</test_modules>
 
 	<!-- End Test Module Settings -->
-</configuration>
+</profile>
 

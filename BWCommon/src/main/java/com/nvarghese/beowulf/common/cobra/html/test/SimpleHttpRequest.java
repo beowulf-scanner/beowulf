@@ -99,14 +99,17 @@ public class SimpleHttpRequest implements HttpRequest {
 
 		return this.readyState;
 	}
-	
-	private synchronized URL getRequestURL(){
+
+	private synchronized URL getRequestURL() {
+
 		return this.requestURL;
 	}
 
-	private synchronized void setRequestURL(URL url){
+	private synchronized void setRequestURL(URL url) {
+
 		this.requestURL = url;
 	}
+
 	public synchronized String getResponseText() {
 
 		byte[] bytes = this.responseBytes;
@@ -118,8 +121,7 @@ public class SimpleHttpRequest implements HttpRequest {
 		try {
 			return bytes == null ? null : new String(bytes, encoding);
 		} catch (UnsupportedEncodingException uee) {
-			logger.log(Level.WARNING, "getResponseText(): Charset '" + encoding
-					+ "' did not work. Retrying with ISO-8859-1.", uee);
+			logger.log(Level.WARNING, "getResponseText(): Charset '" + encoding + "' did not work. Retrying with ISO-8859-1.", uee);
 			try {
 				return new String(bytes, "ISO-8859-1");
 			} catch (UnsupportedEncodingException uee2) {
@@ -241,8 +243,7 @@ public class SimpleHttpRequest implements HttpRequest {
 	 * @param password
 	 *            The password of the request (not supported.)
 	 */
-	public void open(final String method, final URL url, boolean asyncFlag, final String userName,
-			final String password) throws IOException {
+	public void open(final String method, final URL url, boolean asyncFlag, final String userName, final String password) throws IOException {
 
 		this.abort();
 		Proxy proxy = this.proxy;
@@ -409,7 +410,7 @@ public class SimpleHttpRequest implements HttpRequest {
 	public void setRequestHeader(final String headerName, final String value) {
 
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

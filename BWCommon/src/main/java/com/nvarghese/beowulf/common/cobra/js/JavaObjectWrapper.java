@@ -189,16 +189,15 @@ public class JavaObjectWrapper extends ScriptableObject {
 			if (pinfo != null) {
 				Method setter = pinfo.getSetter();
 				if (setter == null) {
-					throw new EvaluatorException("Property '" + name + "' is not settable in "
-							+ this.classWrapper.getClassName() + ".");
+					throw new EvaluatorException("Property '" + name + "' is not settable in " + this.classWrapper.getClassName() + ".");
 				}
 				try {
 					Object actualValue;
 					actualValue = JavaScript.getInstance().getJavaObject(value, pinfo.getPropertyType());
 					setter.invoke(this.getJavaObject(), new Object[] { actualValue });
 				} catch (IllegalArgumentException iae) {
-					Exception newException = new IllegalArgumentException("Property named '" + name
-							+ "' could not be set with value " + value + ".", iae);
+					Exception newException = new IllegalArgumentException("Property named '" + name + "' could not be set with value " + value + ".",
+							iae);
 					throw new WrappedException(newException);
 				} catch (Exception err) {
 					throw new WrappedException(err);

@@ -1,6 +1,6 @@
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
-											// org.cobra_grendel.html.style.*;
+// org.cobra_grendel.html.style.*;
 import com.nvarghese.beowulf.common.cobra.html.BrowserFrame;
 import com.nvarghese.beowulf.common.cobra.html.js.Window;
 import org.w3c.dom.Document;

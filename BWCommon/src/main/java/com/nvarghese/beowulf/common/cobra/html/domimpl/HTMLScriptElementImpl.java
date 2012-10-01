@@ -201,8 +201,7 @@ public class HTMLScriptElementImpl extends HTMLElementImpl implements HTMLScript
 					} finally {
 						if (liflag) {
 							long time2 = System.currentTimeMillis();
-							logger.info("processScript(): Loaded external Javascript from URI=[" + scriptURI + "] in "
-									+ (time2 - time1) + " ms.");
+							logger.info("processScript(): Loaded external Javascript from URI=[" + scriptURI + "] in " + (time2 - time1) + " ms.");
 						}
 					}
 					baseLineNumber = 1;
@@ -214,9 +213,8 @@ public class HTMLScriptElementImpl extends HTMLElementImpl implements HTMLScript
 				try {
 					Scriptable scope = (Scriptable) doc.getUserData(Executor.SCOPE_KEY);
 					if (scope == null) {
-						throw new IllegalStateException(
-								"Scriptable (scope) instance was expected to be keyed as UserData to document using "
-										+ Executor.SCOPE_KEY);
+						throw new IllegalStateException("Scriptable (scope) instance was expected to be keyed as UserData to document using "
+								+ Executor.SCOPE_KEY);
 					}
 					try {
 						long time1 = liflag ? System.currentTimeMillis() : 0;
@@ -226,12 +224,11 @@ public class HTMLScriptElementImpl extends HTMLElementImpl implements HTMLScript
 						ctx.evaluateString(scope, text, scriptURI, baseLineNumber, null);
 						if (liflag) {
 							long time2 = System.currentTimeMillis();
-							logger.info("addNotify(): Evaluated (or attempted to evaluate) Javascript in "
-									+ (time2 - time1) + " ms.");
+							logger.info("addNotify(): Evaluated (or attempted to evaluate) Javascript in " + (time2 - time1) + " ms.");
 						}
 					} catch (EcmaError ecmaError) {
-						logger.log(Level.WARNING, "Javascript error at " + ecmaError.getSourceName() + ":"
-								+ ecmaError.getLineNumber() + ": " + ecmaError.getMessage(), ecmaError);
+						logger.log(Level.WARNING, "Javascript error at " + ecmaError.getSourceName() + ":" + ecmaError.getLineNumber() + ": "
+								+ ecmaError.getMessage(), ecmaError);
 					} catch (Throwable err) {
 						logger.log(Level.WARNING, "Unable to evaluate Javascript code", err);
 					}

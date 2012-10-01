@@ -26,15 +26,15 @@ public class HTMLOptionElementImpl extends HTMLElementImpl implements HTMLOption
 
 		Object parentElement = this.getParentNode();
 		HTMLFormElement parentFormElement = null;
-		
-		while(true) {			
-			if(parentElement instanceof HTMLFormElement) {
+
+		while (true) {
+			if (parentElement instanceof HTMLFormElement) {
 				parentFormElement = (HTMLFormElement) parentElement;
 				break;
-			} else if(parentElement instanceof HTMLElement) {
+			} else if (parentElement instanceof HTMLElement) {
 				break;
 			} else {
-				parentElement = ((HTMLElementImpl)parentElement).getParentNode();
+				parentElement = ((HTMLElementImpl) parentElement).getParentNode();
 			}
 		}
 		return parentFormElement;

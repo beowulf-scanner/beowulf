@@ -18,10 +18,10 @@ public interface RequestPayload {
 	 * @return
 	 */
 	public byte[] getBody();
-	
 
 	/**
 	 * Get the content type
+	 * 
 	 * @return
 	 */
 	public ContentType getContentType();

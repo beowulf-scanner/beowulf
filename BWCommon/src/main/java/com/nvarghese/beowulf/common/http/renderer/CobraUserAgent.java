@@ -13,7 +13,7 @@ import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
  * This is used by HttpTransaction and should not be used by itself unless you
  * really know what you are doing. It may go away in the future.
  * 
- *  
+ * 
  */
 public class CobraUserAgent implements UserAgentContext {
 
@@ -21,7 +21,7 @@ public class CobraUserAgent implements UserAgentContext {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private String id;
 	private boolean enableScripting;
 	/*
@@ -32,7 +32,7 @@ public class CobraUserAgent implements UserAgentContext {
 	 * event-dispatching thread.
 	 */
 	private boolean renderingMode;
-	
+
 	/* Purpose is to track ajax request state */
 	private transient List<HttpRequest> requests;
 
@@ -47,20 +47,20 @@ public class CobraUserAgent implements UserAgentContext {
 	public HttpRequest createHttpRequest() {
 
 		HttpRequest request = new CobraHttpRequest(this);
-		synchronized(requests) {
+		synchronized (requests) {
 			requests.add(request);
 		}
 		return request;
 	}
-	
+
 	public boolean removeHttpRequest(HttpRequest request) {
-		
-		boolean removed = false;		
-		
+
+		boolean removed = false;
+
 		synchronized (requests) {
-			removed = requests.remove(request); 
+			removed = requests.remove(request);
 		}
-		
+
 		return removed;
 	}
 
@@ -183,24 +183,24 @@ public class CobraUserAgent implements UserAgentContext {
 
 		return this.renderingMode;
 	}
-	
+
 	/**
 	 * Inspects the active http requests and look for their state
+	 * 
 	 * @return
 	 */
 	public boolean isRendering() {
-		
+
 		List<HttpRequest> reqs = new ArrayList<HttpRequest>();
-		
+
 		synchronized (requests) {
 			reqs.addAll(requests);
 		}
-		
-		for(HttpRequest r: reqs) {
-			if(!(r.getReadyState() == HttpRequest.STATE_UNINITIALIZED) && 
-					!(r.getReadyState() == HttpRequest.STATE_COMPLETE)) {
+
+		for (HttpRequest r : reqs) {
+			if (!(r.getReadyState() == HttpRequest.STATE_UNINITIALIZED) && !(r.getReadyState() == HttpRequest.STATE_COMPLETE)) {
 				return true;
-			}	
+			}
 		}
 		return false;
 	}

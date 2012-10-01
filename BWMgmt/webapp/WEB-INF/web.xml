@@ -1,5 +1,14 @@
 <web-app id="BeowulfExecutorSystem">
-	<display-name>Beowulf Executor System</display-name>
+	<display-name>Beowulf Management System</display-name>
 	
+	<context-param>
+		<param-name>bw-common-conf-filename</param-name>
+		<param-value>webapp/WEB-INF/bw-common.conf</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>com.nvarghese.beowulf.common.BeowulfCommonConfigManager</listener-class>
+	</listener>
+		
 	
 </web-app>

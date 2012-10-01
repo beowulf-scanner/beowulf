@@ -3,26 +3,39 @@ package com.nvarghese.beowulf.common.scan.model;
 import java.util.List;
 
 import com.google.code.morphia.annotations.Embedded;
+import com.google.code.morphia.annotations.Property;
 
 @Embedded
 public class SettingScanConfigDocument {
 
+	@Property("response_code_override_threshold")
 	private long responseCodeOverideThreshold;
+
+	@Property("response_code_override_test_directories")
 	private boolean responseCodeOverideTestDirectories;
+
+	@Property("response_code_override_use_automatic")
 	private boolean responseCodeOverideUseAutomatic;
 
+	@Property("base_uris")
 	private List<String> baseURIList;
 
+	@Property("forbidden_param_names")
 	private List<String> forbiddenParamNames;
 
+	@Property("irrelevant_param_names")
 	private List<String> irrelevantParamNames;
 
+	@Property("forbidden_mime_types")
 	private List<String> forbiddenMimeTypes;
 
+	@Property("url_blacklist_patterns")
 	private List<String> urlBlacklistPatterns;
 
-	private List<String> urlWhiltelistPatterns;
+	@Property("url_whitelist_patterns")
+	private List<String> urlWhitelistPatterns;
 
+	@Property("imported_spidered_uri_list")
 	private List<String> importedSpideredURIList;
 
 	public long getResponseCodeOverideThreshold() {
@@ -105,14 +118,14 @@ public class SettingScanConfigDocument {
 		this.urlBlacklistPatterns = urlBlacklistPatterns;
 	}
 
-	public List<String> getUrlWhiltelistPatterns() {
+	public List<String> getUrlWhitelistPatterns() {
 
-		return urlWhiltelistPatterns;
+		return urlWhitelistPatterns;
 	}
 
-	public void setUrlWhiltelistPatterns(List<String> urlWhiltelistPatterns) {
+	public void setUrlWhitelistPatterns(List<String> urlWhitelistPatterns) {
 
-		this.urlWhiltelistPatterns = urlWhiltelistPatterns;
+		this.urlWhitelistPatterns = urlWhitelistPatterns;
 	}
 
 	public List<String> getImportedSpideredURIList() {
