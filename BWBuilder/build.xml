@@ -16,6 +16,7 @@
 			<fileset dir="${bw-controller.root}" includes="build.xml" />
 			<fileset dir="${bw-categ.root}" includes="build.xml" />
 			<fileset dir="${bw-executor.root}" includes="build.xml" />
+			<fileset dir="${bw-mgmt.root}" includes="build.xml" />
 			<fileset dir="${bw-common.root}" includes="build.xml" />			
 		</subant>
 	</target>

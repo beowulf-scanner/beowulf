@@ -1,4 +1,4 @@
-package com.nvarghese.beowulf.categ;
+package com.nvarghese.beowulf.scs;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -10,7 +10,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CategServerSettings {
+public class ScsServerSettings {
 
 	private PropertiesConfiguration propertiesConfiguration;
 
@@ -39,23 +39,23 @@ public class CategServerSettings {
 	private static final String BWCATEG__ZK__GROUP_NODE = "bw-categ.zookeeper.group_node_name";
 	private static final String BWCATEG__ZK__SERVER_LIST = "bw-categ.zookeeper.servers";
 
-	static Logger logger = LoggerFactory.getLogger(CategServerSettings.class);
+	static Logger logger = LoggerFactory.getLogger(ScsServerSettings.class);
 
-	public CategServerSettings() throws ConfigurationException, URISyntaxException {
+	public ScsServerSettings() throws ConfigurationException, URISyntaxException {
 
-		URL u = CategServerSettings.class.getClassLoader().getResource("bw-categorizer.conf");
+		URL u = ScsServerSettings.class.getClassLoader().getResource("bw-categorizer.conf");
 		propertiesConfiguration = new PropertiesConfiguration(u);
 		initialize();
 	}
 
-	public CategServerSettings(String categServerConfigFileName) throws ConfigurationException, URISyntaxException {
+	public ScsServerSettings(String categServerConfigFileName) throws ConfigurationException, URISyntaxException {
 
-		propertiesConfiguration = new PropertiesConfiguration(CategServerSettings.class.getClassLoader().getResource(
+		propertiesConfiguration = new PropertiesConfiguration(ScsServerSettings.class.getClassLoader().getResource(
 				categServerConfigFileName));
 		initialize();
 	}
 
-	public CategServerSettings(File categServerConfigFilePath) throws ConfigurationException, URISyntaxException {
+	public ScsServerSettings(File categServerConfigFilePath) throws ConfigurationException, URISyntaxException {
 
 		propertiesConfiguration = new PropertiesConfiguration(categServerConfigFilePath);
 		initialize();

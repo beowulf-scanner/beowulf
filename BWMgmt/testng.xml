@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="BW-Mgmt Test Suite" verbose="1">
+
+
+	<test name="BW-Mgmt Unit Tests">
+		<packages>
+			<package name="test.nvarghese.beowulf.smf.*" />
+		</packages>
+	</test>
+	
+	<test name="BW-Mgmt Integration Tests">
+		<packages>
+			<package name="integration.beowulf.smf.*" />
+		</packages>
+	</test>
+
+</suite>

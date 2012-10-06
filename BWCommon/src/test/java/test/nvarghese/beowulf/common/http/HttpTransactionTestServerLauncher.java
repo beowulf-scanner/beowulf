@@ -23,7 +23,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpServerConnection;
 import org.apache.http.HttpStatus;
 import org.apache.http.MethodNotSupportedException;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.ContentProducer;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.EntityTemplate;
@@ -31,7 +30,6 @@ import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.DefaultConnectionReuseStrategy;
 import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.impl.DefaultHttpServerConnection;
-import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.params.CoreProtocolPNames;
@@ -129,7 +127,7 @@ public class HttpTransactionTestServerLauncher {
 			if (request instanceof HttpEntityEnclosingRequest) {
 				HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
 				byte[] entityContent = EntityUtils.toByteArray(entity);
-				logger.debug("Incoming entity content (bytes): {}", entityContent.length);
+				logger.info("Incoming entity enclosed request content (bytes): {}", entityContent.length);
 			}
 
 			if (target.endsWith("cookie_test.html")) {

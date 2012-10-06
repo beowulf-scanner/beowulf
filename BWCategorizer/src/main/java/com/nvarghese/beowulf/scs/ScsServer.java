@@ -1,4 +1,4 @@
-package com.nvarghese.beowulf.categ;
+package com.nvarghese.beowulf.scs;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,14 +15,14 @@ import org.eclipse.jetty.xml.XmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CategServer {
+public class ScsServer {
 
 	private Server jettyServer;
 
 	/* logger */
-	static Logger logger = LoggerFactory.getLogger(CategServer.class);
+	static Logger logger = LoggerFactory.getLogger(ScsServer.class);
 
-	public static CategServer initializeServer(CategServerSettings settings) throws Exception {
+	public static ScsServer initializeServer(ScsServerSettings settings) throws Exception {
 
 		Resource jettyEnvXml = findAndGetJettyResource(settings);
 		// InputStream in =
@@ -31,7 +31,7 @@ public class CategServer {
 		XmlConfiguration configuration = new XmlConfiguration(jettyEnvXml.getInputStream());
 		logger.debug("Ratify configured with jetty web settings");
 
-		CategServer server = new CategServer();
+		ScsServer server = new ScsServer();
 
 		server.jettyServer = (Server) configuration.configure();
 		WebAppContext context = new WebAppContext();
@@ -54,7 +54,7 @@ public class CategServer {
 
 	}
 
-	private static Resource findAndGetJettyResource(CategServerSettings settings) throws MalformedURLException,
+	private static Resource findAndGetJettyResource(ScsServerSettings settings) throws MalformedURLException,
 			IOException {
 
 		Resource jettyEnvXml = null;
@@ -102,10 +102,10 @@ public class CategServer {
 		return jettyServer;
 	}
 
-	private static CategServerSettings handleCommandLine(String[] args) {
+	private static ScsServerSettings handleCommandLine(String[] args) {
 
 		ProgramOptions options = new ProgramOptions();
-		CategServerSettings settings = null;
+		ScsServerSettings settings = null;
 		try {
 			if (args.length > 0) {
 				CommandLine commands = options.parseArguments(args);
@@ -117,7 +117,7 @@ public class CategServer {
 				} else if (commands.hasOption(ProgramOptions.CONFIG_FILE_OPTION)) {
 					String filename = commands.getOptionValue(ProgramOptions.CONFIG_FILE_OPTION);
 					try {
-						settings = new CategServerSettings(new File(filename));
+						settings = new ScsServerSettings(new File(filename));
 					} catch (ConfigurationException e) {
 						logger.error("Error in config file: " + e.getMessage());
 						System.exit(0);
@@ -129,7 +129,7 @@ public class CategServer {
 
 			} else {
 				/* default */
-				settings = new CategServerSettings();
+				settings = new ScsServerSettings();
 			}
 		} catch (ParseException pe) {
 			logger.error("ParseException thrown: " + pe.getMessage());
@@ -162,11 +162,11 @@ public class CategServer {
 	public static void main(String[] args) throws Exception {
 
 		// PropertyConfigurator.configure("log4j.properties");
-		CategServerSettings settings = handleCommandLine(args);
+		ScsServerSettings settings = handleCommandLine(args);
 
-		logger.info("Categ Server initializing...");
-		final CategServer categServer = initializeServer(settings);
-		CategManager.initialize(categServer, settings, false);
+		logger.info("Scs Server initializing...");
+		final ScsServer scsServer = initializeServer(settings);
+		ScsManager.initialize(scsServer, settings, false);
 
 		// add shutdown hook
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -174,15 +174,15 @@ public class CategServer {
 			@Override
 			public void run() {
 
-				logger.info("Kill signal received for CategServer to shutdown");
-				boolean shutdown = categServer.shutdown();
+				logger.info("Kill signal received for ScsServer to shutdown");
+				boolean shutdown = scsServer.shutdown();
 				if (shutdown)
-					logger.info("CategServer shutdown completed gracefully");
+					logger.info("ScsServer shutdown completed gracefully");
 				else
-					logger.warn("CategServer shutdown failed. Try killing manually");
+					logger.warn("ScsServer shutdown failed. Try killing manually");
 			}
 		});
 
-		categServer.startServer(true);
+		scsServer.startServer(true);
 	}
 }

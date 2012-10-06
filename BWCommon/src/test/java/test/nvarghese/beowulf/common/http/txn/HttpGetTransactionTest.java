@@ -7,8 +7,6 @@ import junit.framework.Assert;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.impl.cookie.BasicClientCookie;
-import org.apache.http.impl.cookie.BrowserCompatSpec;
-import org.codehaus.jackson.map.introspect.BasicClassIntrospector;
 import org.testng.annotations.Test;
 
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
@@ -17,7 +15,7 @@ import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
 
 public class HttpGetTransactionTest {
 
-	@Test(groups = "BW_http_txn_test")
+	@Test(groups = "BW_http_get_txn_test")
 	public void testSimpleGetRequest() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/index.html");
@@ -30,7 +28,7 @@ public class HttpGetTransactionTest {
 
 	}
 
-	@Test(groups = "BW_http_txn_test")
+	@Test(groups = "BW_http_get_txn_test")
 	public void testSimpleGetCookieRequest() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/cookie_test.html");
@@ -46,7 +44,7 @@ public class HttpGetTransactionTest {
 
 	}
 
-	@Test(groups = "BW_http_txn_test")
+	@Test(groups = "BW_http_get_txn_test")
 	public void testAddCookieInRequest() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/cookie_added.html");

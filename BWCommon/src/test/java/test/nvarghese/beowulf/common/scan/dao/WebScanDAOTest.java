@@ -43,6 +43,16 @@ public class WebScanDAOTest {
 
 	}
 
+	@Test
+	public void testNonExistingWebScanDocument() {
+
+		WebScanDAO webScanDAO = new WebScanDAO(ds);
+
+		ObjectId id = new ObjectId();
+		WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(id);
+		Assert.assertNull(webScanDocument);
+	}
+
 	@DataProvider(/* parallel=false */)
 	public Object[][] feedWebScanDocuments() {
 

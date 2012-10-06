@@ -1,0 +1,5 @@
+Some mongoDB query tips
+----------------------------
+
+1. To extract specific test module info
+> db.scanconfigs.findOne({},{"test_modules.2":"1"})

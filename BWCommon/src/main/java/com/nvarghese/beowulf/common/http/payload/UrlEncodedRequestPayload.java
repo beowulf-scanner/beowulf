@@ -84,7 +84,7 @@ public class UrlEncodedRequestPayload implements RequestPayload {
 	@Override
 	public byte[] getBody() {
 
-		if (Charset.isSupported(charset)) {
+		if (charset != null && Charset.isSupported(charset)) {
 			return URLEncodedUtils.format(mappedParameters.values(), Charset.forName(charset)).getBytes();
 		} else {
 			return URLEncodedUtils.format(mappedParameters.values(), Charset.defaultCharset()).getBytes();

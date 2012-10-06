@@ -1,4 +1,4 @@
-package com.nvarghese.beowulf.categ;
+package com.nvarghese.beowulf.scs;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;

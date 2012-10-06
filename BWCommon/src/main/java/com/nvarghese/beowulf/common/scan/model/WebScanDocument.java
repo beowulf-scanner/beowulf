@@ -17,6 +17,7 @@ import com.nvarghese.beowulf.common.model.AbstractDocument;
 public class WebScanDocument extends AbstractDocument {
 
 	private String bwControllerIPAddress;
+	private int bwControllerPort;
 
 	/* Scan status copied from masterscan status */
 	private String scanPhase;
@@ -50,7 +51,7 @@ public class WebScanDocument extends AbstractDocument {
 	private int pendingJobs;
 	private int percentageDone;
 
-	private String scanDBPath;
+	private String txnDbName;
 
 	// @Reference
 	// private ScanReportDocument reportDocument;
@@ -68,7 +69,7 @@ public class WebScanDocument extends AbstractDocument {
 		setCreatedOn(new Date());
 		comments = new ArrayList<String>();
 		baseUris = new ArrayList<String>();
-		scanDBPath = "";
+		txnDbName = "";
 		abortRequested = false;
 		scanRunning = false;
 		scanPhase = "";
@@ -82,8 +83,6 @@ public class WebScanDocument extends AbstractDocument {
 		lastError = "";
 		setAbortingReason("");
 
-		// reportDocument = (ScanReportDocument)
-		// MongoDocumentFactory.createDocument(MongoDocumentType.SCAN_REPORT_DOCUMENT);
 	}
 
 	@PrePersist
@@ -91,6 +90,26 @@ public class WebScanDocument extends AbstractDocument {
 
 		setLastUpdated(new Date());
 
+	}
+
+	public String getBwControllerIPAddress() {
+
+		return bwControllerIPAddress;
+	}
+
+	public void setBwControllerIPAddress(String bwControllerIPAddress) {
+
+		this.bwControllerIPAddress = bwControllerIPAddress;
+	}
+
+	public int getBwControllerPort() {
+
+		return bwControllerPort;
+	}
+
+	public void setBwControllerPort(int bwControllerPort) {
+
+		this.bwControllerPort = bwControllerPort;
 	}
 
 	public boolean isAbortRequested() {
@@ -171,16 +190,6 @@ public class WebScanDocument extends AbstractDocument {
 	public void setScanPhase(String scanPhase) {
 
 		this.scanPhase = scanPhase;
-	}
-
-	public String getScanDBPath() {
-
-		return scanDBPath;
-	}
-
-	public void setScanDBPath(String dbPath) {
-
-		this.scanDBPath = dbPath;
 	}
 
 	public Date getEstimatedTime() {
@@ -336,6 +345,16 @@ public class WebScanDocument extends AbstractDocument {
 	public int getPauseReasonId() {
 
 		return pauseReasonId;
+	}
+
+	public String getTxnDbName() {
+
+		return txnDbName;
+	}
+
+	public void setTxnDbName(String txnDbName) {
+
+		this.txnDbName = txnDbName;
 	}
 
 }

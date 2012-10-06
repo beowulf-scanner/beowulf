@@ -1,53 +1,71 @@
-package com.nvarghese.beowulf.categ;
+package com.nvarghese.beowulf.scs;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.code.morphia.Datastore;
+import com.google.code.morphia.Morphia;
+import com.mongodb.Mongo;
+import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
 import com.nvarghese.beowulf.common.exception.ServerSettingException;
 import com.nvarghese.beowulf.common.zookeeper.ZkClientRunner;
 
-public class CategManager {
+public class ScsManager {
 
-	private CategServer categServer;
+	private ScsServer scsServer;
 	private ZkClientRunner zkClientRunner;
-	private CategServerSettings settings;
+	private ScsServerSettings settings;
+	private Datastore ds;
 
 	private static AtomicBoolean initialized = new AtomicBoolean(false);
-	private static volatile CategManager instance;
+	private static volatile ScsManager instance;
 
-	static Logger logger = LoggerFactory.getLogger(CategManager.class);
+	static Logger logger = LoggerFactory.getLogger(ScsManager.class);
 
-	private CategManager() {
+	private ScsManager() {
 
 	}
 
-	public static void initialize(CategServer categServer, CategServerSettings settings, boolean override) {
+	public static void initialize(ScsServer scsServer, ScsServerSettings settings, boolean override) {
 
-		synchronized (CategManager.class) {
-			
+		synchronized (ScsManager.class) {
+
 			if (instance == null || override == true) {
-				
-				instance = new CategManager();
-				instance.categServer = categServer;
+
+				instance = new ScsManager();
+				instance.scsServer = scsServer;
 				instance.settings = settings;
-				
-				//start zookeeper service 
+
+				instance.initializeDatastore();
+				// start zookeeper service
 				instance.notifyZookeeper();
-				
+
 				initialized.set(true);
 			}
 		}
 
 	}
 
+	private void initializeDatastore() {
+
+		Mongo mongo;
+		try {
+			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
+			ds = new Morphia().createDatastore(mongo, BeowulfCommonConfigManager.getDbName());
+		} catch (ConfigurationException e) {
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
+		}
+
+	}
+
 	private void notifyZookeeper() {
 
-		String instanceName = settings.getIpAddress() + ":"
-				+ Integer.valueOf(categServer.getJettyServer().getConnectors()[0].getPort());
+		String instanceName = settings.getIpAddress() + ":" + Integer.valueOf(scsServer.getJettyServer().getConnectors()[0].getPort());
 		String zkNodeName = settings.getZkGroupNode();
 		zkClientRunner = new ZkClientRunner(settings.getZkServers(), instanceName, zkNodeName);
 		try {
@@ -67,8 +85,7 @@ public class CategManager {
 			exists = zkClientRunner.checkMemberInGroup();
 
 			if (exists) {
-				String message = "Server already joined to " + zkClientRunner.getGroupName()
-						+ " in zookeeper. Try changing port number";
+				String message = "Server already joined to " + zkClientRunner.getGroupName() + " in zookeeper. Try changing port number";
 				throw new ServerSettingException(message);
 			}
 
@@ -92,17 +109,17 @@ public class CategManager {
 		}
 	}
 
-	public static CategManager getInstance() {
+	public static ScsManager getInstance() {
 
 		return instance;
 	}
 
-	public CategServer getCategServer() {
+	public ScsServer getScsServer() {
 
-		return categServer;
+		return scsServer;
 	}
 
-	public CategServerSettings getSettings() {
+	public ScsServerSettings getSettings() {
 
 		return settings;
 	}
@@ -110,6 +127,11 @@ public class CategManager {
 	public static boolean isInitialized() {
 
 		return initialized.get();
+	}
+
+	public Datastore getDataStore() {
+
+		return ds;
 	}
 
 }

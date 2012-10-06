@@ -1,5 +1,19 @@
 <web-app id="BeowulfControllerSystem">
 	<display-name>Beowulf Controller System</display-name>
 	
+		<context-param>
+		<param-name>bw-common-conf-filename</param-name>
+		<param-value>webapp/WEB-INF/bw-common.conf</param-value>
+	</context-param>
+	<context-param>
+		<param-name>queue-conf-filename</param-name>
+		<param-value>queues.conf</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>com.nvarghese.beowulf.sfc.SfcQueueManager</listener-class>
+	</listener>
+	
+	
 	
 </web-app>

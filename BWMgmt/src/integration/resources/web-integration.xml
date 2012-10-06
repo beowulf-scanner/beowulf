@@ -1,0 +1,33 @@
+<web-app id="BeowulfExecutorSystem">
+	<display-name>Beowulf Management System</display-name>
+	
+	<context-param>
+		<param-name>bw-common-conf-filename</param-name>
+		<param-value>webapp/WEB-INF/bw-common.conf</param-value>
+	</context-param>
+		<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	
+	
+<!-- 	<listener> -->
+<!-- 		<listener-class>com.nvarghese.beowulf.common.BeowulfCommonConfigManager</listener-class> -->
+<!-- 	</listener> -->
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+		<servlet>
+		<servlet-name>BwSmfRestApi</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BwSmfRestApi</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+	
+	
+		
+	
+</web-app>

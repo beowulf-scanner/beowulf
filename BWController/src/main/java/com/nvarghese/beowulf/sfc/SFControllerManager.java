@@ -3,10 +3,15 @@ package com.nvarghese.beowulf.sfc;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.code.morphia.Datastore;
+import com.google.code.morphia.Morphia;
+import com.mongodb.Mongo;
+import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
 import com.nvarghese.beowulf.common.exception.ServerSettingException;
 import com.nvarghese.beowulf.common.zookeeper.ZkClientRunner;
 
@@ -15,6 +20,7 @@ public class SFControllerManager {
 	private SFControllerServer controllerServer;
 	private ZkClientRunner zkClientRunner;
 	private SFControllerSettings settings;
+	private Datastore ds;
 
 	private static AtomicBoolean initialized = new AtomicBoolean(false);
 	private static volatile SFControllerManager instance;
@@ -33,6 +39,7 @@ public class SFControllerManager {
 				instance.controllerServer = controllerServer;
 				instance.settings = settings;
 
+				instance.initializeDatastore();
 				// start zookeeper service
 				instance.notifyZookeeper();
 
@@ -41,6 +48,19 @@ public class SFControllerManager {
 		}
 
 	}
+	
+	private void initializeDatastore() {
+
+		Mongo mongo;
+		try {
+			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
+			ds = new Morphia().createDatastore(mongo, BeowulfCommonConfigManager.getDbName());
+		} catch (ConfigurationException e) {
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
+		}
+
+	}
+
 
 	private void notifyZookeeper() {
 
@@ -95,7 +115,7 @@ public class SFControllerManager {
 		return instance;
 	}
 
-	public SFControllerServer getCategServer() {
+	public SFControllerServer getControllerServer() {
 
 		return controllerServer;
 	}
@@ -108,6 +128,11 @@ public class SFControllerManager {
 	public static boolean isInitialized() {
 
 		return initialized.get();
+	}
+	
+	public Datastore getDataStore() {
+
+		return ds;
 	}
 
 }

@@ -51,6 +51,7 @@
 		<dependency org="org.mozilla" name="rhino" rev="1.7R3"/>
 
 		<!-- resteasy server/client dependencies -->
+		<dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.3.4.Final"/>
 		<dependency org="org.jboss.resteasy" name="resteasy-jaxrs" rev="2.3.4.Final" />
 		<dependency org="org.jboss.resteasy" name="resteasy-jaxb-provider" rev="2.3.4.Final" />
 		<dependency org="org.jboss.resteasy" name="resteasy-jettison-provider" rev="2.3.4.Final" />
@@ -59,7 +60,10 @@
 		<!-- hornetQ/JMS client(only) dependencies -->
 		<dependency org="org.hornetq" name="hornetq-jms-client" rev="2.2.19.Final" />
 		<dependency org="org.hornetq" name="hornetq-core-client" rev="2.2.19.Final" />
+		<dependency org="org.jboss.netty" name="netty" rev="3.2.6.Final" />
 		<dependency org="javax.jms" name="jms" rev="1.1" />
+		<!-- <dependency org="jboss" name="jnp-client" rev="4.2.2.GA"/> -->
+		<dependency org="org.jboss.naming" name="jnpserver" rev="5.0.3.GA"/>
 
 		<!-- zookeeper dependencies -->
 		<dependency org="org.apache.zookeeper" name="zookeeper" rev="3.3.6" />
@@ -73,6 +77,10 @@
 		<dependency org="commons-codec" name="commons-codec" rev="1.4" />
 		<dependency org="commons-cli" name="commons-cli" rev="1.2" />
 		<dependency org="commons-io" name="commons-io" rev="2.1" />
+		<dependency org="joda-time" name="joda-time" rev="1.6.2"/>
+		
+		<dependency org="org.msgpack" name="msgpack" rev="0.6.6"/>
+		<dependency org="org.msgpack" name="msgpack-rpc" rev="0.7.0"/>
 
 		<!-- logging libraries -->
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" />

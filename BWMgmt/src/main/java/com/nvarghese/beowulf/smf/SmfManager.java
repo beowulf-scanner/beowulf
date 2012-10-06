@@ -2,6 +2,10 @@ package com.nvarghese.beowulf.smf;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.configuration.ConfigurationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
@@ -15,6 +19,8 @@ public class SmfManager {
 
 	private static AtomicBoolean initialized = new AtomicBoolean(false);
 	private static volatile SmfManager instance;
+
+	static Logger logger = LoggerFactory.getLogger(SmfManager.class);
 
 	private SmfManager() {
 
@@ -36,8 +42,13 @@ public class SmfManager {
 
 	private void initializeDatastore() {
 
-		Mongo mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
-		ds = new Morphia().createDatastore(mongo, BeowulfCommonConfigManager.getDbName());
+		Mongo mongo;
+		try {
+			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
+			ds = new Morphia().createDatastore(mongo, BeowulfCommonConfigManager.getDbName());
+		} catch (ConfigurationException e) {
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
+		}
 
 	}
 

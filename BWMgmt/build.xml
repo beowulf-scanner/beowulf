@@ -13,7 +13,7 @@
 	<property name="dist.dir" location="dist" />
 	<property name="lib.dir" location="${bw-smf.root}/lib" />
 
-	<property name="testng.output.dir" value="test-outputs" />
+	<property name="testng.output.dir" value="test-output" />
 
 	<property name="src.dir" value="src/main/java" />
 	<property name="test.dir" value="src/test/java" />

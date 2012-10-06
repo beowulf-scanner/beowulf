@@ -1,5 +1,17 @@
 <web-app id="BeowulfCategSystem">
 	<display-name>Beowulf Categorizer System</display-name>
+		<context-param>
+		<param-name>bw-common-conf-filename</param-name>
+		<param-value>webapp/WEB-INF/bw-common.conf</param-value>
+	</context-param>
+	<context-param>
+		<param-name>queue-conf-filename</param-name>
+		<param-value>queues.conf</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>com.nvarghese.beowulf.scs.ScsQueueManager</listener-class>
+	</listener>
 	
 	
 </web-app>

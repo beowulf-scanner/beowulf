@@ -1,6 +1,7 @@
 package com.nvarghese.beowulf.common;
 
 import java.io.File;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,20 @@ public class BeowulfCommonConfigManager implements ServletContextListener {
 
 	public BeowulfCommonConfigManager() {
 
-		propertiesConfiguration = new PropertiesConfiguration();
 	}
 
 	public static void initialize(String filename) throws ConfigurationException {
 
-		propertiesConfiguration = new PropertiesConfiguration(new File(filename));
+		File file = new File(filename);
+		if (file.exists()) {
+			logger.info("Found the configuration file for bw-common library");
+			propertiesConfiguration = new PropertiesConfiguration(new File(filename));
+		} else {
+			logger.info("Trying to find the bw-common configuration resource using class loader");
+			URL url = BeowulfCommonConfigManager.class.getClassLoader().getResource(filename);
+			logger.info("Found the configuration file for bw-common library at `{}`", url);
+			propertiesConfiguration = new PropertiesConfiguration(url);
+		}
 
 	}
 
@@ -43,10 +52,26 @@ public class BeowulfCommonConfigManager implements ServletContextListener {
 
 	public static String getDbName() {
 
+		if (propertiesConfiguration == null) {
+			try {
+				initialize();
+			} catch (ConfigurationException e) {
+				logger.error("Failed to initialize bw-common.", e);
+			}
+		}
+
 		return propertiesConfiguration.getString(BWCOMMON__DB__NAME, "beowulfDB");
 	}
 
 	public static List<ServerAddress> getDbServers() throws ConfigurationException {
+
+		if (propertiesConfiguration == null) {
+			try {
+				initialize();
+			} catch (ConfigurationException e) {
+				logger.error("Failed to initialize bw-common.", e);
+			}
+		}
 
 		List<String> addrs = propertiesConfiguration.getList(BWCOMMON__DB__SERVER_LIST);
 		List<ServerAddress> dbServers = new ArrayList<ServerAddress>();
@@ -76,8 +101,6 @@ public class BeowulfCommonConfigManager implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
-
-		
 
 	}
 

@@ -94,6 +94,7 @@
 					<attribute name="Class-Path" value="${jar.classpath.final}" />
 					<attribute name="Build-Date" value="${TODAY}" />
 				</manifest>
+				<fileset dir="${src.resources.dir}" />
 			</jar>
 		</sequential>
 	</macrodef>

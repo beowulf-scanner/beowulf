@@ -2,14 +2,18 @@ package com.nvarghese.beowulf.common.http.txn;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.Authenticator.RequestorType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -22,9 +26,12 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicStatusLine;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,11 +39,15 @@ import com.nvarghese.beowulf.common.http.client.HttpClientFactory;
 import com.nvarghese.beowulf.common.http.client.HttpClientUtil;
 import com.nvarghese.beowulf.common.http.payload.MultipartEncodedRequestPayload;
 import com.nvarghese.beowulf.common.http.payload.RequestPayload;
+import com.nvarghese.beowulf.common.http.payload.RequestPayloadUtils;
 import com.nvarghese.beowulf.common.http.payload.UrlEncodedRequestPayload;
 import com.nvarghese.beowulf.common.http.wrapper.HttpRequestWrapper;
 import com.nvarghese.beowulf.common.http.wrapper.HttpResponseWrapper;
 
 public abstract class AbstractHttpTransaction {
+
+	private ObjectId objId;
+	private ObjectId refererTxnObjId;
 
 	private HttpRequestWrapper httpRequestWrapper;
 	private HttpResponseWrapper httpResponseWrapper;
@@ -48,19 +59,109 @@ public abstract class AbstractHttpTransaction {
 	private String referer;
 
 	protected AtomicBoolean payloadChanged;
+	protected AtomicBoolean saved;
 
 	/* logger */
-	static transient Logger logger = LoggerFactory.getLogger(AbstractHttpTransaction.class);
+	static Logger logger = LoggerFactory.getLogger(AbstractHttpTransaction.class);
+
+	public AbstractHttpTransaction() {
+
+		super();
+		payloadChanged = new AtomicBoolean(false);
+		responseReady = new AtomicBoolean(false);
+		saved = new AtomicBoolean(false);
+	}
 
 	public AbstractHttpTransaction(HttpRequestWrapper requestWrapper, String referer) {
 
+		this();
 		this.cookieStore = new BasicCookieStore();
 		this.httpRequestWrapper = requestWrapper;
 		this.referer = referer;
 
-		payloadChanged = new AtomicBoolean(false);
-		responseReady = new AtomicBoolean(false);
+	}
 
+	@SuppressWarnings("unchecked")
+	public HttpTxnDocument toHttpTxnDocument() {
+
+		updateRequestPayload();
+
+		HttpTxnDocument txnDocument = new HttpTxnDocument();
+
+		txnDocument.setRequestMethod(httpRequestWrapper.getMethod());
+		txnDocument.setRequestURI(getURI().toString());
+		txnDocument.setRequestHeaders((List<BasicHeader>) httpRequestWrapper.getHeaders());
+		txnDocument.setRequestPayload(RequestPayloadUtils.serialize(httpRequestWrapper.getRequestPayload()));
+		txnDocument.setPayloadChanged(payloadChanged.get());
+		txnDocument.setCookieStore(cookieStore);
+		txnDocument.setRefererTxnObjId(refererTxnObjId);
+		txnDocument.setReferer(referer);
+		txnDocument.setResponseReady(responseReady.get());
+		if (responseReady.get()) {
+			txnDocument.setResponseStatusLine((BasicStatusLine) httpResponseWrapper.getStatusLine());
+			txnDocument.setResponseHeaders((List<BasicHeader>) httpResponseWrapper.getHeaders());
+			txnDocument.setResponseBody(httpResponseWrapper.getResponseBody());
+		}
+
+		if (saved.get()) {
+			txnDocument.setId(getObjId());
+		}
+
+		return txnDocument;
+
+	}
+
+	public static AbstractHttpTransaction getObject(HttpTxnDocument httpTxnDocument) {
+
+		AbstractHttpTransaction httpTxn = null;
+		try {
+			RequestPayload requestPayload = RequestPayloadUtils.deserialize(httpTxnDocument.getRequestPayload());
+			HttpRequest httpRequest = HttpTransactionFactory.createHttpRequest(httpTxnDocument.getRequestMethod(),
+					new URI(httpTxnDocument.getRequestURI()), httpTxnDocument.getRequestHeaders().toArray(new BasicHeader[0]),
+					requestPayload.toHttpEntity());
+
+			httpTxn = HttpTransactionFactory.createTransaction(httpRequest, httpTxnDocument.getReferer());
+			httpTxn.setCookieStore(httpTxnDocument.getCookieStore());
+			httpTxn.setObjId(httpTxnDocument.getId());
+			httpTxn.setRefererTxnObjId(httpTxnDocument.getRefererTxnObjId());
+
+			httpTxn.payloadChanged.set(httpTxnDocument.isPayloadChanged());
+			if (httpTxnDocument.isResponseReady()) {
+				httpTxn.httpResponseWrapper = new HttpResponseWrapper(httpTxnDocument.getResponseStatusLine(), httpTxnDocument.getResponseHeaders(),
+						httpTxnDocument.getResponseBody());
+				httpTxn.responseReady.set(true);
+			} else {
+				httpTxn.responseReady.set(false);
+			}
+
+			httpTxn.setSaved(true);
+
+		} catch (URISyntaxException e) {
+			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
+		} catch (NotImplementedException e) {
+			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
+		} catch(Exception e) {
+			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
+		}
+		return httpTxn;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public ObjectId getObjId() {
+
+		return objId;
+	}
+
+	/**
+	 * 
+	 * @param objId
+	 */
+	public void setObjId(ObjectId objId) {
+
+		this.objId = objId;
 	}
 
 	/**
@@ -260,6 +361,7 @@ public abstract class AbstractHttpTransaction {
 
 		if (payloadChanged.get()) {
 			httpRequestWrapper.processUpdates();
+			payloadChanged.set(false);
 		}
 	}
 
@@ -281,6 +383,16 @@ public abstract class AbstractHttpTransaction {
 	public void setCookieStore(BasicCookieStore cookieStore) {
 
 		this.cookieStore = cookieStore;
+	}
+
+	public ObjectId getRefererTxnObjId() {
+
+		return refererTxnObjId;
+	}
+
+	public void setRefererTxnObjId(ObjectId refererTxnObjId) {
+
+		this.refererTxnObjId = refererTxnObjId;
 	}
 
 	public CookieOrigin getCookieOrigin(boolean secure) {
@@ -430,6 +542,16 @@ public abstract class AbstractHttpTransaction {
 	public boolean isUncompressed() {
 
 		return uncompressed.get();
+	}
+
+	public boolean isSaved() {
+
+		return saved.get();
+	}
+
+	public void setSaved(boolean value) {
+
+		saved.set(value);
 	}
 
 }

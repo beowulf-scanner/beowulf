@@ -1,14 +1,39 @@
-<web-app id="BeowulfExecutorSystem">
+<web-app id="BeowulfSMFSystem">
 	<display-name>Beowulf Management System</display-name>
-	
+
 	<context-param>
 		<param-name>bw-common-conf-filename</param-name>
 		<param-value>webapp/WEB-INF/bw-common.conf</param-value>
 	</context-param>
-	
+	<context-param>
+		<param-name>queue-conf-filename</param-name>
+		<param-value>queues.conf</param-value>
+	</context-param>
+
 	<listener>
-		<listener-class>com.nvarghese.beowulf.common.BeowulfCommonConfigManager</listener-class>
+		<listener-class>com.nvarghese.beowulf.smf.SmfQueueManager</listener-class>
 	</listener>
-		
-	
+
+
+
+	<servlet>
+		<servlet-name>BwSmfRestApi</servlet-name>
+		<servlet-class>
+			org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+		</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>com.nvarghese.beowulf.smf.SmfRestApplication
+			</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BwSmfRestApi</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
 </web-app>

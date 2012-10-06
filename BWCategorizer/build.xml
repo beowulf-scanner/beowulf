@@ -35,7 +35,7 @@
 		<property name="dist.dir" location="${bw-categ.root}/dist" />
 		<property name="classpath" location="${lib.dir}" />
 
-		<property name="main-class" value="com.nvarghese.beowulf.categ.CategServer" />
+		<property name="main-class" value="com.nvarghese.beowulf.scs.ScsServer" />
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 

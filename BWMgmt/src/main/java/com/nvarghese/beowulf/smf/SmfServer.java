@@ -48,6 +48,11 @@ public class SmfServer {
 		context.setContextPath(settings.getJettyContextRootPath());
 
 		context.setParentLoaderPriority(true);
+		
+//		ServletHolder h = new ServletHolder(new HttpServletDispatcher());
+//		h.setInitParameter("javax.ws.rs.Application", "com.nvarghese.beowulf.smf.SmfRestApplication");
+//		context.addServlet(h, "/*");
+		 
 		// context.getSessionHandler().getSessionManager().setSessionCookie("xsessionid");
 		server.jettyServer.setHandler(context);
 

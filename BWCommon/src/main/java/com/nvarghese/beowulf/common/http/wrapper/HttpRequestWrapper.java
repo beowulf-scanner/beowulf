@@ -24,9 +24,8 @@ import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
 public class HttpRequestWrapper extends HttpMessageWrapper {
 
 	private HttpMethodType method;
-
 	private HttpRequest httpRequest;
-
+	private List<Header> headers;
 	private RequestPayload requestPayload;
 
 	static Logger logger = LoggerFactory.getLogger(HttpRequestWrapper.class);
@@ -37,6 +36,7 @@ public class HttpRequestWrapper extends HttpMessageWrapper {
 		this.method = method;
 		this.httpRequest = httpRequest;
 		this.requestPayload = requestPayload;
+		this.headers = Arrays.asList(httpRequest.getAllHeaders());
 	}
 
 	public URI getURI() {
@@ -62,13 +62,13 @@ public class HttpRequestWrapper extends HttpMessageWrapper {
 
 	public void processUpdates() {
 
-		List<Header> headersList = Arrays.asList(httpRequest.getAllHeaders());
+		headers = Arrays.asList(httpRequest.getAllHeaders());
 		URI uri = getUpdatedURI();
 		if (requestPayload.getContentType() != null) {
-			Header contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, requestPayload.getContentType().getMimeType());
-			headersList.add(contentTypeHeader);
+			BasicHeader contentTypeHeader = new BasicHeader(HttpHeaders.CONTENT_TYPE, requestPayload.getContentType().getMimeType());
+			headers.add(contentTypeHeader);
 		}
-		HttpRequest newHttpRequest = HttpTransactionFactory.createHttpRequest(method, uri, headersList.toArray(new Header[0]),
+		HttpRequest newHttpRequest = HttpTransactionFactory.createHttpRequest(method, uri, headers.toArray(new Header[0]),
 				requestPayload.toHttpEntity());
 		this.httpRequest = newHttpRequest;
 
@@ -100,6 +100,16 @@ public class HttpRequestWrapper extends HttpMessageWrapper {
 		}
 
 		return uri;
+	}
+
+	public List<? extends Header> getHeaders() {
+
+		return headers;
+	}	
+
+	public void setHeaders(List<Header> headers) {
+
+		this.headers = headers;
 	}
 
 }
