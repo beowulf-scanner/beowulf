@@ -8,11 +8,11 @@ import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
 
 
-public abstract class TokenCategorizer extends SingleSetCategorizer implements TransactionCategorizer {
+public abstract class TokenSingleSetTransactionCategorizer extends SingleSetCategorizer implements TransactionCategorizer {
 
 	private Set<String> tokens;
 
-	public TokenCategorizer(WebTestType webTestType) {
+	public TokenSingleSetTransactionCategorizer(WebTestType webTestType) {
 
 		super(webTestType);
 		tokens = Collections.synchronizedSet(new HashSet<String>());

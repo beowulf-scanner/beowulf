@@ -7,9 +7,9 @@ import java.util.Set;
 
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
-import com.nvarghese.beowulf.scs.categorizers.TokenCategorizer;
+import com.nvarghese.beowulf.scs.categorizers.TokenSingleSetTransactionCategorizer;
 
-public class HttpQueryParameterCategorizer extends TokenCategorizer {
+public class HttpQueryParameterCategorizer extends TokenSingleSetTransactionCategorizer {
 
 	public HttpQueryParameterCategorizer() {
 

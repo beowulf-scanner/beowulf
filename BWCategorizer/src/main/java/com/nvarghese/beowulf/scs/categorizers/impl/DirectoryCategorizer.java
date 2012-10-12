@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
-import com.nvarghese.beowulf.scs.categorizers.TokenCategorizer;
+import com.nvarghese.beowulf.scs.categorizers.TokenSingleSetTransactionCategorizer;
 
-public class DirectoryCategorizer extends TokenCategorizer {
+public class DirectoryCategorizer extends TokenSingleSetTransactionCategorizer {
 
 	private Set<String> testedDirs;
 

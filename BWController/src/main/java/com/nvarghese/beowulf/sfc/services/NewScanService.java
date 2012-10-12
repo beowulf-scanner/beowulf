@@ -25,7 +25,11 @@ import com.nvarghese.beowulf.common.jobs.NewScanJob;
 import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.utils.ByteUtils;
-import com.nvarghese.beowulf.common.webtest.scs.jobs.MetaCategorizerJob;
+import com.nvarghese.beowulf.common.webtest.CategorizerType;
+import com.nvarghese.beowulf.common.webtest.JobStatus;
+import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDAO;
+import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDocument;
+import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizerJob;
 import com.nvarghese.beowulf.sfc.SFControllerManager;
 
 public class NewScanService {
@@ -67,12 +71,13 @@ public class NewScanService {
 				webScanDAO.updateWebScanDocument(webScanDocument);
 			}
 
-			// post message
-			MetaCategorizerJob categJob = new MetaCategorizerJob();
-			categJob.setDatabaseName(ds.getDB().getName());
-			categJob.setTxnObjId(txnId.toString());
+			// persist job and post message
+			ObjectId categJobObjId = createMetaCategorizationJobDocument(ds, txnId, webScanDocument.getId());
+			CategorizerJob categJob = new CategorizerJob();
+			categJob.setCategorizerJobObjId(categJobObjId.toString());
 			categJob.setWebScanObjId(webScanDocument.getId().toString());
-
+			categJob.setDatabaseName(ds.getDB().getName());
+			
 			BwCategorizerService categService = new BwCategorizerService();
 			try {
 				categService.submitJob(categJob);
@@ -86,6 +91,19 @@ public class NewScanService {
 		} else {
 			logger.warn("Web scan document with id: {} cannot be found. Failed to start scan");
 		}
+	}
+
+	private ObjectId createMetaCategorizationJobDocument(Datastore ds, ObjectId txnObjId, ObjectId webscanObjId) {
+
+		CategorizationJobDocument jobDoc = new CategorizationJobDocument();
+		jobDoc.setJobStatus(JobStatus.INIT);
+		jobDoc.setTxnObjId(txnObjId);
+		jobDoc.setWebScanObjId(webscanObjId);
+		jobDoc.setCategorizerType(CategorizerType.META);
+
+		CategorizationJobDAO categorizationJobDAO = new CategorizationJobDAO(ds);
+		ObjectId id  = categorizationJobDAO.createCategorizationJobDocument(jobDoc);
+		return id;
 	}
 
 	private URI getBaseURI(WebScanDocument webScanDocument) throws URISyntaxException {

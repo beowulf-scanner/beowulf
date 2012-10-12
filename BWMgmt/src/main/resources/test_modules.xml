@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta_test_modules>
+	<meta_test_module test_category="SPIDER" test_type="HTTP_RESPONSE_CODE_TEST">
+		<module_number>1001</module_number>
+		<module_name>URL-Regex</module_name>
+		<module_description>A simple URL regex based spidering module</module_description>
+		<test_attributes>
+			<test_attribute>200</test_attribute>
+		</test_attributes>
+		<module_enabled>true</module_enabled>
+	</meta_test_module>
+	<meta_test_module test_category="SPIDER" test_type="HTML_ELEM_TEST">
+		<module_number>1002</module_number>
+		<module_name>HTML tag requester</module_name>
+		<module_description>Spidering module which extracts new links</module_description>
+		<test_attributes>
+			<test_attribute>APPLET</test_attribute>
+			<test_attribute>EMBED</test_attribute>
+			<test_attribute>FRAME</test_attribute>
+			<test_attribute>IFRAME</test_attribute>
+			<test_attribute>SCRIPT</test_attribute>
+			<test_attribute>IMG</test_attribute>
+			<test_attribute>A</test_attribute>
+			<test_attribute>AREA</test_attribute>
+			<test_attribute>BASE</test_attribute>
+			<test_attribute>LINK</test_attribute>
+			<test_attribute>META</test_attribute>
+		</test_attributes>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>Request all directories</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>A</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>APPLET</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>AREA</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>BASE</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>EMBED</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>FRAME</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>IFRAME</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>LINK</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>SCRIPT</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>IMG</option_name>
+			<option_value>false</option_value>
+		</options>
+	</meta_test_module>
+	<meta_test_module test_category="SPIDER" test_type="HTML_ELEM_TEST">
+		<module_number>1003</module_number>
+		<module_name>Form baseline</module_name>
+		<module_description>Spidering module responsible in form submissions</module_description>
+		<test_attributes>
+			<test_attribute>FORM</test_attribute>
+		</test_attributes>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>GET method</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>POST method</option_name>
+			<option_value>true</option_value>
+		</options>
+	</meta_test_module>
+</meta_test_modules>

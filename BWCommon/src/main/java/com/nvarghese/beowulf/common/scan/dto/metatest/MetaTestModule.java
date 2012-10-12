@@ -7,7 +7,7 @@
 // Generated on: 2012.10.01 at 01:12:11 AM IST
 //
 
-package com.nvarghese.beowulf.common.scan.dto.config;
+package com.nvarghese.beowulf.common.scan.dto.metatest;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -18,6 +18,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.nvarghese.beowulf.common.webtest.WebTestCategory;
+import com.nvarghese.beowulf.common.webtest.WebTestType;
 
 /**
  * <p>
@@ -46,19 +49,34 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "moduleNumber", "moduleName", "enabled", "options", "modulegroup" })
-@XmlRootElement(name = "test_module")
-public class TestModule {
+@XmlType(name = "", propOrder = { "moduleNumber", "moduleName", "enabled", "moduleDescription", "options", "webTestCategory", "webTestType",
+		"testAttributes" })
+@XmlRootElement(name = "meta_test_module")
+public class MetaTestModule {
 
 	@XmlElement(name = "module_number", required = true)
 	protected BigInteger moduleNumber;
+
 	@XmlElement(name = "module_name", required = true)
 	protected String moduleName;
+
 	@XmlElement(name = "module_enabled", required = true)
 	protected boolean enabled;
+
+	@XmlElement(name = "module_description")
+	protected String moduleDescription;
+
+	@XmlElement(name = "options")
 	protected List<Options> options;
+
 	@XmlAttribute(name = "test_category")
-	protected String modulegroup;
+	protected WebTestCategory webTestCategory;
+
+	@XmlAttribute(name = "test_type")
+	protected WebTestType webTestType;
+
+	@XmlAttribute(name = "test_attributes")
+	protected TestAttributes testAttributes;
 
 	/**
 	 * Gets the value of the moduleNumber property.
@@ -152,29 +170,6 @@ public class TestModule {
 			options = new ArrayList<Options>();
 		}
 		return this.options;
-	}
-
-	/**
-	 * Gets the value of the modulegroup property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getModulegroup() {
-
-		return modulegroup;
-	}
-
-	/**
-	 * Sets the value of the modulegroup property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setModulegroup(String value) {
-
-		this.modulegroup = value;
 	}
 
 }

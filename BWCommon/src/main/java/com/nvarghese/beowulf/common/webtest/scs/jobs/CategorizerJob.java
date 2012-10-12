@@ -1,17 +1,17 @@
 package com.nvarghese.beowulf.common.webtest.scs.jobs;
 
-public class MetaCategorizerJob extends AbstractCategorizerJob {
+public class CategorizerJob extends AbstractCategorizerJob {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2154760240035698132L;
+	private static final long serialVersionUID = 3963215005873035249L;
 
 	private String databaseName;
 
 	private String webScanObjId;
 
-	private String txnObjId;
+	private String categorizerJobObjId;
 
 	public String getDatabaseName() {
 
@@ -33,14 +33,14 @@ public class MetaCategorizerJob extends AbstractCategorizerJob {
 		this.webScanObjId = webScanObjId;
 	}
 
-	public String getTxnObjId() {
+	public String getCategorizerJobObjId() {
 
-		return txnObjId;
+		return categorizerJobObjId;
 	}
 
-	public void setTxnObjId(String txnObjId) {
+	public void setCategorizerJobObjId(String categorizerJobObjId) {
 
-		this.txnObjId = txnObjId;
-	}
+		this.categorizerJobObjId = categorizerJobObjId;
+	};
 
 }

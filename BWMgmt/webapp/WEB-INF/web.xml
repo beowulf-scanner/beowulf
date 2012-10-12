@@ -9,6 +9,10 @@
 		<param-name>queue-conf-filename</param-name>
 		<param-value>queues.conf</param-value>
 	</context-param>
+	<context-param>
+		<param-name>test-module-list-filename</param-name>
+		<param-value>test_modules.xml</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>com.nvarghese.beowulf.smf.SmfQueueManager</listener-class>
