@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
 import com.nvarghese.beowulf.common.http.txn.HttpMethodType;
 import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
+import com.nvarghese.beowulf.common.http.txn.TransactionSource;
 
 public class HttpPostTransactionTest {
 
@@ -25,7 +26,8 @@ public class HttpPostTransactionTest {
 	public void testSimplePostRequest() throws URISyntaxException, UnsupportedEncodingException {
 
 		URI uri = new URI("http://localhost:9888/index.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null,
+				TransactionSource.NONE);
 		transaction.execute();
 		String responseString = transaction.getResponseBodyAsString();
 		Assert.assertNotNull(responseString);
@@ -37,7 +39,8 @@ public class HttpPostTransactionTest {
 	public void testSimplePostCookieRequest() throws URISyntaxException, UnsupportedEncodingException {
 
 		URI uri = new URI("http://localhost:9888/cookie_test.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null,
+				TransactionSource.NONE);
 
 		transaction.execute();
 		String responseString = transaction.getResponseBodyAsString();
@@ -53,7 +56,8 @@ public class HttpPostTransactionTest {
 	public void testPostAddCookieInRequest() throws URISyntaxException, UnsupportedEncodingException {
 
 		URI uri = new URI("http://localhost:9888/cookie_added.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null,
+				TransactionSource.NONE);
 		BasicClientCookie cookie = new BasicClientCookie("c", "value");
 		cookie.setDomain("localhost");
 		cookie.setPath("/");

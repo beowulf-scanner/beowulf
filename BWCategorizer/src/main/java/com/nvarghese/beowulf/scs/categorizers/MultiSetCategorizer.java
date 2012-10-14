@@ -1,32 +1,55 @@
 package com.nvarghese.beowulf.scs.categorizers;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.google.code.morphia.Datastore;
+import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
+import com.nvarghese.beowulf.common.webtest.dao.TestModuleMetaDataDAO;
+import com.nvarghese.beowulf.common.webtest.model.TestModuleMetaDataDocument;
+import com.nvarghese.beowulf.scs.ScsManager;
 
 public abstract class MultiSetCategorizer extends Categorizer {
 
-	private WebTestType webTestType;
-	protected Map<Object, HashSet<Integer>> modulesByType;
+	protected WebTestType webTestType;
+	protected Map<String, HashSet<Long>> modulesNumbersByType;
 
 	Logger logger = Logger.getLogger(MultiSetCategorizer.class);
 
-	@Override
-	public boolean hasModules() {
+	public MultiSetCategorizer(Datastore ds, WebScanDocument webScanDocument, WebTestType webTestType) {
 
-		return modulesByType.size() > 0 ? true : false;
+		super(ds, webScanDocument);
+		this.webTestType = webTestType;
+		this.modulesNumbersByType = new HashMap<String, HashSet<Long>>();
 	}
 
-	public MultiSetCategorizer(WebTestType webTestType) {
+	@Override
+	public void initialize() {
 
-		super();
-		modulesByType = Collections.synchronizedMap(new HashMap<Object, HashSet<Integer>>());
-		this.webTestType = webTestType;
+		TestModuleMetaDataDAO testModuleMetaDataDAO = new TestModuleMetaDataDAO(ScsManager.getInstance().getDataStore());
+		List<TestModuleMetaDataDocument> testModuleMetaDataDocs = testModuleMetaDataDAO.findByTestType(webTestType);
+
+		for (TestModuleMetaDataDocument metaDoc : testModuleMetaDataDocs) {
+			if (getEnabledTestModuleNumbers().contains(metaDoc.getModuleNumber())) {
+
+				for (String attr : metaDoc.getTestAttributes()) {
+					if (modulesNumbersByType.containsKey(attr)) {
+						modulesNumbersByType.get(attr).add(metaDoc.getModuleNumber());
+					} else {
+						HashSet<Long> moduleNumbers = new HashSet<Long>();
+						moduleNumbers.add(metaDoc.getModuleNumber());
+						modulesNumbersByType.put(attr, moduleNumbers);
+					}
+				}
+
+			}
+		}
+
 	}
 
 }

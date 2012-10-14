@@ -21,6 +21,7 @@ import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
 import com.nvarghese.beowulf.common.http.txn.HttpMethodType;
 import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
 import com.nvarghese.beowulf.common.http.txn.HttpTxnDAO;
+import com.nvarghese.beowulf.common.http.txn.TransactionSource;
 import com.nvarghese.beowulf.common.jobs.NewScanJob;
 import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
@@ -147,7 +148,7 @@ public class NewScanService {
 
 	private ObjectId requestBaseURI(Datastore ds, URI baseUri) {
 
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, baseUri, null, null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, baseUri, null, null, TransactionSource.BASE);
 		transaction.execute();
 
 		HttpTxnDAO txnDAO = new HttpTxnDAO(ds);

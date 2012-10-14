@@ -5,6 +5,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.zookeeper.KeeperException;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +23,7 @@ import com.nvarghese.beowulf.common.zookeeper.ZkClientRunner;
 public class ScsManager {
 
 	private ScsServer scsServer;
+	private Reflections reflections;
 	private ZkClientRunner zkClientRunner;
 	private ScsServerSettings settings;
 	private Datastore ds;
@@ -42,12 +48,22 @@ public class ScsManager {
 				instance.settings = settings;
 
 				instance.initializeDatastore();
+				instance.initializeReflections();
 				// start zookeeper service
 				instance.notifyZookeeper();
 
 				initialized.set(true);
 			}
 		}
+
+	}
+
+	private void initializeReflections() {
+
+		// reflections = new Reflections("com.nvarghese.beowulf.scs");
+		reflections = new Reflections(new ConfigurationBuilder()
+				.filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix("com.nvarghese.beowulf.scs")))
+				.setUrls(ClasspathHelper.forPackage("com.nvarghese.beowulf.scs")).setScanners(new SubTypesScanner()));
 
 	}
 
@@ -122,6 +138,11 @@ public class ScsManager {
 	public ScsServerSettings getSettings() {
 
 		return settings;
+	}
+
+	public Reflections getReflections() {
+
+		return reflections;
 	}
 
 	public static boolean isInitialized() {

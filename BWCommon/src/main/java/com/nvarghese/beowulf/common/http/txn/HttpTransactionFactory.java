@@ -57,7 +57,7 @@ public class HttpTransactionFactory {
 	 * @param referer
 	 * @return
 	 */
-	public static AbstractHttpTransaction createTransaction(HttpRequest request, String referer) {
+	public static AbstractHttpTransaction createTransaction(HttpRequest request, String referer, TransactionSource source) {
 
 		AbstractHttpTransaction transaction = null;
 		if (request.getRequestLine().getMethod().equals(HttpMethodType.GET.getValue())) {
@@ -68,7 +68,7 @@ public class HttpTransactionFactory {
 				get = (HttpGet) request;
 			}
 
-			transaction = new HttpGetTransaction(get, referer);
+			transaction = new HttpGetTransaction(get, referer, source);
 		} else if (request.getRequestLine().getMethod().equals(HttpMethodType.POST.getValue())) {
 			HttpPost post = null;
 			if (request instanceof BasicHttpEntityEnclosingRequest) {
@@ -77,7 +77,7 @@ public class HttpTransactionFactory {
 				post = (HttpPost) request;
 			}
 
-			transaction = new HttpPostTransaction(post, referer);
+			transaction = new HttpPostTransaction(post, referer, source);
 		}
 		return transaction;
 	}
@@ -90,9 +90,9 @@ public class HttpTransactionFactory {
 	 * @param referer
 	 * @return
 	 */
-	public static AbstractHttpTransaction createTransaction(HttpMethodType method, URI uri, HttpEntity entity, String referer) {
+	public static AbstractHttpTransaction createTransaction(HttpMethodType method, URI uri, HttpEntity entity, String referer, TransactionSource source) {
 
-		return createTransaction(createHttpRequest(method, uri, null, entity), referer);
+		return createTransaction(createHttpRequest(method, uri, null, entity), referer, source);
 	}
 
 	/**

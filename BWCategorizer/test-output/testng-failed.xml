@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Failed suite [BW-Scs Test Suite]">
+  <test name="BW-Scs Integration Tests(failed)" preserve-order="false">
+    <classes>
+      <class name="integration.beowulf.scs.HttpCategorizerTransactionTestServerLauncher">
+        <methods>
+          <include name="startServer"/>
+          <include name="stopServer"/>
+        </methods>
+      </class>
+      <class name="integration.beowulf.scs.ScsServerLauncher">
+        <methods>
+          <include name="stopServer"/>
+          <include name="startServer"/>
+        </methods>
+      </class>
+      <class name="integration.beowulf.scs.categorizers.impl.DirectoryCategorizerTest">
+        <methods>
+          <include name="initialize"/>
+          <include name="cleanup"/>
+        </methods>
+      </class>
+      <class name="integration.beowulf.scs.categorizers.dao.DirectoryCategorizerDAOTest">
+        <methods>
+          <include name="initialize"/>
+          <include name="cleanup"/>
+        </methods>
+      </class>
+      <class name="integration.beowulf.scs.categorizers.MetaCategorizerTest">
+        <methods>
+          <include name="testInitTransactionCategorizers"/>
+          <include name="testInitCategorizers"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

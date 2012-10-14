@@ -36,7 +36,7 @@ public class TestModuleMetaDataDocument extends AbstractDocument {
 	private WebTestType testType;
 
 	@Property("test_attributes")
-	private String[] testAttributes;
+	private List<String> testAttributes;
 
 	@Embedded
 	private List<TestModuleOptionDocument> options;
@@ -128,12 +128,12 @@ public class TestModuleMetaDataDocument extends AbstractDocument {
 		this.testType = testType;
 	}
 
-	public String[] getTestAttributes() {
+	public List<String> getTestAttributes() {
 
 		return testAttributes;
 	}
 
-	public void setTestAttributes(String[] testAttributes) {
+	public void setTestAttributes(List<String> testAttributes) {
 
 		this.testAttributes = testAttributes;
 	}

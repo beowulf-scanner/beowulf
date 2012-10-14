@@ -8,10 +8,10 @@ import com.nvarghese.beowulf.common.http.wrapper.HttpRequestWrapper;
 
 public class HttpGetTransaction extends AbstractHttpTransaction {
 
-	public HttpGetTransaction(HttpGet get, String referer) {
+	public HttpGetTransaction(HttpGet get, String referer, TransactionSource source) {
 
 		super(new HttpRequestWrapper(HttpMethodType.GET, get, new UrlEncodedRequestPayload(URLEncodedUtils.parse(get.getURI(), "ISO-8559-1"))),
-				referer);
+				referer, source);
 
 	}
 

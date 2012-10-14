@@ -1,6 +1,8 @@
 package com.nvarghese.beowulf.scs.categorizers.impl;
 
+import com.google.code.morphia.Datastore;
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
+import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
 import com.nvarghese.beowulf.scs.categorizers.TokenSingleSetTransactionCategorizer;
 
@@ -10,15 +12,15 @@ import com.nvarghese.beowulf.scs.categorizers.TokenSingleSetTransactionCategoriz
  */
 public class FileCategorizer extends TokenSingleSetTransactionCategorizer {
 
-	public FileCategorizer() {
+	public FileCategorizer(Datastore ds, WebScanDocument webScanDocument) {
 
-		super(WebTestType.FILE_TEST);
+		super(ds, webScanDocument, WebTestType.FILE_TEST);
 	}
 
 	@Override
 	protected String[] getTokens(AbstractHttpTransaction transaction) {
 
-		return null;
+		return new String[] {};
 
 	}
 

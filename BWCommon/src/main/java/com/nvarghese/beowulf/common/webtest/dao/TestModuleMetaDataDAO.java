@@ -1,5 +1,7 @@
 package com.nvarghese.beowulf.common.webtest.dao;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
 import com.google.code.morphia.query.Query;
+import com.google.code.morphia.query.QueryResults;
 import com.nvarghese.beowulf.common.dao.AbstractMongoDAO;
+import com.nvarghese.beowulf.common.webtest.WebTestType;
 import com.nvarghese.beowulf.common.webtest.model.TestModuleMetaDataDocument;
 
 public class TestModuleMetaDataDAO extends AbstractMongoDAO<TestModuleMetaDataDocument, ObjectId> {
@@ -54,7 +58,7 @@ public class TestModuleMetaDataDAO extends AbstractMongoDAO<TestModuleMetaDataDo
 
 	/**
 	 * 
-	 * Create a new web scan document
+	 * Create a new TestModuleMetaDataDocument
 	 * 
 	 * @param webScanDocument
 	 */
@@ -71,6 +75,15 @@ public class TestModuleMetaDataDAO extends AbstractMongoDAO<TestModuleMetaDataDo
 		Query<TestModuleMetaDataDocument> q = ds.createQuery(TestModuleMetaDataDocument.class).field("moduleNumber").equal(monduleNumber);
 		TestModuleMetaDataDocument document = findOne(q);
 		return document;
+	}
+
+	public List<TestModuleMetaDataDocument> findByTestType(WebTestType testType) {
+
+		Query<TestModuleMetaDataDocument> q = ds.createQuery(TestModuleMetaDataDocument.class).field("testType").equal(testType);
+		QueryResults<TestModuleMetaDataDocument> results = find(q);
+		// List<TestModuleMetaDataDocument> docs = find(q);
+		List<TestModuleMetaDataDocument> docs = results.asList();
+		return docs;
 	}
 
 }

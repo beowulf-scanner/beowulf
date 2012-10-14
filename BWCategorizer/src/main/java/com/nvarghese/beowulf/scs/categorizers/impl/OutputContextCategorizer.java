@@ -5,7 +5,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.code.morphia.Datastore;
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
+import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
 import com.nvarghese.beowulf.scs.categorizers.MultiSetCategorizer;
 import com.nvarghese.beowulf.scs.categorizers.TransactionCategorizer;
@@ -14,9 +16,9 @@ public class OutputContextCategorizer extends MultiSetCategorizer implements Tra
 
 	private Pattern tokenPattern;
 
-	public OutputContextCategorizer() {
+	public OutputContextCategorizer(Datastore ds, WebScanDocument webScanDocument) {
 
-		super(WebTestType.OUTPUT_CONTEXT_TEST);
+		super(ds, webScanDocument, WebTestType.OUTPUT_CONTEXT_TEST);
 
 	}
 
@@ -33,7 +35,6 @@ public class OutputContextCategorizer extends MultiSetCategorizer implements Tra
 
 	public void analyzeTransaction(AbstractHttpTransaction transaction) {
 
-		
 	}
 
 }

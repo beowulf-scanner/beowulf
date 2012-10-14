@@ -1,5 +1,7 @@
 package com.nvarghese.beowulf.smf.scan.services;
 
+import java.util.Map;
+
 import javax.jms.JMSException;
 
 import org.slf4j.Logger;
@@ -11,7 +13,10 @@ import com.nvarghese.beowulf.common.scan.dao.MasterScanConfigDAO;
 import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
 import com.nvarghese.beowulf.common.scan.dto.config.Profile;
 import com.nvarghese.beowulf.common.scan.model.MasterScanConfigDocument;
+import com.nvarghese.beowulf.common.scan.model.TestModuleScanConfigDocument;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
+import com.nvarghese.beowulf.common.webtest.dao.TestModuleMetaDataDAO;
+import com.nvarghese.beowulf.common.webtest.model.TestModuleMetaDataDocument;
 import com.nvarghese.beowulf.smf.SmfManager;
 import com.nvarghese.beowulf.smf.scan.dto.Baseuris;
 import com.nvarghese.beowulf.smf.scan.dto.Comments;
@@ -34,6 +39,7 @@ public class ScanManagementService {
 		scanConfigDocument.setReportScanConfig(profileTransformer.transformToReportScanConfigDocument(profile.getReportSettings()));
 		scanConfigDocument.setSessionScanConfig(profileTransformer.transformToSessionSettingScanConfigDocument(profile.getSessionSettings()));
 		scanConfigDocument.setTestModules(profileTransformer.transformToMappedTestModuleScanConfigDocument(profile.getTestModules()));
+		updateTestModulesWithTestType(scanConfigDocument.getTestModules());
 
 		// persist
 		MasterScanConfigDAO scanConfigDAO = new MasterScanConfigDAO(SmfManager.getInstance().getDataStore());
@@ -59,6 +65,22 @@ public class ScanManagementService {
 		}
 
 		return transformToScanRequest(webScanDocument);
+
+	}
+
+	private void updateTestModulesWithTestType(Map<Long, TestModuleScanConfigDocument> testModules) {
+
+		TestModuleMetaDataDAO testModuleMetaDataDAO = new TestModuleMetaDataDAO(SmfManager.getInstance().getDataStore());
+		for (TestModuleScanConfigDocument scanConfigDocument : testModules.values()) {
+
+			TestModuleMetaDataDocument metaTestModule = testModuleMetaDataDAO.findByModuleNumber(scanConfigDocument.getModuleNumber());
+			if (metaTestModule != null) {
+				scanConfigDocument.setTestType(metaTestModule.getTestType());
+			} else {
+				logger.warn("Failed to find metaTestModule with module_number: {}", scanConfigDocument.getModuleNumber());
+			}
+
+		}
 
 	}
 

@@ -3,7 +3,6 @@ package com.nvarghese.beowulf.common.http.txn;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.Authenticator.RequestorType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +48,8 @@ public abstract class AbstractHttpTransaction {
 	private ObjectId objId;
 	private ObjectId refererTxnObjId;
 
+	private TransactionSource transactionSource;
+
 	private HttpRequestWrapper httpRequestWrapper;
 	private HttpResponseWrapper httpResponseWrapper;
 	private BasicCookieStore cookieStore;
@@ -70,14 +71,16 @@ public abstract class AbstractHttpTransaction {
 		payloadChanged = new AtomicBoolean(false);
 		responseReady = new AtomicBoolean(false);
 		saved = new AtomicBoolean(false);
+		transactionSource = TransactionSource.NONE;
 	}
 
-	public AbstractHttpTransaction(HttpRequestWrapper requestWrapper, String referer) {
+	public AbstractHttpTransaction(HttpRequestWrapper requestWrapper, String referer, TransactionSource transactionSource) {
 
 		this();
 		this.cookieStore = new BasicCookieStore();
 		this.httpRequestWrapper = requestWrapper;
 		this.referer = referer;
+		this.transactionSource = transactionSource;
 
 	}
 
@@ -88,6 +91,7 @@ public abstract class AbstractHttpTransaction {
 
 		HttpTxnDocument txnDocument = new HttpTxnDocument();
 
+		txnDocument.setTransactionSource(transactionSource);
 		txnDocument.setRequestMethod(httpRequestWrapper.getMethod());
 		txnDocument.setRequestURI(getURI().toString());
 		txnDocument.setRequestHeaders((List<BasicHeader>) httpRequestWrapper.getHeaders());
@@ -120,7 +124,7 @@ public abstract class AbstractHttpTransaction {
 					new URI(httpTxnDocument.getRequestURI()), httpTxnDocument.getRequestHeaders().toArray(new BasicHeader[0]),
 					requestPayload.toHttpEntity());
 
-			httpTxn = HttpTransactionFactory.createTransaction(httpRequest, httpTxnDocument.getReferer());
+			httpTxn = HttpTransactionFactory.createTransaction(httpRequest, httpTxnDocument.getReferer(), httpTxnDocument.getTransactionSource());
 			httpTxn.setCookieStore(httpTxnDocument.getCookieStore());
 			httpTxn.setObjId(httpTxnDocument.getId());
 			httpTxn.setRefererTxnObjId(httpTxnDocument.getRefererTxnObjId());
@@ -140,7 +144,7 @@ public abstract class AbstractHttpTransaction {
 			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
 		} catch (NotImplementedException e) {
 			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
 		}
 		return httpTxn;
@@ -552,6 +556,16 @@ public abstract class AbstractHttpTransaction {
 	public void setSaved(boolean value) {
 
 		saved.set(value);
+	}
+
+	public TransactionSource getTransactionSource() {
+
+		return transactionSource;
+	}
+
+	public void setTransactionSource(TransactionSource transactionSource) {
+
+		this.transactionSource = transactionSource;
 	}
 
 }

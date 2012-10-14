@@ -7,6 +7,7 @@ import java.util.Map;
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.PrePersist;
+import com.google.code.morphia.annotations.Transient;
 import com.nvarghese.beowulf.common.model.AbstractDocument;
 
 @Entity("scanconfigs")
@@ -27,6 +28,9 @@ public class MasterScanConfigDocument extends AbstractDocument {
 	@Embedded("test_modules")
 	private Map<Long, TestModuleScanConfigDocument> testModules;
 
+	@Transient
+	private Map<Long, TestModuleScanConfigDocument> enabledTestModules;
+
 	public MasterScanConfigDocument() {
 
 		setCreatedOn(new Date());
@@ -35,6 +39,7 @@ public class MasterScanConfigDocument extends AbstractDocument {
 		reportScanConfig = new ReportScanConfigDocument();
 		sessionScanConfig = new SessionSettingScanConfigDocument();
 		testModules = new HashMap<Long, TestModuleScanConfigDocument>();
+		enabledTestModules = new HashMap<Long, TestModuleScanConfigDocument>();
 
 	}
 
@@ -42,6 +47,30 @@ public class MasterScanConfigDocument extends AbstractDocument {
 	void prePersist() {
 
 		setLastUpdated(new Date());
+
+	}
+
+//	@PostPersist
+//	void postPersist() {
+//
+//		loadEnabledTestModules();
+//	}
+//
+//	@PostLoad
+//	void postLoad() {
+//
+//		loadEnabledTestModules();
+//
+//	}
+
+	public void loadEnabledTestModules() {
+
+		for (TestModuleScanConfigDocument testModuleConfigDoc : testModules.values()) {
+
+			if (testModuleConfigDoc.isEnabled()) {
+				enabledTestModules.put(testModuleConfigDoc.getModuleNumber(), testModuleConfigDoc);
+			}
+		}
 
 	}
 
@@ -93,6 +122,11 @@ public class MasterScanConfigDocument extends AbstractDocument {
 	public void setTestModules(Map<Long, TestModuleScanConfigDocument> testModules) {
 
 		this.testModules = testModules;
+	}
+
+	public Map<Long, TestModuleScanConfigDocument> getEnabledTestModules() {
+
+		return enabledTestModules;
 	}
 
 }

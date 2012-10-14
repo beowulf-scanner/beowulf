@@ -1,10 +1,11 @@
 package com.nvarghese.beowulf.common.scan.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Property;
+import com.nvarghese.beowulf.common.webtest.WebTestType;
+import com.nvarghese.beowulf.common.webtest.model.TestModuleOptionDocument;
 
 @Embedded
 public class TestModuleScanConfigDocument {
@@ -18,8 +19,11 @@ public class TestModuleScanConfigDocument {
 	@Property("module_enabled")
 	private boolean enabled;
 
-	@Property("options")
-	private Map<String, String> options = new HashMap<String, String>();
+	@Property("test_type")
+	private WebTestType testType;
+
+	@Embedded
+	private List<TestModuleOptionDocument> options;
 
 	public long getModuleNumber() {
 
@@ -51,12 +55,22 @@ public class TestModuleScanConfigDocument {
 		this.enabled = enabled;
 	}
 
-	public Map<String, String> getOptions() {
+	public WebTestType getTestType() {
+
+		return testType;
+	}
+
+	public void setTestType(WebTestType testType) {
+
+		this.testType = testType;
+	}
+
+	public List<TestModuleOptionDocument> getOptions() {
 
 		return options;
 	}
 
-	public void setOptions(Map<String, String> options) {
+	public void setOptions(List<TestModuleOptionDocument> options) {
 
 		this.options = options;
 	}

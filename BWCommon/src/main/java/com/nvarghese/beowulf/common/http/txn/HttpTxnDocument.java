@@ -16,6 +16,9 @@ import com.nvarghese.beowulf.common.model.AbstractDocument;
 @Entity("http_txns")
 public class HttpTxnDocument extends AbstractDocument {
 
+	@Property("txn_source")
+	private TransactionSource transactionSource;
+
 	@Property("request_method")
 	private HttpMethodType requestMethod;
 
@@ -54,6 +57,16 @@ public class HttpTxnDocument extends AbstractDocument {
 
 	@Serialized("response_body")
 	private byte[] responseBody;
+
+	public TransactionSource getTransactionSource() {
+
+		return transactionSource;
+	}
+
+	public void setTransactionSource(TransactionSource transactionSource) {
+
+		this.transactionSource = transactionSource;
+	}
 
 	public HttpMethodType getRequestMethod() {
 
