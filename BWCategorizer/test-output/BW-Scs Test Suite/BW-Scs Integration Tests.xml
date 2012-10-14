@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite hostname="nibin-laptop" name="integration.beowulf.scs.categorizers.MetaCategorizerTest" tests="6" failures="0" timestamp="14 Oct 2012 19:29:01 GMT" time="1.866" errors="0">
-  <testcase name="testInitCategorizers" time="0.08" classname="integration.beowulf.scs.categorizers.MetaCategorizerTest"/>
-  <testcase name="testInitTransactionCategorizers" time="0.03" classname="integration.beowulf.scs.categorizers.MetaCategorizerTest"/>
-  <testcase name="testDirectoryCategorizerDocumentOperations" time="0.074" classname="integration.beowulf.scs.categorizers.dao.DirectoryCategorizerDAOTest"/>
-  <testcase name="testDirectoryCategorizerDocumentWithIgnoredFields" time="0.0030" classname="integration.beowulf.scs.categorizers.dao.DirectoryCategorizerDAOTest"/>
-  <testcase name="testDirectoryCategorizerDocumentWithIgnoredFieldsAndAddItems" time="0.11" classname="integration.beowulf.scs.categorizers.dao.DirectoryCategorizerDAOTest"/>
-  <testcase name="testGetTokens" time="0.328" classname="integration.beowulf.scs.categorizers.impl.DirectoryCategorizerTest"/>
-</testsuite>
