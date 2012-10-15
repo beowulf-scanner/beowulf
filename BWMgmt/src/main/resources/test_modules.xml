@@ -89,4 +89,66 @@
 			<option_value>true</option_value>
 		</options>
 	</meta_test_module>
+	<meta_test_module test_category="FILE_ENUMERATION" test_type="DIRECTORY_TEST">
+		<module_number>1004</module_number>
+		<module_name>Directory enumerator</module_name>
+		<module_description>Enumeration module for common directories</module_description>
+		<test_attributes />
+		<module_enabled>false</module_enabled>
+		<options type="boolean">
+			<option_name>Small (100 directory names)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium (300 directory names)</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Large (500 directory names)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Extra large (819 directory names)</option_name>
+			<option_value>false</option_value>
+		</options>
+	</meta_test_module>
+	<meta_test_module test_category="FILE_ENUMERATION" test_type="DIRECTORY_TEST">
+		<module_number>1005</module_number>
+		<module_name>File enumerator</module_name>
+		<module_description>Enumeration module for commonly occuring filenames</module_description>
+		<test_attributes />
+		<module_enabled>false</module_enabled>
+		<options type="boolean">
+			<option_name>Small (20 filenames)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium (40 filenames)</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Large (64 filenames)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Small (10 extensions)</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium (25 extensions)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Large (63 extensions)</option_name>
+			<option_value>false</option_value>
+		</options>
+	</meta_test_module>
+	<meta_test_module test_category="FILE_ENUMERATION" test_type="FILE_TEST">
+		<module_number>1006</module_number>
+		<module_description>Enumeration module for commonly occuring backup filenames</module_description>
+		<module_name>Backup file enumerator</module_name>
+		<test_attributes />
+		<module_enabled>false</module_enabled>
+	</meta_test_module>
+
 </meta_test_modules>

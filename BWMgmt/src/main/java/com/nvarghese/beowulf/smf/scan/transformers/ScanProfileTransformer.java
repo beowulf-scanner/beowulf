@@ -1,6 +1,8 @@
 package com.nvarghese.beowulf.smf.scan.transformers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.nvarghese.beowulf.common.report.ReportFormat;
@@ -17,6 +19,7 @@ import com.nvarghese.beowulf.common.scan.model.ReportScanConfigDocument;
 import com.nvarghese.beowulf.common.scan.model.SessionSettingScanConfigDocument;
 import com.nvarghese.beowulf.common.scan.model.SettingScanConfigDocument;
 import com.nvarghese.beowulf.common.scan.model.TestModuleScanConfigDocument;
+import com.nvarghese.beowulf.common.webtest.model.TestModuleOptionDocument;
 
 public class ScanProfileTransformer {
 
@@ -24,10 +27,8 @@ public class ScanProfileTransformer {
 
 		HttpClientScanConfigDocument httpClientScanConfigDocument = new HttpClientScanConfigDocument();
 		httpClientScanConfigDocument.setMaxRedirects(httpClient.getMaxRedirects().longValue());
-		httpClientScanConfigDocument.setMaxConsecutiveFailedRequests(httpClient.getMaxConsecutiveFailedRequests()
-				.longValue());
-		httpClientScanConfigDocument.setMaxFailedRequestsPerServer(httpClient.getMaxFailedRequestsPerServer()
-				.longValue());
+		httpClientScanConfigDocument.setMaxConsecutiveFailedRequests(httpClient.getMaxConsecutiveFailedRequests().longValue());
+		httpClientScanConfigDocument.setMaxFailedRequestsPerServer(httpClient.getMaxFailedRequestsPerServer().longValue());
 		httpClientScanConfigDocument.setMaxRequestCount(httpClient.getMaxRequestCount().longValue());
 		httpClientScanConfigDocument.setMaxRequestDepth(httpClient.getMaxRequestDepth().longValue());
 		httpClientScanConfigDocument.setMaxRequestRetries(httpClient.getMaxRequestRetries().longValue());
@@ -43,21 +44,15 @@ public class ScanProfileTransformer {
 
 		SettingScanConfigDocument settingScanDocument = new SettingScanConfigDocument();
 
-		settingScanDocument.setResponseCodeOverideTestDirectories(scanSettings.getResponseCodeOverrides()
-				.isTestAllDirectories());
-		settingScanDocument.setResponseCodeOverideThreshold(scanSettings.getResponseCodeOverrides()
-				.getOverrideThreshold().longValue());
-		settingScanDocument.setResponseCodeOverideUseAutomatic(scanSettings.getResponseCodeOverrides()
-				.isUseAutomaticOverrides());
+		settingScanDocument.setResponseCodeOverideTestDirectories(scanSettings.getResponseCodeOverrides().isTestAllDirectories());
+		settingScanDocument.setResponseCodeOverideThreshold(scanSettings.getResponseCodeOverrides().getOverrideThreshold().longValue());
+		settingScanDocument.setResponseCodeOverideUseAutomatic(scanSettings.getResponseCodeOverrides().isUseAutomaticOverrides());
 
 		settingScanDocument.setBaseURIList(scanSettings.getBaseUris().getBaseUri());
 
-		settingScanDocument.setForbiddenParamNames(scanSettings.getRestrictions().getForbiddenParameterNames()
-				.getParameterName());
-		settingScanDocument.setForbiddenMimeTypes(scanSettings.getRestrictions().getForbiddenMimeTypes()
-				.getMimeTypePattern());
-		settingScanDocument.setIrrelevantParamNames(scanSettings.getRestrictions().getIrrelevantParameterNames()
-				.getParameterName());
+		settingScanDocument.setForbiddenParamNames(scanSettings.getRestrictions().getForbiddenParameterNames().getParameterName());
+		settingScanDocument.setForbiddenMimeTypes(scanSettings.getRestrictions().getForbiddenMimeTypes().getMimeTypePattern());
+		settingScanDocument.setIrrelevantParamNames(scanSettings.getRestrictions().getIrrelevantParameterNames().getParameterName());
 
 		settingScanDocument.setUrlBlacklistPatterns(scanSettings.getRestrictions().getUrlBlacklist().getUrlPattern());
 		settingScanDocument.setUrlWhitelistPatterns(scanSettings.getRestrictions().getUrlWhitelist().getUrlPattern());
@@ -86,8 +81,7 @@ public class ScanProfileTransformer {
 		sessionConfigDocument.setPassword(sessionSettings.getLogin().getPassword());
 		sessionConfigDocument.setUsernameFieldPattern(sessionSettings.getLogin().getUsernameFieldPattern());
 		sessionConfigDocument.setPasswordFieldPattern(sessionSettings.getLogin().getPasswordFieldPattern());
-		sessionConfigDocument.setKnownSessionIdPatterns(sessionSettings.getSessionTracking().getKnownSessionIdlist()
-				.getIdPattern());
+		sessionConfigDocument.setKnownSessionIdPatterns(sessionSettings.getSessionTracking().getKnownSessionIdlist().getIdPattern());
 
 		return sessionConfigDocument;
 
@@ -102,11 +96,19 @@ public class ScanProfileTransformer {
 			testModuleScanConfigDocument.setModuleName(module.getModuleName());
 			testModuleScanConfigDocument.setModuleNumber(module.getModuleNumber().longValue());
 			testModuleScanConfigDocument.setEnabled(module.isEnabled());
-			Map<String, String> options = new HashMap<String, String>();
+
+			List<TestModuleOptionDocument> optionDocuments = new ArrayList<TestModuleOptionDocument>();
 			for (Options option : module.getOptions()) {
-				options.put(option.getOptionName(), option.getOptionValue());
+
+				TestModuleOptionDocument testModuleOptionDocument = new TestModuleOptionDocument();
+				testModuleOptionDocument.setOptionName(option.getOptionName());
+				testModuleOptionDocument.setOptionValue(option.getOptionValue());
+				testModuleOptionDocument.setOptionGroup(option.getGroup());
+				testModuleOptionDocument.setOptionType(option.getType());
+
+				optionDocuments.add(testModuleOptionDocument);
 			}
-			testModuleScanConfigDocument.setOptions(options);
+			testModuleScanConfigDocument.setOptions(optionDocuments);
 
 			testModuleMap.put(testModuleScanConfigDocument.getModuleNumber(), testModuleScanConfigDocument);
 		}

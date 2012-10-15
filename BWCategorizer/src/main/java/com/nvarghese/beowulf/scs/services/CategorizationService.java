@@ -21,6 +21,8 @@ import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDAO;
 import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDocument;
 import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizerJob;
 import com.nvarghese.beowulf.scs.ScsManager;
+import com.nvarghese.beowulf.scs.categorizers.MetaCategorizer;
+import com.nvarghese.beowulf.scs.categorizers.TransactionCategorizer;
 
 public class CategorizationService {
 
@@ -45,7 +47,7 @@ public class CategorizationService {
 					categJobDocument.setJobStatus(JobStatus.PROCESSING);
 					categJobDAO.updateCategorizationJobDocument(categJobDocument);
 
-					routeCategorizationJob(ds, categJobDocument);
+					routeCategorizationJob(ds, webScanDocument, categJobDocument);
 
 					categJobDocument.setJobStatus(JobStatus.COMPLETED);
 					categJobDAO.updateCategorizationJobDocument(categJobDocument);
@@ -71,22 +73,22 @@ public class CategorizationService {
 
 	}
 
-	private void routeCategorizationJob(Datastore ds, CategorizationJobDocument categJobDocument) throws CategorizationJobException {
+	private void routeCategorizationJob(Datastore ds, WebScanDocument webScanDocument, CategorizationJobDocument categJobDocument) throws CategorizationJobException {
 
 		if (categJobDocument.getCategorizerType() == CategorizerType.META) {
-			processMetaCategorization(ds, categJobDocument);
+			processMetaCategorization(ds, webScanDocument, categJobDocument);
 		}
 
 	}
 
-	private void processMetaCategorization(Datastore ds, CategorizationJobDocument categJobDocument) {
+	private void processMetaCategorization(Datastore ds, WebScanDocument webScanDocument, CategorizationJobDocument categJobDocument) {
 
 		HttpTxnDAO txnDAO = new HttpTxnDAO(ds);
 		HttpTxnDocument httpTxnDocument = txnDAO.getHttpTxnDocument(categJobDocument.getTxnObjId());
 		if (httpTxnDocument != null) {
 
 			AbstractHttpTransaction httpTransaction = AbstractHttpTransaction.getObject(httpTxnDocument);
-			doProcessMetaCategorization(httpTransaction);
+			doProcessMetaCategorization(ds, webScanDocument, httpTransaction);
 
 		} else {
 
@@ -94,9 +96,16 @@ public class CategorizationService {
 
 	}
 
-	private void doProcessMetaCategorization(AbstractHttpTransaction httpTransaction) {
+	private void doProcessMetaCategorization(Datastore ds, WebScanDocument webScanDocument, AbstractHttpTransaction httpTransaction) {
 
 		logger.info("Running meta categorization on transaction with id: {}", httpTransaction.getObjId());
+
+		MetaCategorizer metaCategorizer = new MetaCategorizer();
+		metaCategorizer.initTransactionCategorizers(ds, webScanDocument);
+		for (TransactionCategorizer tc : metaCategorizer.getTransactionCategorizers()) {
+
+			tc.analyzeTransaction(httpTransaction);
+		}
 
 	}
 

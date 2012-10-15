@@ -7,9 +7,9 @@ import com.nvarghese.beowulf.common.http.wrapper.HttpRequestWrapper;
 
 public class HttpPostTransaction extends AbstractHttpTransaction {
 
-	public HttpPostTransaction(HttpPost post, String referer) {
+	public HttpPostTransaction(HttpPost post, String referer, TransactionSource source) {
 
-		super(new HttpRequestWrapper(HttpMethodType.GET, post, RequestPayloadFactory.createRequestPayload(post)), referer);
+		super(new HttpRequestWrapper(HttpMethodType.GET, post, RequestPayloadFactory.createRequestPayload(post)), referer, source);
 
 	}
 }

@@ -1,12 +1,18 @@
 package com.nvarghese.beowulf.scs.categorizers;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.code.morphia.Datastore;
+import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
+import com.nvarghese.beowulf.common.webtest.dao.TestModuleMetaDataDAO;
+import com.nvarghese.beowulf.common.webtest.model.TestModuleMetaDataDocument;
+import com.nvarghese.beowulf.scs.ScsManager;
 
 /**
  * 
@@ -15,20 +21,29 @@ import com.nvarghese.beowulf.common.webtest.WebTestType;
 public abstract class SingleSetCategorizer extends Categorizer {
 
 	protected WebTestType testType;
-	protected Set<Integer> testModuleNumbers;
+	protected Set<Long> moduleNumbers;
 
 	static Logger logger = LoggerFactory.getLogger(SingleSetCategorizer.class);
 
-	@Override
-	public boolean hasModules() {
+	public SingleSetCategorizer(Datastore ds, WebScanDocument webScanDocument, WebTestType testType) {
 
-		return testModuleNumbers.size() > 0 ? true : false;
+		super(ds, webScanDocument);
+		this.testType = testType;
+		moduleNumbers = new HashSet<Long>();
 	}
 
-	public SingleSetCategorizer(WebTestType testType) {
+	@Override
+	public void initialize() {
 
-		testModuleNumbers = new HashSet<Integer>();
-		this.testType = testType;
+		TestModuleMetaDataDAO testModuleMetaDataDAO = new TestModuleMetaDataDAO(ScsManager.getInstance().getDataStore());
+		List<TestModuleMetaDataDocument> testModuleMetaDataDocs = testModuleMetaDataDAO.findByTestType(testType);
+
+		for (TestModuleMetaDataDocument metaDoc : testModuleMetaDataDocs) {
+			if (getEnabledTestModuleNumbers().contains(metaDoc.getModuleNumber())) {
+				moduleNumbers.add(metaDoc.getModuleNumber());
+			}
+		}
+
 	}
 
 }

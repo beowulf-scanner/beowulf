@@ -16,10 +16,11 @@
 
 	<listener>
 		<listener-class>com.nvarghese.beowulf.smf.SmfQueueManager</listener-class>
+	</listener>	
+	<listener>
+		<listener-class>com.nvarghese.beowulf.smf.SmfTestModuleListLoader</listener-class>
 	</listener>
-
-
-
+	
 	<servlet>
 		<servlet-name>BwSmfRestApi</servlet-name>
 		<servlet-class>
@@ -35,9 +36,4 @@
 		<servlet-name>BwSmfRestApi</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
-
-
-
-
-
 </web-app>

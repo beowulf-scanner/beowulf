@@ -23,6 +23,7 @@ import com.nvarghese.beowulf.common.cobra.util.Urls;
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
 import com.nvarghese.beowulf.common.http.txn.HttpMethodType;
 import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
+import com.nvarghese.beowulf.common.http.txn.TransactionSource;
 
 public class CobraHttpRequest implements HttpRequest {
 
@@ -264,7 +265,8 @@ public class CobraHttpRequest implements HttpRequest {
 		try {
 
 			URI uri = this.requestURL.toURI();
-			rawTransaction = HttpTransactionFactory.createTransaction(HttpMethodType.getHttpMethodType(this.requestMethod), uri, null, null);
+			rawTransaction = HttpTransactionFactory.createTransaction(HttpMethodType.getHttpMethodType(this.requestMethod), uri, null, null,
+					TransactionSource.COBRA);
 
 		} catch (URISyntaxException e) {
 			logger.error("Problem with URI syntax at CobraHttpRequest.open: " + e.getMessage(), e);

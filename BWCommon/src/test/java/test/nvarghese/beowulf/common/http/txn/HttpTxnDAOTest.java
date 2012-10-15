@@ -25,6 +25,7 @@ import com.nvarghese.beowulf.common.http.txn.HttpMethodType;
 import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
 import com.nvarghese.beowulf.common.http.txn.HttpTxnDAO;
 import com.nvarghese.beowulf.common.http.txn.HttpTxnDocument;
+import com.nvarghese.beowulf.common.http.txn.TransactionSource;
 
 public class HttpTxnDAOTest {
 
@@ -42,7 +43,7 @@ public class HttpTxnDAOTest {
 	public void testSimpleGetRequestPersisted() throws URISyntaxException {
 
 		URI uri = new URI("http://localhost:9888/index.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null, null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, uri, null, null, TransactionSource.NONE);
 
 		HttpTxnDAO txnDAO = new HttpTxnDAO(ds);
 		HttpTxnDocument txnDocument = transaction.toHttpTxnDocument();
@@ -68,7 +69,7 @@ public class HttpTxnDAOTest {
 	public void testSimplePostRequestPersisted() throws URISyntaxException, UnsupportedEncodingException {
 
 		URI uri = new URI("http://localhost:9888/index.html");
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.POST, uri, getUrlEncodedFormEntity(), null, TransactionSource.NONE);
 
 		HttpTxnDAO txnDAO = new HttpTxnDAO(ds);
 		HttpTxnDocument txnDocument = transaction.toHttpTxnDocument();

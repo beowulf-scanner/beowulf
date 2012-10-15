@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<test_modules>
+	<test_module test_category="SPIDER" test_type="HTTP_RESPONSE_CODE_TEST">
+		<module_number>1001</module_number>
+		<module_name>URL-Regex</module_name>
+		<module_description>A simple URL regex based spidering module</module_description>
+		<test_attributes>200</test_attributes>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="SPIDER" test_type="HTML_ELEM_TEST">
+		<module_number>1002</module_number>
+		<module_name>HTML tag requester</module_name>
+		<module_description>Spidering module which extracts new links</module_description>
+		<test_attributes>APPLET,EMBED,FRAME,IFRAME,SCRIPT,IMG,A,AREA,BASE,LINK,"META"</test_attributes>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>Request all directories</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>A</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>APPLET</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>AREA</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>BASE</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>EMBED</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>FRAME</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>IFRAME</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>LINK</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>SCRIPT</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>IMG</option_name>
+			<option_value>false</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="SPIDER">
+		<module_number>1003</module_number>
+		<module_name>Form baseline</module_name>
+		<module_description>Spidering module responsible in form submissions</module_description>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>GET method</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>POST method</option_name>
+			<option_value>true</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="FILE_ENUMERATION">
+		<module_number>1004</module_number>
+		<module_name>Directory enumerator</module_name>
+		<module_description>Enumeration module for common directories</module_description>
+		<module_enabled>false</module_enabled>
+		<options type="boolean">
+			<option_name>Small (100 directory names)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium (300 directory names)</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Large (500 directory names)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Extra large (819 directory names)</option_name>
+			<option_value>false</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="FILE_ENUMERATION">
+		<module_number>1005</module_number>
+		<module_name>File enumerator</module_name>
+		<module_description>Enumeration module for commonly occuring filenames</module_description>
+		<module_enabled>false</module_enabled>
+		<options type="boolean">
+			<option_name>Small (20 filenames)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium (40 filenames)</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Large (64 filenames)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Small (10 extensions)</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium (25 extensions)</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Large (63 extensions)</option_name>
+			<option_value>false</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="FILE_ENUMERATION">
+		<module_number>1006</module_number>
+		<module_description>Enumeration module for commonly occuring backup filenames</module_description>
+		<module_name>Backup file enumerator</module_name>
+		<module_enabled>false</module_enabled>
+	</test_module>
+	<test_module test_category="INFORMATION_LEAKAGE">
+		<module_number>1007</module_number>
+		<module_name>Private address leakage</module_name>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="SESSION_MANAGEMENT">
+		<module_number>1008</module_number>
+		<module_name>Cookie strength </module_name>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="XSS">
+		<module_number>1009</module_number>
+		<module_name>XSS - Query</module_name>
+		<module_description>Module that detects XSS by executing DOM using a headless browser</module_description>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>Low</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>High</option_name>
+			<option_value>true</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="XSS">
+		<module_number>1010</module_number>
+		<module_name>Error XSS</module_name>
+		<module_description>Module that detects XSS in error pages</module_description>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>Low</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Medium</option_name>
+			<option_value>false</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>High</option_name>
+			<option_value>true</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="SESSION_MANAGEMENT">
+		<module_number>1011</module_number>
+		<module_name>Session fixation (cookies)</module_name>
+		<module_description>Module that tries to fix session at the server side</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="SQL_INJECTION">
+		<module_number>1012</module_number>
+		<module_name>Error-based SQL Injection</module_name>
+		<module_description>The module that is responsible in detecting SQL injections based on errors coming from server side</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="HIDDEN">
+		<module_number>1013</module_number>
+		<module_name>404 directory tester</module_name>
+		<module_description>File not found profile builder to detect custom error pages</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="HIDDEN">
+		<module_number>1014</module_number>
+		<module_name>Token submitter</module_name>
+		<module_description>The module responsible in sending tokens to server</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="INFORMATION_LEAKAGE">
+		<module_number>1015</module_number>
+		<module_name>CRLF Injection</module_name>
+		<module_description>The module that sends CRLF injection attacks</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="ARCHITECTURE">
+		<module_number>1016</module_number>
+		<module_name>Input / Output flows</module_name>
+		<module_description>Input output flow mapper</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="INFORMATION_LEAKAGE">
+		<module_number>1017</module_number>
+		<module_name>Directory listings</module_name>
+		<module_description>Tries to detect whether directory listing is enabled.</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="SESSION_MANAGEMENT">
+		<module_number>1018</module_number>
+		<module_name>Insecure transmission</module_name>
+		<module_description>Detects if confidential informations are sent in clear text to the server</module_description>
+		<module_enabled>true</module_enabled>
+		<options type="text">
+			<option_name>URL regex whitelist</option_name>
+			<option_value>.*</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="OS_COMMANDING">
+		<module_number>1019</module_number>
+		<module_name>Shell Command Exec</module_name>
+		<module_description>The module that tries to detect any OS command execution vulnerability</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="INFORMATION_LEAKAGE">
+		<module_number>1020</module_number>
+		<module_name>Platform error messages</module_name>
+		<module_description>The module that tries to detect platform error messages</module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="INFORMATION_LEAKAGE">
+		<module_number>1021</module_number>
+		<module_name>UserDir Enumeration</module_name>
+		<module_description></module_description>
+		<module_enabled>false</module_enabled>
+	</test_module>
+	<test_module test_category="FILE_INCLUSION">
+		<module_number>1022</module_number>
+		<module_name>Local File Inclusion</module_name>
+		<module_description></module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="FILE_INCLUSION">
+		<module_number>1023</module_number>
+		<module_name>Remote File Inclusion</module_name>
+		<module_description></module_description>
+		<module_enabled>false</module_enabled>
+	</test_module>
+	<test_module test_category="XPATH_INJECTION">
+		<module_number>1024</module_number>
+		<module_name>Error-based Xpath Injection</module_name>
+		<module_description></module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="SSI_INJECTION">
+		<module_number>1025</module_number>
+		<module_name>SSI Injection</module_name>
+		<module_description></module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="ARCHITECTURE">
+		<module_number>1026</module_number>
+		<module_name>FingerPrinting</module_name>
+		<module_description></module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+	<test_module test_category="SESSION_MANAGEMENT">
+		<module_number>1027</module_number>
+		<module_name>Cookie Attributes</module_name>
+		<module_description></module_description>
+		<module_enabled>true</module_enabled>
+		<options type="boolean">
+			<option_name>Check for domain attribute</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Check for path attribute</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Check for expiry attribute</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Check for secure attribute</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="boolean">
+			<option_name>Check for httponly attribute</option_name>
+			<option_value>true</option_value>
+		</options>
+		<options type="integer">
+			<option_name>Session Cookie should expire within</option_name>
+			<option_value>1</option_value>
+		</options>
+	</test_module>
+	<test_module test_category="SESSION_MANAGEMENT">
+		<module_number>1028</module_number>
+		<module_name>Insecure Password</module_name>
+		<module_description></module_description>
+		<module_enabled>true</module_enabled>
+	</test_module>
+</test_modules>

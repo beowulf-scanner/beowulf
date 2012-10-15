@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 import com.nvarghese.beowulf.common.jms.JmsQueueManager;
 import com.nvarghese.beowulf.scs.jms.listeners.BwCategorizerQueueListener;
 
-
-
 public class ScsQueueManager implements ServletContextListener {
 
 	private static PropertiesConfiguration propertiesConfiguration;
@@ -28,6 +26,7 @@ public class ScsQueueManager implements ServletContextListener {
 	private static final String QUEUES__CONNECTION_FACTORY_NAME = "queues.conn_factory_name";
 
 	private static JmsQueueManager bwCategorizerJmsQueueClient;
+	private static JmsQueueManager bwExecutorJmsQueueClient;
 
 	static Logger logger = LoggerFactory.getLogger(ScsQueueManager.class);
 
@@ -36,6 +35,7 @@ public class ScsQueueManager implements ServletContextListener {
 
 		try {
 			bwCategorizerJmsQueueClient.shutDownAll();
+			bwExecutorJmsQueueClient.shutDownAll();
 		} catch (JMSException e) {
 			logger.error("Failed to shutdown queue manager: " + e.getMessage(), e);
 		} catch (NamingException e) {
@@ -56,10 +56,15 @@ public class ScsQueueManager implements ServletContextListener {
 
 			bwCategorizerJmsQueueClient = new JmsQueueManager("/queue/bwCategorizerQueue", getConnectionFactoryName());
 			BwCategorizerQueueListener bwCategorizerQueueListener = new BwCategorizerQueueListener();
-			bwCategorizerJmsQueueClient.initializeQueueReceiverOnly(ScsQueueManager.class.getClassLoader().getResourceAsStream(getJndiFileName()), 5, bwCategorizerQueueListener);
+			bwCategorizerJmsQueueClient.initializeQueueReceiverOnly(ScsQueueManager.class.getClassLoader().getResourceAsStream(getJndiFileName()), 5,
+					bwCategorizerQueueListener);
+
+			bwExecutorJmsQueueClient = new JmsQueueManager("/queue/bwExecutorQueue", getConnectionFactoryName());
+			bwExecutorJmsQueueClient.initializeQueueSenderOnly(ScsQueueManager.class.getClassLoader().getResourceAsStream(getJndiFileName()));
 
 			// start listeners
 			bwCategorizerJmsQueueClient.startJmsQueueReceivers();
+			bwExecutorJmsQueueClient.startJmsQueueSender();
 			logger.info("SfcQueueManager for Bw-SCS started");
 
 		} catch (ConfigurationException e) {
@@ -141,5 +146,14 @@ public class ScsQueueManager implements ServletContextListener {
 	public static JmsQueueManager getBwCategorizerJmsQueueClient() {
 
 		return bwCategorizerJmsQueueClient;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public static JmsQueueManager getBwExecutorJmsQueueClient() {
+
+		return bwExecutorJmsQueueClient;
 	}
 }

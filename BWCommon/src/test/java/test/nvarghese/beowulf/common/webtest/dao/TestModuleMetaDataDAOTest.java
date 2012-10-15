@@ -1,6 +1,7 @@
 package test.nvarghese.beowulf.common.webtest.dao;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 import junit.framework.Assert;
 
@@ -50,6 +51,16 @@ public class TestModuleMetaDataDAOTest {
 		TestModuleMetaDataDAO testModuleDAO = new TestModuleMetaDataDAO(ds);
 		TestModuleMetaDataDocument loadedTestModuleMetaDataDocument = testModuleDAO.findByModuleNumber(1);
 		Assert.assertNotNull(loadedTestModuleMetaDataDocument);
+
+	}
+
+	@Test(dependsOnMethods = { "testFindByModuleNumber" })
+	public void testFindByTestType() {
+
+		TestModuleMetaDataDAO testModuleDAO = new TestModuleMetaDataDAO(ds);
+		List<TestModuleMetaDataDocument> docs = testModuleDAO.findByTestType(WebTestType.HTML_ELEM_TEST);
+		Assert.assertNotNull(docs);
+		Assert.assertTrue(docs.size() > 0);
 
 	}
 

@@ -29,21 +29,21 @@ public class ScsServerSettings {
 	private String zkGroupNode;
 	private String zkServers;
 
-	private static final String BWCATEG__IP_ADDR = "bw-categ.ip_address";
-	private static final String BWCATEG__DEFAULT_CONF_DIR = "bw-categ.conf.dir";
-	private static final String BWCATEG__JETTY__RESOURCE_FILE_NAME = "bw-categ.jetty.resource_file_name";
-	private static final String BWCATEG__JETTY__CONTEXT__DESCRIPTOR = "bw-categ.jetty.context.descriptor";
-	private static final String BWCATEG__JETTY__CONTEXT__RESOURCE_BASE = "bw-categ.jetty.context.resourcebase";
-	private static final String BWCATEG__JETTY__CONTEXT__ROOT_PATH = "bw-categ.jetty.context.rootpath";
+	private static final String BWSCS__IP_ADDR = "bw-scs.ip_address";
+	private static final String BWSCS__DEFAULT_CONF_DIR = "bw-scs.conf.dir";
+	private static final String BWSCS__JETTY__RESOURCE_FILE_NAME = "bw-scs.jetty.resource_file_name";
+	private static final String BWSCS__JETTY__CONTEXT__DESCRIPTOR = "bw-scs.jetty.context.descriptor";
+	private static final String BWSCS__JETTY__CONTEXT__RESOURCE_BASE = "bw-scs.jetty.context.resourcebase";
+	private static final String BWSCS__JETTY__CONTEXT__ROOT_PATH = "bw-scs.jetty.context.rootpath";
 
-	private static final String BWCATEG__ZK__GROUP_NODE = "bw-categ.zookeeper.group_node_name";
-	private static final String BWCATEG__ZK__SERVER_LIST = "bw-categ.zookeeper.servers";
+	private static final String BWSCS__ZK__GROUP_NODE = "bw-scs.zookeeper.group_node_name";
+	private static final String BWSCS__ZK__SERVER_LIST = "bw-scs.zookeeper.servers";
 
 	static Logger logger = LoggerFactory.getLogger(ScsServerSettings.class);
 
 	public ScsServerSettings() throws ConfigurationException, URISyntaxException {
 
-		URL u = ScsServerSettings.class.getClassLoader().getResource("bw-categorizer.conf");
+		URL u = ScsServerSettings.class.getClassLoader().getResource("bw-scs.conf");
 		propertiesConfiguration = new PropertiesConfiguration(u);
 		initialize();
 	}
@@ -64,7 +64,7 @@ public class ScsServerSettings {
 	private void initialize() throws URISyntaxException {
 
 		{
-			String bwCategHome = System.getenv("BWCATEG_HOME");
+			String bwCategHome = System.getenv("BWSCS_HOME");
 			if (bwCategHome != null) {
 				PropertyConfigurator.configure(bwCategHome + File.separator + "log4j.properties");
 				bwCategRootPath = bwCategHome;
@@ -78,19 +78,19 @@ public class ScsServerSettings {
 		}
 
 		{
-			defaultConfDir = propertiesConfiguration.getString(BWCATEG__DEFAULT_CONF_DIR, "conf");
-			ipAddress = propertiesConfiguration.getString(BWCATEG__IP_ADDR);
+			defaultConfDir = propertiesConfiguration.getString(BWSCS__DEFAULT_CONF_DIR, "conf");
+			ipAddress = propertiesConfiguration.getString(BWSCS__IP_ADDR);
 		}
 		{
-			jettyResourceFileName = propertiesConfiguration.getString(BWCATEG__JETTY__RESOURCE_FILE_NAME,
+			jettyResourceFileName = propertiesConfiguration.getString(BWSCS__JETTY__RESOURCE_FILE_NAME,
 					"jetty-web.xml");
-			jettyContextDescriptor = propertiesConfiguration.getString(BWCATEG__JETTY__CONTEXT__DESCRIPTOR);
-			jettyContextResourceBase = propertiesConfiguration.getString(BWCATEG__JETTY__CONTEXT__RESOURCE_BASE);
-			jettyContextRootPath = propertiesConfiguration.getString(BWCATEG__JETTY__CONTEXT__ROOT_PATH);
+			jettyContextDescriptor = propertiesConfiguration.getString(BWSCS__JETTY__CONTEXT__DESCRIPTOR);
+			jettyContextResourceBase = propertiesConfiguration.getString(BWSCS__JETTY__CONTEXT__RESOURCE_BASE);
+			jettyContextRootPath = propertiesConfiguration.getString(BWSCS__JETTY__CONTEXT__ROOT_PATH);
 		}
 		{
-			zkGroupNode = propertiesConfiguration.getString(BWCATEG__ZK__GROUP_NODE, "categ");
-			zkServers = propertiesConfiguration.getString(BWCATEG__ZK__SERVER_LIST);
+			zkGroupNode = propertiesConfiguration.getString(BWSCS__ZK__GROUP_NODE, "categ");
+			zkServers = propertiesConfiguration.getString(BWSCS__ZK__SERVER_LIST);
 		}
 	}
 
