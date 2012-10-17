@@ -20,6 +20,7 @@ import com.nvarghese.beowulf.common.utils.HttpUtils;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
 import com.nvarghese.beowulf.scs.categorizers.TokenSingleSetTransactionCategorizer;
 import com.nvarghese.beowulf.scs.categorizers.dao.DirectoryCategorizerDAO;
+import com.nvarghese.beowulf.scs.categorizers.model.DirectoryCategorizerDocument;
 
 public class DirectoryCategorizer extends TokenSingleSetTransactionCategorizer {
 
@@ -29,8 +30,11 @@ public class DirectoryCategorizer extends TokenSingleSetTransactionCategorizer {
 	public DirectoryCategorizer(Datastore ds, WebScanDocument webScanDocument) {
 
 		super(ds, webScanDocument, WebTestType.DIRECTORY_TEST);
-		if (ds != null)
+		if (ds != null) {
 			directoryCategorizerDAO = new DirectoryCategorizerDAO(ds);
+			if (directoryCategorizerDAO.getDirectoryCategorizerDocument() == null)
+				directoryCategorizerDAO.createDirectoryCategorizerDocument(new DirectoryCategorizerDocument());
+		}
 
 	}
 

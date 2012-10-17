@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.PostLoad;
+import com.google.code.morphia.annotations.PostPersist;
 import com.google.code.morphia.annotations.PrePersist;
 import com.google.code.morphia.annotations.Transient;
 import com.nvarghese.beowulf.common.model.AbstractDocument;
@@ -31,6 +33,9 @@ public class MasterScanConfigDocument extends AbstractDocument {
 	@Transient
 	private Map<Long, TestModuleScanConfigDocument> enabledTestModules;
 
+	@Transient
+	private boolean enabledTestModulesLoaded;
+
 	public MasterScanConfigDocument() {
 
 		setCreatedOn(new Date());
@@ -40,6 +45,7 @@ public class MasterScanConfigDocument extends AbstractDocument {
 		sessionScanConfig = new SessionSettingScanConfigDocument();
 		testModules = new HashMap<Long, TestModuleScanConfigDocument>();
 		enabledTestModules = new HashMap<Long, TestModuleScanConfigDocument>();
+		enabledTestModulesLoaded = false;
 
 	}
 
@@ -50,26 +56,29 @@ public class MasterScanConfigDocument extends AbstractDocument {
 
 	}
 
-//	@PostPersist
-//	void postPersist() {
-//
-//		loadEnabledTestModules();
-//	}
-//
-//	@PostLoad
-//	void postLoad() {
-//
-//		loadEnabledTestModules();
-//
-//	}
+	// @PostPersist
+	// void postPersistDocument() {
+	//
+	// loadEnabledTestModules();
+	// }
+	//
+	// @PostLoad
+	// void postLoadDocument() {
+	//
+	// loadEnabledTestModules();
+	//
+	// }
 
-	public void loadEnabledTestModules() {
+	private void loadEnabledTestModules() {
 
-		for (TestModuleScanConfigDocument testModuleConfigDoc : testModules.values()) {
+		if (!enabledTestModulesLoaded) {
+			for (TestModuleScanConfigDocument testModuleConfigDoc : testModules.values()) {
 
-			if (testModuleConfigDoc.isEnabled()) {
-				enabledTestModules.put(testModuleConfigDoc.getModuleNumber(), testModuleConfigDoc);
+				if (testModuleConfigDoc.isEnabled()) {
+					enabledTestModules.put(testModuleConfigDoc.getModuleNumber(), testModuleConfigDoc);
+				}
 			}
+			enabledTestModulesLoaded = true;
 		}
 
 	}
@@ -125,6 +134,10 @@ public class MasterScanConfigDocument extends AbstractDocument {
 	}
 
 	public Map<Long, TestModuleScanConfigDocument> getEnabledTestModules() {
+
+		if (!enabledTestModulesLoaded) {
+			loadEnabledTestModules();
+		}
 
 		return enabledTestModules;
 	}
