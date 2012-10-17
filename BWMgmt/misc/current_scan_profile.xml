@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!-- Updated: Tue Jan 17 11:25:18 IST 2012  -->
+<profile>
+	<!--  Start Http Client     -->
+	<http_client>
+		<max_redirects>3</max_redirects>
+		<max_consecutive_failed_requests>10</max_consecutive_failed_requests>
+		<max_failed_requests_per_server>500</max_failed_requests_per_server>
+		<max_request_count>100000</max_request_count>
+		<max_request_depth>10</max_request_depth>
+		<max_request_retries>3</max_request_retries>
+		<max_spider_urls>100000</max_spider_urls>
+		<socket_read_timeout>60</socket_read_timeout>
+		<user_agent_string>Mozilla/5.0 (compatible;)</user_agent_string>
+		<character_encoding>ISO-8859-1</character_encoding>
+	</http_client>
+	<!--   End Http Client    -->
+
+	<!--   Start Scan Settings  -->
+	<scan_settings>
+		<response_code_overrides>
+			<override_threshold>80</override_threshold>
+			<test_all_directories>false</test_all_directories>
+			<use_automatic_overrides>true</use_automatic_overrides>
+		</response_code_overrides>
+		<base_uris>
+			<base_uri>http://www.webscantest.com/osrun/</base_uri>
+		</base_uris>
+		<restrictions>
+			<forbidden_parameter_names>
+				<parameter_name>__VIEWSTATE</parameter_name>
+				<parameter_name>__EVENTARGUMENT</parameter_name>
+				<parameter_name>__EVENTTARGET</parameter_name>
+				<parameter_name>__VIEWSTATEENCRYPTED</parameter_name>
+				<parameter_name>__EVENTVALIDATION</parameter_name>
+				<parameter_name>authenticity_token</parameter_name>
+				<parameter_name>M</parameter_name>
+				<parameter_name>D</parameter_name>
+				<parameter_name>S</parameter_name>
+			</forbidden_parameter_names>
+			<irrelevant_parameter_names>
+				<parameter_name />
+			</irrelevant_parameter_names>
+			<forbidden_mime_types>
+				<mime_type_pattern>image/.*</mime_type_pattern>
+			</forbidden_mime_types>
+			<url_blacklist>
+				<url_pattern>logout</url_pattern>
+				<url_pattern>logoff</url_pattern>
+				<url_pattern>exit</url_pattern>
+				<url_pattern>delete</url_pattern>
+				<url_pattern>signout</url_pattern>
+				<url_pattern>
+					\\.(?:bmp|jpe?g|gif|tiff?|png|mpe?g|mov|avi|wmv|mp3|wma|wav)$
+				</url_pattern>
+				<url_pattern>\\.(?:docx?|xlsx?|mdb|rtf|pptx?|pdf)$</url_pattern>
+			</url_blacklist>
+			<url_whitelist>
+				<url_pattern />
+			</url_whitelist>
+		</restrictions>
+		<import_spidered_uris>
+			<uri />
+		</import_spidered_uris>
+	</scan_settings>
+	<!--  End Scan Setting      -->
+
+	<!--  Start Report Settings	-->
+	<report_settings>
+		<filename>report.xml</filename>
+		<min_severity>Informational</min_severity>
+		<auto_report_generation>false</auto_report_generation>
+		<format>xml</format>
+	</report_settings>
+	<!--  End Report Settings	-->
+
+	<!-- Start Session Settings -->
+	<session_settings>
+		<login>
+			<username />
+			<password />
+			<username_field_pattern />
+			<password_field_pattern />
+		</login>
+		<session_tracking>
+			<known_session_idlist>
+				<id_pattern>phpsessid</id_pattern>
+				<id_pattern>jsessionid</id_pattern>
+				<id_pattern>ASPSESSIONID.*</id_pattern>
+				<id_pattern>viewstate</id_pattern>
+				<id_pattern>cftoken</id_pattern>
+				<id_pattern>cfid</id_pattern>
+				<id_pattern>sid</id_pattern>
+				<id_pattern>ASP.NET_SessionId</id_pattern>
+				<id_pattern>SITESERVER</id_pattern>
+				<id_pattern>zenid</id_pattern>
+			</known_session_idlist>
+		</session_tracking>
+	</session_settings>
+
+	<!-- End Session Settings -->
+
+	<!-- Start Test Module Settings	-->
+	<test_modules>
+		<test_module>
+			<module_number>1001</module_number>
+			<module_name>URL-Regex</module_name>
+			<module_enabled>true</module_enabled>
+		</test_module>
+		<test_module>
+			<module_number>1002</module_number>
+			<module_name>HTML tag requester</module_name>
+			<module_enabled>true</module_enabled>
+			<options>
+				<option_name>Request all directories</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>A</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>APPLET</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>AREA</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>BASE</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>EMBED</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>FRAME</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>IFRAME</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>LINK</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>SCRIPT</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>IMG</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>1003</module_number>
+			<module_name>Form baseline</module_name>
+			<module_enabled>true</module_enabled>
+			<options>
+				<option_name>GET method</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>POST method</option_name>
+				<option_value>true</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>1004</module_number>
+			<module_name>Directory enumerator</module_name>
+			<module_enabled>true</module_enabled>
+			<options>
+				<option_name>Small (100 directory names)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Medium (300 directory names)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Large (500 directory names)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Extra large (819 directory names)</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>1005</module_number>
+			<module_name>File enumerator</module_name>
+			<module_enabled>true</module_enabled>
+			<options>
+				<option_name>Small (20 filenames)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Medium (40 filenames)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Large (64 filenames)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Small (10 extensions)</option_name>
+				<option_value>true</option_value>
+			</options>
+			<options>
+				<option_name>Medium (25 extensions)</option_name>
+				<option_value>false</option_value>
+			</options>
+			<options>
+				<option_name>Large (63 extensions)</option_name>
+				<option_value>false</option_value>
+			</options>
+		</test_module>
+		<test_module>
+			<module_number>1006</module_number>
+			<module_name>Backup file enumerator</module_name>
+			<module_enabled>true</module_enabled>
+		</test_module>
+	</test_modules>
+
+	<!-- End Test Module Settings -->
+</profile>
+

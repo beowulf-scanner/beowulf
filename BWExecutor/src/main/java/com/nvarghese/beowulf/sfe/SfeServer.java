@@ -15,14 +15,14 @@ import org.eclipse.jetty.xml.XmlConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SFExecutorServer {
+public class SfeServer {
 
 	private Server jettyServer;
 
 	/* logger */
-	static Logger logger = LoggerFactory.getLogger(SFExecutorServer.class);
+	static Logger logger = LoggerFactory.getLogger(SfeServer.class);
 
-	public static SFExecutorServer initializeServer(SFExecutorSettings settings) throws Exception {
+	public static SfeServer initializeServer(SfeSettings settings) throws Exception {
 
 		Resource jettyEnvXml = findAndGetJettyResource(settings);
 		// InputStream in =
@@ -31,7 +31,7 @@ public class SFExecutorServer {
 		XmlConfiguration configuration = new XmlConfiguration(jettyEnvXml.getInputStream());
 		logger.debug("SFExecutorServer configured with jetty web settings");
 
-		SFExecutorServer server = new SFExecutorServer();
+		SfeServer server = new SfeServer();
 
 		server.jettyServer = (Server) configuration.configure();
 		WebAppContext context = new WebAppContext();
@@ -55,7 +55,7 @@ public class SFExecutorServer {
 
 	}
 
-	private static Resource findAndGetJettyResource(SFExecutorSettings settings) throws MalformedURLException,
+	private static Resource findAndGetJettyResource(SfeSettings settings) throws MalformedURLException,
 			IOException {
 
 		Resource jettyEnvXml = null;
@@ -103,10 +103,10 @@ public class SFExecutorServer {
 		return jettyServer;
 	}
 
-	private static SFExecutorSettings handleCommandLine(String[] args) {
+	private static SfeSettings handleCommandLine(String[] args) {
 
 		ProgramOptions options = new ProgramOptions();
-		SFExecutorSettings settings = null;
+		SfeSettings settings = null;
 		try {
 			if (args.length > 0) {
 				CommandLine commands = options.parseArguments(args);
@@ -118,7 +118,7 @@ public class SFExecutorServer {
 				} else if (commands.hasOption(ProgramOptions.CONFIG_FILE_OPTION)) {
 					String filename = commands.getOptionValue(ProgramOptions.CONFIG_FILE_OPTION);
 					try {
-						settings = new SFExecutorSettings(new File(filename));
+						settings = new SfeSettings(new File(filename));
 					} catch (ConfigurationException e) {
 						logger.error("Error in config file: " + e.getMessage());
 						System.exit(0);
@@ -130,7 +130,7 @@ public class SFExecutorServer {
 
 			} else {
 				/* default */
-				settings = new SFExecutorSettings();
+				settings = new SfeSettings();
 			}
 		} catch (ParseException pe) {
 			logger.error("ParseException thrown: " + pe.getMessage());
@@ -163,11 +163,11 @@ public class SFExecutorServer {
 	public static void main(String[] args) throws Exception {
 
 		// PropertyConfigurator.configure("log4j.properties");
-		SFExecutorSettings settings = handleCommandLine(args);
+		SfeSettings settings = handleCommandLine(args);
 
 		logger.info("SFExecutorServer Server initializing...");
-		final SFExecutorServer sfeServer = initializeServer(settings);
-		SFExecutorManager.initialize(sfeServer, settings, false);
+		final SfeServer sfeServer = initializeServer(settings);
+		SfeManager.initialize(sfeServer, settings, false);
 
 		// add shutdown hook
 		Runtime.getRuntime().addShutdownHook(new Thread() {

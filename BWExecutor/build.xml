@@ -35,7 +35,7 @@
 		<property name="dist.dir" location="${bw-executor.root}/dist" />
 		<property name="classpath" location="${lib.dir}" />
 
-		<property name="main-class" value="com.nvarghese.beowulf.sfe.SFExecutorServer" />
+		<property name="main-class" value="com.nvarghese.beowulf.sfe.SfeServer" />
 	</target>
 
 	<!-- - - - - - - - - - - - - - - - - - 

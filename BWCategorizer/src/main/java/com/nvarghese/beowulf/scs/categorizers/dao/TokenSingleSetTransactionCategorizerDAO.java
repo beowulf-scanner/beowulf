@@ -10,7 +10,6 @@ import com.google.code.morphia.query.Query;
 import com.google.code.morphia.query.QueryResults;
 import com.google.code.morphia.query.UpdateOperations;
 import com.nvarghese.beowulf.common.dao.AbstractMongoDAO;
-import com.nvarghese.beowulf.scs.categorizers.model.DirectoryCategorizerDocument;
 import com.nvarghese.beowulf.scs.categorizers.model.TokenSingleSetTransactionCategorizerDocument;
 
 public class TokenSingleSetTransactionCategorizerDAO extends AbstractMongoDAO<TokenSingleSetTransactionCategorizerDocument, ObjectId> {

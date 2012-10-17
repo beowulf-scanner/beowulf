@@ -10,7 +10,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SFExecutorSettings {
+public class SfeSettings {
 
 	private PropertiesConfiguration propertiesConfiguration;
 
@@ -29,33 +29,33 @@ public class SFExecutorSettings {
 	private String zkGroupNode;
 	private String zkServers;
 
-	private static final String BWSFE__IP_ADDR = "bw-executor.ip_address";
-	private static final String BWSFE__DEFAULT_CONF_DIR = "bw-executor.conf.dir";
-	private static final String BWSFE__JETTY__RESOURCE_FILE_NAME = "bw-executor.jetty.resource_file_name";
-	private static final String BWSFE__JETTY__CONTEXT__DESCRIPTOR = "bw-executor.jetty.context.descriptor";
-	private static final String BWSFE__JETTY__CONTEXT__RESOURCE_BASE = "bw-executor.jetty.context.resourcebase";
-	private static final String BWSFE__JETTY__CONTEXT__ROOT_PATH = "bw-executor.jetty.context.rootpath";
+	private static final String BWSFE__IP_ADDR = "bw-sfe.ip_address";
+	private static final String BWSFE__DEFAULT_CONF_DIR = "bw-sfe.conf.dir";
+	private static final String BWSFE__JETTY__RESOURCE_FILE_NAME = "bw-sfe.jetty.resource_file_name";
+	private static final String BWSFE__JETTY__CONTEXT__DESCRIPTOR = "bw-sfe.jetty.context.descriptor";
+	private static final String BWSFE__JETTY__CONTEXT__RESOURCE_BASE = "bw-sfe.jetty.context.resourcebase";
+	private static final String BWSFE__JETTY__CONTEXT__ROOT_PATH = "bw-sfe.jetty.context.rootpath";
 
-	private static final String BWSFE__ZK__GROUP_NODE = "bw-executor.zookeeper.group_node_name";
-	private static final String BWSFE__ZK__SERVER_LIST = "bw-executor.zookeeper.servers";
+	private static final String BWSFE__ZK__GROUP_NODE = "bw-sfe.zookeeper.group_node_name";
+	private static final String BWSFE__ZK__SERVER_LIST = "bw-sfe.zookeeper.servers";
 
-	static Logger logger = LoggerFactory.getLogger(SFExecutorSettings.class);
+	static Logger logger = LoggerFactory.getLogger(SfeSettings.class);
 
-	public SFExecutorSettings() throws ConfigurationException, URISyntaxException {
+	public SfeSettings() throws ConfigurationException, URISyntaxException {
 
-		URL u = SFExecutorSettings.class.getClassLoader().getResource("bw-executor.conf");
+		URL u = SfeSettings.class.getClassLoader().getResource("bw-sfe.conf");
 		propertiesConfiguration = new PropertiesConfiguration(u);
 		initialize();
 	}
 
-	public SFExecutorSettings(String execServerConfigFileName) throws ConfigurationException, URISyntaxException {
+	public SfeSettings(String execServerConfigFileName) throws ConfigurationException, URISyntaxException {
 
-		propertiesConfiguration = new PropertiesConfiguration(SFExecutorSettings.class.getClassLoader().getResource(
+		propertiesConfiguration = new PropertiesConfiguration(SfeSettings.class.getClassLoader().getResource(
 				execServerConfigFileName));
 		initialize();
 	}
 
-	public SFExecutorSettings(File execServerConfigFilePath) throws ConfigurationException, URISyntaxException {
+	public SfeSettings(File execServerConfigFilePath) throws ConfigurationException, URISyntaxException {
 
 		propertiesConfiguration = new PropertiesConfiguration(execServerConfigFilePath);
 		initialize();

@@ -3,35 +3,43 @@ package com.nvarghese.beowulf.sfe;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.zookeeper.KeeperException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.code.morphia.Datastore;
+import com.google.code.morphia.Morphia;
+import com.mongodb.Mongo;
+import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
 import com.nvarghese.beowulf.common.exception.ServerSettingException;
 import com.nvarghese.beowulf.common.zookeeper.ZkClientRunner;
 
-public class SFExecutorManager {
+public class SfeManager {
 
-	private SFExecutorServer execServer;
+	private SfeServer execServer;
 	private ZkClientRunner zkClientRunner;
-	private SFExecutorSettings settings;
+	private SfeSettings settings;
+	private Datastore ds;
 
 	private static AtomicBoolean initialized = new AtomicBoolean(false);
-	private static volatile SFExecutorManager instance;
+	private static volatile SfeManager instance;
 
-	static Logger logger = LoggerFactory.getLogger(SFExecutorManager.class);
+	static Logger logger = LoggerFactory.getLogger(SfeManager.class);
 
-	private SFExecutorManager() {
+	private SfeManager() {
 
 	}
 
-	public static void initialize(SFExecutorServer execServer, SFExecutorSettings settings, boolean override) {
+	public static void initialize(SfeServer execServer,
+			SfeSettings settings, boolean override) {
 
-		synchronized (SFExecutorManager.class) {
+		synchronized (SfeManager.class) {
 			if (instance == null || override == true) {
-				instance = new SFExecutorManager();
+				instance = new SfeManager();
 				instance.execServer = execServer;
 				instance.settings = settings;
+				instance.initializeDatastore();
 				instance.notifyZookeeper();
 				initialized.set(true);
 			}
@@ -41,14 +49,32 @@ public class SFExecutorManager {
 
 	private void notifyZookeeper() {
 
-		String instanceName = settings.getIpAddress() + ":"
-				+ Integer.valueOf(execServer.getJettyServer().getConnectors()[0].getPort());
+		String instanceName = settings.getIpAddress()
+				+ ":"
+				+ Integer
+						.valueOf(execServer.getJettyServer().getConnectors()[0]
+								.getPort());
 		String zkNodeName = settings.getZkGroupNode();
-		zkClientRunner = new ZkClientRunner(settings.getZkServers(), instanceName, zkNodeName);
+		zkClientRunner = new ZkClientRunner(settings.getZkServers(),
+				instanceName, zkNodeName);
 		try {
 			joinZkGroup();
 		} catch (ServerSettingException e) {
 			logger.error("Failed to notify zookeeper.", e);
+		}
+
+	}
+
+	private void initializeDatastore() {
+
+		Mongo mongo;
+		try {
+			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
+			ds = new Morphia().createDatastore(mongo,
+					BeowulfCommonConfigManager.getDbName());
+		} catch (ConfigurationException e) {
+			logger.error("Failed to initialize data store. Reason: {}",
+					e.getMessage(), e);
 		}
 
 	}
@@ -62,7 +88,8 @@ public class SFExecutorManager {
 			exists = zkClientRunner.checkMemberInGroup();
 
 			if (exists) {
-				String message = "Server already joined to " + zkClientRunner.getGroupName()
+				String message = "Server already joined to "
+						+ zkClientRunner.getGroupName()
 						+ " in zookeeper. Try changing port number";
 				throw new ServerSettingException(message);
 			}
@@ -87,17 +114,17 @@ public class SFExecutorManager {
 		}
 	}
 
-	public static SFExecutorManager getInstance() {
+	public static SfeManager getInstance() {
 
 		return instance;
 	}
 
-	public SFExecutorServer getExecServer() {
+	public SfeServer getExecServer() {
 
 		return execServer;
 	}
 
-	public SFExecutorSettings getSettings() {
+	public SfeSettings getSettings() {
 
 		return settings;
 	}
@@ -105,6 +132,11 @@ public class SFExecutorManager {
 	public static boolean isInitialized() {
 
 		return initialized.get();
+	}
+
+	public Datastore getDataStore() {
+
+		return ds;
 	}
 
 }

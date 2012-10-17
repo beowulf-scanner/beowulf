@@ -1,7 +1,11 @@
 package com.nvarghese.beowulf.common.webtest.sfe.jobs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 
+import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Property;
 import com.nvarghese.beowulf.common.model.AbstractDocument;
@@ -17,8 +21,8 @@ public class TestJobDocument extends AbstractDocument {
 	@Property("module_number")
 	private long moduleNumber;
 
-	@Property("test_parameters")
-	private String[] testParameters;
+	@Embedded("test_parameters")
+	private List<TestParameterDocument> testParameters;
 
 	@Property("webscan_obj_id")
 	private ObjectId webScanObjId;
@@ -29,6 +33,11 @@ public class TestJobDocument extends AbstractDocument {
 	@Property("job_status")
 	private JobStatus jobStatus;
 
+	public TestJobDocument() {
+
+		testParameters = new ArrayList<TestParameterDocument>();
+	}
+
 	public WebTestType getTestType() {
 
 		return testType;
@@ -37,16 +46,6 @@ public class TestJobDocument extends AbstractDocument {
 	public void setTestType(WebTestType testType) {
 
 		this.testType = testType;
-	}
-
-	public String[] getTestParameters() {
-
-		return testParameters;
-	}
-
-	public void setTestParameters(String[] testParameters) {
-
-		this.testParameters = testParameters;
 	}
 
 	public long getModuleNumber() {
@@ -77,6 +76,16 @@ public class TestJobDocument extends AbstractDocument {
 	public void setTxnObjId(ObjectId txnObjId) {
 
 		this.txnObjId = txnObjId;
+	}
+
+	public List<TestParameterDocument> getTestParameters() {
+
+		return testParameters;
+	}
+
+	public void setTestParameters(List<TestParameterDocument> testParameters) {
+
+		this.testParameters = testParameters;
 	}
 
 	public JobStatus getJobStatus() {

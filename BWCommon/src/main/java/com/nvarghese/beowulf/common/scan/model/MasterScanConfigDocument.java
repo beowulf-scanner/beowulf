@@ -71,15 +71,13 @@ public class MasterScanConfigDocument extends AbstractDocument {
 
 	private void loadEnabledTestModules() {
 
-		if (!enabledTestModulesLoaded) {
-			for (TestModuleScanConfigDocument testModuleConfigDoc : testModules.values()) {
+		for (TestModuleScanConfigDocument testModuleConfigDoc : testModules.values()) {
 
-				if (testModuleConfigDoc.isEnabled()) {
-					enabledTestModules.put(testModuleConfigDoc.getModuleNumber(), testModuleConfigDoc);
-				}
+			if (testModuleConfigDoc.isEnabled()) {
+				enabledTestModules.put(testModuleConfigDoc.getModuleNumber(), testModuleConfigDoc);
 			}
-			enabledTestModulesLoaded = true;
 		}
+		enabledTestModulesLoaded = true;
 
 	}
 
@@ -135,11 +133,24 @@ public class MasterScanConfigDocument extends AbstractDocument {
 
 	public Map<Long, TestModuleScanConfigDocument> getEnabledTestModules() {
 
-		if (!enabledTestModulesLoaded) {
+		if (!isEnabledTestModulesLoaded()) {
 			loadEnabledTestModules();
 		}
 
 		return enabledTestModules;
+	}
+
+	private boolean isEnabledTestModulesLoaded() {
+
+		boolean loaded = false;
+		if (enabledTestModulesLoaded == true && enabledTestModules.size() > 0) {
+			// this is only a sanity check
+			loaded = true;
+		} else {
+			enabledTestModulesLoaded = false;
+		}
+
+		return loaded;
 	}
 
 }

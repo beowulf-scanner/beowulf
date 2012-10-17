@@ -1,6 +1,8 @@
 package com.nvarghese.beowulf.scs.categorizers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -14,6 +16,7 @@ import com.nvarghese.beowulf.common.webtest.WebTestType;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJob;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDAO;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDocument;
+import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestParameterDocument;
 import com.nvarghese.beowulf.scs.categorizers.dao.TokenSingleSetTransactionCategorizerDAO;
 import com.nvarghese.beowulf.scs.categorizers.model.TokenSingleSetTransactionCategorizerDocument;
 import com.nvarghese.beowulf.scs.services.BwExecutorService;
@@ -71,7 +74,15 @@ public abstract class TokenSingleSetTransactionCategorizer extends SingleSetCate
 		testJobDocument.setTestType(testType);
 		testJobDocument.setTxnObjId(transaction.getObjId());
 		testJobDocument.setWebScanObjId(webScanDocument.getId());
-		testJobDocument.setTestParameters(new String[] { token });
+		
+		//add test params
+		List<TestParameterDocument> params = new ArrayList<TestParameterDocument>();
+		TestParameterDocument parameterDocument = new TestParameterDocument();
+		parameterDocument.setParameterType(token.getClass().getName());
+		parameterDocument.setParameterValue(token);
+		params.add(parameterDocument);
+		testJobDocument.setTestParameters(params);
+		
 
 		TestJobDAO testJobDAO = new TestJobDAO(ds);
 		ObjectId id = testJobDAO.createTestJobDocument(testJobDocument);
