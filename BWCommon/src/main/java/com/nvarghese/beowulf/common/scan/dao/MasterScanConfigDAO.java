@@ -27,8 +27,7 @@ public class MasterScanConfigDAO extends AbstractMongoDAO<MasterScanConfigDocume
 	public MasterScanConfigDocument getMasterScanConfigDocument(ObjectId objectId) {
 
 		MasterScanConfigDocument scanConfigDocument = get(objectId);
-		scanConfigDocument.loadEnabledTestModules();
-
+		
 		return scanConfigDocument;
 	}
 
@@ -41,8 +40,7 @@ public class MasterScanConfigDAO extends AbstractMongoDAO<MasterScanConfigDocume
 
 		ObjectId id = new ObjectId(objectId);
 		MasterScanConfigDocument scanConfigDocument = get(id);
-		scanConfigDocument.loadEnabledTestModules();
-
+		
 		return scanConfigDocument;
 
 	}

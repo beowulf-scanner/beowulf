@@ -2,11 +2,13 @@ package com.nvarghese.beowulf.common.webtest.sfe.jobs;
 
 import org.bson.types.ObjectId;
 
+import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Property;
 import com.nvarghese.beowulf.common.model.AbstractDocument;
 import com.nvarghese.beowulf.common.webtest.JobStatus;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
 
+@Entity("test_jobs")
 public class TestJobDocument extends AbstractDocument {
 
 	@Property("test_type")

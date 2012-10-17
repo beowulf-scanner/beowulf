@@ -62,9 +62,9 @@ public class MetaCategorizer {
 				try {
 					Constructor constructor = c.getConstructor(Datastore.class, WebScanDocument.class);
 					TransactionCategorizer txnCategorizer = (TransactionCategorizer) constructor.newInstance(ds, webScanDocument);
-					txnCategorizer.initialize();
+					((Categorizer) txnCategorizer).initialize();
 
-					transactionCategorizers.add(((TransactionCategorizer) constructor.newInstance(ds, webScanDocument)));
+					transactionCategorizers.add(txnCategorizer);
 					logger.info("Added class `{}` to TransactionCategorizer list", c.getName());
 				} catch (InstantiationException e) {
 					logger.error("Failed to initialize TransactionCategorizer of type: {}", c.getName(), e);

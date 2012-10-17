@@ -26,7 +26,9 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 	 */
 	public WebScanDocument getWebScanDocument(ObjectId objectId) {
 
-		return get(objectId);
+		WebScanDocument webScanDocument = get(objectId);
+		
+		return webScanDocument;
 	}
 
 	/**
@@ -37,7 +39,9 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 	public WebScanDocument getWebScanDocument(String objectId) {
 
 		ObjectId id = new ObjectId(objectId);
-		return get(id);
+		WebScanDocument webScanDocument = get(id);
+
+		return webScanDocument;
 
 	}
 

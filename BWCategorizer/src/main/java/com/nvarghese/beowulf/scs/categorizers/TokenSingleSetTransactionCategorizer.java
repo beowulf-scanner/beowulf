@@ -15,6 +15,7 @@ import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJob;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDAO;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDocument;
 import com.nvarghese.beowulf.scs.categorizers.dao.TokenSingleSetTransactionCategorizerDAO;
+import com.nvarghese.beowulf.scs.categorizers.model.TokenSingleSetTransactionCategorizerDocument;
 import com.nvarghese.beowulf.scs.services.BwExecutorService;
 
 public abstract class TokenSingleSetTransactionCategorizer extends SingleSetCategorizer implements TransactionCategorizer {
@@ -26,6 +27,10 @@ public abstract class TokenSingleSetTransactionCategorizer extends SingleSetCate
 		super(ds, webScanDocument, webTestType);
 		if (ds != null) {
 			tokenSingleSetTransactionCategorizerDAO = new TokenSingleSetTransactionCategorizerDAO(ds);
+			if (tokenSingleSetTransactionCategorizerDAO.getTokenSingleSetTransactionCategorizerDocument() == null) {
+				tokenSingleSetTransactionCategorizerDAO
+						.createTokenSingleSetTransactionCategorizerDocument(new TokenSingleSetTransactionCategorizerDocument());
+			}
 		}
 
 	}
@@ -44,12 +49,12 @@ public abstract class TokenSingleSetTransactionCategorizer extends SingleSetCate
 			if (!tokenSingleSetTransactionCategorizerDAO.isTokenHashPresent(tokenHash)) {
 				tokenSingleSetTransactionCategorizerDAO.addTokenHash(tokenHash);
 				for (Long moduleNumber : moduleNumbers) {
-					TestJob testJob = makeTestJob(transaction, moduleNumber, tokenHash);
+					TestJob testJob = makeTestJob(transaction, moduleNumber, token);
 					testJobs.add(testJob);
 				}
 			}
 		}
-		
+
 		// submit to queue
 		BwExecutorService bwExecutorService = new BwExecutorService();
 		bwExecutorService.submitJobs(testJobs);
