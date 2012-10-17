@@ -69,7 +69,7 @@ public class TestExecutorService {
 
 	private void routeTestJob(Datastore ds, WebScanDocument webScanDocument, TestJobDocument testJobDocument) throws TestJobException {
 
-		if(testJobDocument.get)
+		//if(testJobDocument.get)
 
 	}
 
