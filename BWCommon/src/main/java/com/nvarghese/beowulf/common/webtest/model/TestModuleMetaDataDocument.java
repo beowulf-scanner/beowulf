@@ -23,6 +23,9 @@ public class TestModuleMetaDataDocument extends AbstractDocument {
 	@Property("module_enabled")
 	private boolean enabled;
 
+	@Property("module_class_name")
+	private String moduleClassName;
+
 	@Property("test_category")
 	private WebTestCategory testCategory;
 
@@ -40,7 +43,7 @@ public class TestModuleMetaDataDocument extends AbstractDocument {
 
 	@Embedded
 	private List<TestModuleOptionDocument> options;
-	
+
 	@PrePersist
 	void prePersist() {
 
@@ -76,6 +79,16 @@ public class TestModuleMetaDataDocument extends AbstractDocument {
 	public void setEnabled(boolean enabled) {
 
 		this.enabled = enabled;
+	}
+
+	public String getModuleClassName() {
+
+		return moduleClassName;
+	}
+
+	public void setModuleClassName(String moduleClassName) {
+
+		this.moduleClassName = moduleClassName;
 	}
 
 	public List<TestModuleOptionDocument> getOptions() {

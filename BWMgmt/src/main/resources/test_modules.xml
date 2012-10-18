@@ -7,6 +7,7 @@
 		<test_attributes>
 			<test_attribute>200</test_attribute>
 		</test_attributes>
+		<module_class_name>com.nvarghese.beowulf.sfe.webtest.tm.enumeration.DirectoryEnumerator</module_class_name>
 		<module_enabled>true</module_enabled>
 	</meta_test_module>
 	<meta_test_module test_category="SPIDER" test_type="HTML_ELEM_TEST">

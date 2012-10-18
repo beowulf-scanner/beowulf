@@ -11,12 +11,19 @@ import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
 import com.nvarghese.beowulf.common.ds.DataStoreUtil;
 import com.nvarghese.beowulf.common.rpc.BwControllerRpcInterface;
 import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
+import com.nvarghese.beowulf.common.scan.model.TestModuleScanConfigDocument;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.webtest.JobStatus;
+import com.nvarghese.beowulf.common.webtest.WebTestType;
+import com.nvarghese.beowulf.common.webtest.dao.TestModuleMetaDataDAO;
+import com.nvarghese.beowulf.common.webtest.model.TestModuleMetaDataDocument;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJob;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDAO;
 import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDocument;
+import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestParameterDocument;
 import com.nvarghese.beowulf.sfe.SfeManager;
+import com.nvarghese.beowulf.sfe.webtest.tm.AbstractTestModule;
+import com.nvarghese.beowulf.sfe.webtest.types.DirectoryTestType;
 
 public class TestExecutorService {
 
@@ -69,7 +76,39 @@ public class TestExecutorService {
 
 	private void routeTestJob(Datastore ds, WebScanDocument webScanDocument, TestJobDocument testJobDocument) throws TestJobException {
 
-		//if(testJobDocument.get)
+		// load meta testModule
+		TestModuleMetaDataDAO testModuleMetaDAO = new TestModuleMetaDataDAO(SfeManager.getInstance().getDataStore());
+		TestModuleMetaDataDocument testModuleMetaDocument = testModuleMetaDAO.findByModuleNumber(testJobDocument.getModuleNumber());
+
+		// load enabled test module
+		TestModuleScanConfigDocument testModuleScanConfigDocument = webScanDocument.getScanConfig().getTestModules()
+				.get(testJobDocument.getModuleNumber());
+
+		if (testModuleMetaDocument != null && testModuleScanConfigDocument != null) {
+
+			try {
+
+				if (testJobDocument.getTestType() == WebTestType.DIRECTORY_TEST) {
+					Class targetTestModuleClass = Class.forName(testModuleMetaDocument.getModuleClassName());
+					Object targetTestModuleObject = targetTestModuleClass.newInstance();
+					DirectoryTestType directoryTestModule = DirectoryTestType.class.cast(targetTestModuleObject);
+					((AbstractTestModule) directoryTestModule).initialize(ds, testModuleMetaDocument, testModuleScanConfigDocument);
+					TestParameterDocument testParamDocument = testJobDocument.getTestParameters().get(0);
+					String paramValue = (String) testParamDocument.getParameterValue();
+					directoryTestModule.testByDirectory(testJobDocument.getTxnObjId(), paramValue);
+				}
+
+			} catch (ClassNotFoundException e) {
+
+			} catch (InstantiationException e) {
+
+			} catch (IllegalAccessException e) {
+
+			}
+
+		} else {
+
+		}
 
 	}
 

@@ -99,6 +99,7 @@ public class SmfTestModuleListLoader implements ServletContextListener {
 		testModuleMetaDataDocument.setEnabled(metaTestModule.isEnabled());
 		testModuleMetaDataDocument.setDescription(metaTestModule.getModuleDescription());
 		testModuleMetaDataDocument.setModuleName(metaTestModule.getModuleName());
+		testModuleMetaDataDocument.setModuleClassName(metaTestModule.getModuleClassName());
 		testModuleMetaDataDocument.setTestAttributes(metaTestModule.getTestAttributes().getTestAttribute());
 		testModuleMetaDataDocument.setTestCategory(metaTestModule.getWebTestCategory());
 		testModuleMetaDataDocument.setTestType(metaTestModule.getWebTestType());

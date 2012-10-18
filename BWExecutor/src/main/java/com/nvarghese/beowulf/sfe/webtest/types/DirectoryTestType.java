@@ -5,4 +5,6 @@ import org.bson.types.ObjectId;
 public interface DirectoryTestType {
 
 	public void testByDirectory(ObjectId txnObjId, String directory);
+
+	
 }

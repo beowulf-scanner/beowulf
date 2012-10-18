@@ -15,8 +15,8 @@ import com.nvarghese.beowulf.common.webtest.WebTestCategory;
 import com.nvarghese.beowulf.common.webtest.WebTestType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "moduleNumber", "moduleName", "enabled", "moduleDescription", "options", "webTestCategory", "webTestType",
-		"testAttributes" })
+@XmlType(name = "", propOrder = { "moduleNumber", "moduleName", "enabled", "moduleClassName", "moduleDescription", "options", "webTestCategory",
+		"webTestType", "testAttributes" })
 @XmlRootElement(name = "meta_test_module")
 public class MetaTestModule {
 
@@ -28,6 +28,9 @@ public class MetaTestModule {
 
 	@XmlElement(name = "module_enabled", required = true)
 	protected boolean enabled;
+
+	@XmlElement(name = "module_class_name", required = true)
+	protected String moduleClassName;
 
 	@XmlElement(name = "module_description")
 	protected String moduleDescription;
@@ -106,6 +109,16 @@ public class MetaTestModule {
 	public void setEnabled(boolean value) {
 
 		this.enabled = value;
+	}
+
+	public String getModuleClassName() {
+
+		return moduleClassName;
+	}
+
+	public void setModuleClassName(String moduleClassName) {
+
+		this.moduleClassName = moduleClassName;
 	}
 
 	/**
