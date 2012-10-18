@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 
 import javax.jms.JMSException;
 
@@ -78,7 +79,7 @@ public class NewScanService {
 			categJob.setCategorizerJobObjId(categJobObjId.toString());
 			categJob.setWebScanObjId(webScanDocument.getId().toString());
 			categJob.setDatabaseName(ds.getDB().getName());
-			
+
 			BwCategorizerService categService = new BwCategorizerService();
 			try {
 				categService.submitJob(categJob);
@@ -103,7 +104,7 @@ public class NewScanService {
 		jobDoc.setCategorizerType(CategorizerType.META);
 
 		CategorizationJobDAO categorizationJobDAO = new CategorizationJobDAO(ds);
-		ObjectId id  = categorizationJobDAO.createCategorizationJobDocument(jobDoc);
+		ObjectId id = categorizationJobDAO.createCategorizationJobDocument(jobDoc);
 		return id;
 	}
 
@@ -148,7 +149,8 @@ public class NewScanService {
 
 	private ObjectId requestBaseURI(Datastore ds, URI baseUri) {
 
-		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, baseUri, null, null, TransactionSource.BASE);
+		AbstractHttpTransaction transaction = HttpTransactionFactory.createTransaction(HttpMethodType.GET, baseUri, null, null,
+				TransactionSource.BASE);
 		transaction.execute();
 
 		HttpTxnDAO txnDAO = new HttpTxnDAO(ds);
@@ -163,9 +165,11 @@ public class NewScanService {
 		String databaseName = "scan_inst_" + ByteUtils.toHex(ByteUtils.getRandomBytes(6));
 		Datastore ds = null;
 		try {
-			ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbServers(), databaseName);
+			ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), databaseName);
 		} catch (ConfigurationException e) {
-			logger.error("Failed to retrieve db server list. Reason: {}", e.getMessage(), e);
+			logger.error("Failed to create scan data store. Reason: {}", e.getMessage(), e);
+		} catch (UnknownHostException e) {
+			logger.error("Failed to create scan data store. Reason: {}", e.getMessage(), e);
 		}
 
 		return ds;

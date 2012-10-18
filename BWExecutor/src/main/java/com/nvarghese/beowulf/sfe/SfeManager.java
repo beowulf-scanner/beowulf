@@ -1,6 +1,7 @@
 package com.nvarghese.beowulf.sfe;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -9,9 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.code.morphia.Datastore;
-import com.google.code.morphia.Morphia;
-import com.mongodb.Mongo;
 import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
+import com.nvarghese.beowulf.common.ds.DataStoreUtil;
 import com.nvarghese.beowulf.common.exception.ServerSettingException;
 import com.nvarghese.beowulf.common.zookeeper.ZkClientRunner;
 
@@ -31,8 +31,7 @@ public class SfeManager {
 
 	}
 
-	public static void initialize(SfeServer execServer,
-			SfeSettings settings, boolean override) {
+	public static void initialize(SfeServer execServer, SfeSettings settings, boolean override) {
 
 		synchronized (SfeManager.class) {
 			if (instance == null || override == true) {
@@ -49,14 +48,9 @@ public class SfeManager {
 
 	private void notifyZookeeper() {
 
-		String instanceName = settings.getIpAddress()
-				+ ":"
-				+ Integer
-						.valueOf(execServer.getJettyServer().getConnectors()[0]
-								.getPort());
+		String instanceName = settings.getIpAddress() + ":" + Integer.valueOf(execServer.getJettyServer().getConnectors()[0].getPort());
 		String zkNodeName = settings.getZkGroupNode();
-		zkClientRunner = new ZkClientRunner(settings.getZkServers(),
-				instanceName, zkNodeName);
+		zkClientRunner = new ZkClientRunner(settings.getZkServers(), instanceName, zkNodeName);
 		try {
 			joinZkGroup();
 		} catch (ServerSettingException e) {
@@ -67,14 +61,12 @@ public class SfeManager {
 
 	private void initializeDatastore() {
 
-		Mongo mongo;
 		try {
-			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
-			ds = new Morphia().createDatastore(mongo,
-					BeowulfCommonConfigManager.getDbName());
+			ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), BeowulfCommonConfigManager.getDbName());
 		} catch (ConfigurationException e) {
-			logger.error("Failed to initialize data store. Reason: {}",
-					e.getMessage(), e);
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
+		} catch (UnknownHostException e) {
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
 		}
 
 	}
@@ -88,9 +80,7 @@ public class SfeManager {
 			exists = zkClientRunner.checkMemberInGroup();
 
 			if (exists) {
-				String message = "Server already joined to "
-						+ zkClientRunner.getGroupName()
-						+ " in zookeeper. Try changing port number";
+				String message = "Server already joined to " + zkClientRunner.getGroupName() + " in zookeeper. Try changing port number";
 				throw new ServerSettingException(message);
 			}
 

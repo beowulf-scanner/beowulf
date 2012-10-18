@@ -38,7 +38,7 @@ public class TestExecutorService {
 		try {
 			BwControllerRpcInterface bwContollerRpcClient = bwControllerService.getRpcClient(webScanDocument.getBwControllerIPAddress(),
 					webScanDocument.getBwControllerPort());
-			Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbServers(), testJob.getDatabaseName());
+			Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), testJob.getDatabaseName());
 
 			TestJobDAO testJobDAO = new TestJobDAO(ds);
 			TestJobDocument testJobDocument = testJobDAO.getTestJobDocument(testJob.getTestJobObjId());

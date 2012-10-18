@@ -1,6 +1,7 @@
 package com.nvarghese.beowulf.sfc;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -12,6 +13,7 @@ import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
 import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
+import com.nvarghese.beowulf.common.ds.DataStoreUtil;
 import com.nvarghese.beowulf.common.exception.ServerSettingException;
 import com.nvarghese.beowulf.common.zookeeper.ZkClientRunner;
 
@@ -51,11 +53,11 @@ public class SFControllerManager {
 	
 	private void initializeDatastore() {
 
-		Mongo mongo;
 		try {
-			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
-			ds = new Morphia().createDatastore(mongo, BeowulfCommonConfigManager.getDbName());
+			ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), BeowulfCommonConfigManager.getDbName());
 		} catch (ConfigurationException e) {
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
+		} catch (UnknownHostException e) {
 			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
 		}
 

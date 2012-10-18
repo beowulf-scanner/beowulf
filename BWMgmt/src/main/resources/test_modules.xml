@@ -7,7 +7,6 @@
 		<test_attributes>
 			<test_attribute>200</test_attribute>
 		</test_attributes>
-		<module_class_name>com.nvarghese.beowulf.sfe.webtest.tm.enumeration.DirectoryEnumerator</module_class_name>
 		<module_enabled>true</module_enabled>
 	</meta_test_module>
 	<meta_test_module test_category="SPIDER" test_type="HTML_ELEM_TEST">
@@ -94,6 +93,7 @@
 		<module_number>1004</module_number>
 		<module_name>Directory enumerator</module_name>
 		<module_description>Enumeration module for common directories</module_description>
+		<module_class_name>com.nvarghese.beowulf.sfe.webtest.tm.enumeration.DirectoryEnumerator</module_class_name>
 		<test_attributes />
 		<module_enabled>true</module_enabled>
 		<options type="boolean">

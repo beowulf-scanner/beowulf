@@ -1,5 +1,6 @@
 package com.nvarghese.beowulf.smf;
 
+import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -7,9 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.code.morphia.Datastore;
-import com.google.code.morphia.Morphia;
-import com.mongodb.Mongo;
 import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
+import com.nvarghese.beowulf.common.ds.DataStoreUtil;
 
 public class SmfManager {
 
@@ -42,11 +42,11 @@ public class SmfManager {
 
 	private void initializeDatastore() {
 
-		Mongo mongo;
 		try {
-			mongo = new Mongo(BeowulfCommonConfigManager.getDbServers());
-			ds = new Morphia().createDatastore(mongo, BeowulfCommonConfigManager.getDbName());
+			ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), BeowulfCommonConfigManager.getDbName());
 		} catch (ConfigurationException e) {
+			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
+		} catch (UnknownHostException e) {
 			logger.error("Failed to initialize data store. Reason: {}", e.getMessage(), e);
 		}
 

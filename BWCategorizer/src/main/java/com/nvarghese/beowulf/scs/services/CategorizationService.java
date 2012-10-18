@@ -37,7 +37,7 @@ public class CategorizationService {
 		try {
 			BwControllerRpcInterface bwContollerRpcClient = bwControllerService.getRpcClient(webScanDocument.getBwControllerIPAddress(),
 					webScanDocument.getBwControllerPort());
-			Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbServers(), categorizerJob.getDatabaseName());
+			Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), categorizerJob.getDatabaseName());
 
 			CategorizationJobDAO categJobDAO = new CategorizationJobDAO(ds);
 			CategorizationJobDocument categJobDocument = categJobDAO.getCategorizationJobDocument(categorizerJob.getCategorizerJobObjId());
