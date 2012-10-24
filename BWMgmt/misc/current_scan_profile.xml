@@ -175,11 +175,11 @@
 			<module_enabled>true</module_enabled>
 			<options>
 				<option_name>Small (100 directory names)</option_name>
-				<option_value>false</option_value>
+				<option_value>true</option_value>
 			</options>
 			<options>
 				<option_name>Medium (300 directory names)</option_name>
-				<option_value>true</option_value>
+				<option_value>false</option_value>
 			</options>
 			<options>
 				<option_name>Large (500 directory names)</option_name>

@@ -441,6 +441,21 @@ public abstract class AbstractHttpTransaction {
 		return getURI().getHost();
 	}
 
+	public String getScheme() {
+
+		return getURI().getScheme();
+	}
+
+	public String getHostUriWithoutTrailingSlash() {
+
+		String base = getScheme() + "://" + getHost();
+		int port = getPort();
+		if (port > 0) {
+			base += ":" + port;
+		}
+		return base;
+	}
+
 	public HttpResponse getResponse() {
 
 		HttpResponse response = null;

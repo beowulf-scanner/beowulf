@@ -29,6 +29,9 @@ public class SfeSettings {
 	private String zkGroupNode;
 	private String zkServers;
 
+	private String scannerConfigDir;
+	private String scannerConfigMasterFile;
+
 	private static final String BWSFE__IP_ADDR = "bw-sfe.ip_address";
 	private static final String BWSFE__DEFAULT_CONF_DIR = "bw-sfe.conf.dir";
 	private static final String BWSFE__JETTY__RESOURCE_FILE_NAME = "bw-sfe.jetty.resource_file_name";
@@ -38,6 +41,9 @@ public class SfeSettings {
 
 	private static final String BWSFE__ZK__GROUP_NODE = "bw-sfe.zookeeper.group_node_name";
 	private static final String BWSFE__ZK__SERVER_LIST = "bw-sfe.zookeeper.servers";
+
+	private static final String BWSFE__SCANNER_CONFIG__DIR = "bw-sfe.scanner_configuration.dir";
+	private static final String BWSFE__SCANNER_CONFIG__MASTER_FILE = "bw-sfe.scanner_configuration.master_config_file_name";
 
 	static Logger logger = LoggerFactory.getLogger(SfeSettings.class);
 
@@ -50,8 +56,7 @@ public class SfeSettings {
 
 	public SfeSettings(String execServerConfigFileName) throws ConfigurationException, URISyntaxException {
 
-		propertiesConfiguration = new PropertiesConfiguration(SfeSettings.class.getClassLoader().getResource(
-				execServerConfigFileName));
+		propertiesConfiguration = new PropertiesConfiguration(SfeSettings.class.getClassLoader().getResource(execServerConfigFileName));
 		initialize();
 	}
 
@@ -82,8 +87,7 @@ public class SfeSettings {
 			ipAddress = propertiesConfiguration.getString(BWSFE__IP_ADDR);
 		}
 		{
-			jettyResourceFileName = propertiesConfiguration
-					.getString(BWSFE__JETTY__RESOURCE_FILE_NAME, "jetty-web.xml");
+			jettyResourceFileName = propertiesConfiguration.getString(BWSFE__JETTY__RESOURCE_FILE_NAME, "jetty-web.xml");
 			jettyContextDescriptor = propertiesConfiguration.getString(BWSFE__JETTY__CONTEXT__DESCRIPTOR);
 			jettyContextResourceBase = propertiesConfiguration.getString(BWSFE__JETTY__CONTEXT__RESOURCE_BASE);
 			jettyContextRootPath = propertiesConfiguration.getString(BWSFE__JETTY__CONTEXT__ROOT_PATH);
@@ -91,6 +95,11 @@ public class SfeSettings {
 		{
 			zkGroupNode = propertiesConfiguration.getString(BWSFE__ZK__GROUP_NODE, "executor");
 			zkServers = propertiesConfiguration.getString(BWSFE__ZK__SERVER_LIST);
+		}
+
+		{
+			scannerConfigDir = propertiesConfiguration.getString(BWSFE__SCANNER_CONFIG__DIR, "scan-config");
+			scannerConfigMasterFile = propertiesConfiguration.getString(BWSFE__SCANNER_CONFIG__MASTER_FILE, "config_master.conf");
 		}
 
 	}
@@ -168,6 +177,16 @@ public class SfeSettings {
 	public String getZkServers() {
 
 		return zkServers;
+	}
+
+	public String getScannerConfigDir() {
+
+		return scannerConfigDir;
+	}
+
+	public String getScannerConfigMasterFile() {
+
+		return scannerConfigMasterFile;
 	}
 
 }

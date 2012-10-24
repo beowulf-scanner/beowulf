@@ -1,11 +1,14 @@
 package com.nvarghese.beowulf.sfe;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.UnknownHostException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.zookeeper.KeeperException;
+import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,9 +42,31 @@ public class SfeManager {
 				instance.execServer = execServer;
 				instance.settings = settings;
 				instance.initializeDatastore();
+				instance.initializeScannerConfiguration();
 				instance.notifyZookeeper();
 				initialized.set(true);
 			}
+		}
+
+	}
+
+	private void initializeScannerConfiguration() {
+
+		try {
+			Resource rs = getResource(settings.getScannerConfigMasterFile(), settings.getScannerConfigDir());
+			if (rs != null) {
+				ConfigurationManager.initializeConfiguration(rs.getFile());
+			} else {
+				logger.info("Trying to load scanner configuration using class loaders");
+				ConfigurationManager.initializeConfiguration(settings.getScannerConfigDir() + File.separator + settings.getScannerConfigMasterFile());
+			}
+			logger.info("Loaded scanner configurations");
+		} catch (ConfigurationException e) {
+			logger.error("Failed to load scanner configurations", e);
+		} catch (MalformedURLException e) {
+			logger.error("Failed to load scanner configurations", e);
+		} catch (IOException e) {
+			logger.error("Failed to load scanner configurations", e);
 		}
 
 	}
@@ -102,6 +127,46 @@ public class SfeManager {
 		} catch (InterruptedException e) {
 
 		}
+	}
+
+	private Resource getResource(String resourceName, String directory) throws MalformedURLException, IOException {
+
+		Resource res = null;
+		res = Resource.newClassPathResource(resourceName);
+
+		if (res != null && res.exists()) {
+			logger.info("Found resource `{}` in classpath", resourceName);
+			return res;
+		}
+		res = Resource.newResource(resourceName);
+		if (res != null && res.exists()) {
+			logger.info("Found resource file `{}`", resourceName);
+			return res;
+		}
+
+		logger.warn("Checking resource file in default conf directory");
+
+		String d = "";
+		if (directory != null && !directory.isEmpty()) {
+			d = directory + File.separator;
+
+		}
+
+		String resPath = settings.getDefaultConfDir() + File.separator + d + resourceName;
+		if (!settings.getBwSfExecutorRootPath().equalsIgnoreCase("")) {
+			resPath = settings.getBwSfExecutorRootPath() + File.separator + resPath;
+		}
+
+		res = Resource.newResource(resPath);
+		if (res != null && res.exists()) {
+			logger.info("Found resource `{}` in default conf directory", resourceName);
+			return res;
+		} else {
+			logger.warn("Cannot find resource file `{}`", resourceName);
+		}
+
+		return null;
+
 	}
 
 	public static SfeManager getInstance() {
