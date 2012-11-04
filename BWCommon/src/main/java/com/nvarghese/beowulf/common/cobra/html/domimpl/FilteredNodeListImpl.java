@@ -25,9 +25,10 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 
 class FilteredNodeListImpl extends AbstractScriptableDelegate implements NodeList {
 

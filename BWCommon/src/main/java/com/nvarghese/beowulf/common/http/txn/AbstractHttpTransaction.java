@@ -70,6 +70,7 @@ public abstract class AbstractHttpTransaction {
 		super();
 		payloadChanged = new AtomicBoolean(false);
 		responseReady = new AtomicBoolean(false);
+		uncompressed = new AtomicBoolean(true);
 		saved = new AtomicBoolean(false);
 		transactionSource = TransactionSource.NONE;
 	}
@@ -101,6 +102,7 @@ public abstract class AbstractHttpTransaction {
 		txnDocument.setRefererTxnObjId(refererTxnObjId);
 		txnDocument.setReferer(referer);
 		txnDocument.setResponseReady(responseReady.get());
+		txnDocument.setUncompressed(uncompressed.get());
 		if (responseReady.get()) {
 			txnDocument.setResponseStatusLine((BasicStatusLine) httpResponseWrapper.getStatusLine());
 			txnDocument.setResponseHeaders((List<BasicHeader>) httpResponseWrapper.getHeaders());
@@ -138,6 +140,7 @@ public abstract class AbstractHttpTransaction {
 				httpTxn.responseReady.set(false);
 			}
 
+			httpTxn.uncompressed.set(httpTxnDocument.isUncompressed());
 			httpTxn.setSaved(true);
 
 		} catch (URISyntaxException e) {

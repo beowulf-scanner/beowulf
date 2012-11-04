@@ -27,12 +27,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 
 public class NamedNodeMapImpl extends AbstractScriptableDelegate implements NamedNodeMap {
 

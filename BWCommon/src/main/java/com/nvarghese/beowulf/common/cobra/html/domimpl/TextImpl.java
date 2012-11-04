@@ -22,10 +22,11 @@
  */
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
-import com.nvarghese.beowulf.common.cobra.util.Strings;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
+
+import com.nvarghese.beowulf.common.cobra.util.Strings;
 
 public class TextImpl extends CharacterDataImpl implements Text {
 

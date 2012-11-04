@@ -22,14 +22,15 @@ package com.nvarghese.beowulf.common.cobra.html.js;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
-import com.nvarghese.beowulf.common.cobra.html.domimpl.NodeImpl;
-import com.nvarghese.beowulf.common.cobra.js.JavaScript;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 import org.w3c.dom.Document;
+
+import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
+import com.nvarghese.beowulf.common.cobra.html.domimpl.NodeImpl;
+import com.nvarghese.beowulf.common.cobra.js.JavaScript;
 
 public class Executor {
 

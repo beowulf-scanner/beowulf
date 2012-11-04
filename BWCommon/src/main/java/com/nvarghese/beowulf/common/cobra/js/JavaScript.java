@@ -22,9 +22,10 @@ package com.nvarghese.beowulf.common.cobra.js;
 import java.lang.ref.WeakReference;
 import java.util.WeakHashMap;
 
-import com.nvarghese.beowulf.common.cobra.util.Objects;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.Undefined;
+
+import com.nvarghese.beowulf.common.cobra.util.Objects;
 
 public class JavaScript {
 

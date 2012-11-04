@@ -15,8 +15,12 @@ import com.nvarghese.beowulf.common.http.txn.HttpTransactionFactory;
 import com.nvarghese.beowulf.common.http.txn.HttpTxnDAO;
 import com.nvarghese.beowulf.common.http.txn.HttpTxnDocument;
 import com.nvarghese.beowulf.common.http.txn.TransactionSource;
+import com.nvarghese.beowulf.common.scan.dao.ReportIssueDAO;
 import com.nvarghese.beowulf.common.scan.dto.config.Options;
+import com.nvarghese.beowulf.common.scan.model.ReportIssueDocument;
+import com.nvarghese.beowulf.common.scan.model.ReportIssueVariantDocument;
 import com.nvarghese.beowulf.common.utils.HttpUtils;
+import com.nvarghese.beowulf.common.webtest.ReportThreatType;
 import com.nvarghese.beowulf.sfe.ConfigurationManager;
 import com.nvarghese.beowulf.sfe.webtest.tm.AbstractTestModule;
 import com.nvarghese.beowulf.sfe.webtest.types.DirectoryTestType;
@@ -57,7 +61,8 @@ public class DirectoryEnumerator extends AbstractTestModule implements Directory
 				if (HttpUtils.fileExists(testTransaction.getResponseStatusCode())) {
 					logger.info("Detected directory `{}` by enumeration", uri.getPath());
 					ObjectId id = txnDAO.createHttpTxnDocument(testTransaction.toHttpTxnDocument());
-					// report
+					testTransaction.setObjId(id);
+					reportFinding(originalTxn, testTransaction, newDirectory);
 				} else {
 
 				}
@@ -91,6 +96,50 @@ public class DirectoryEnumerator extends AbstractTestModule implements Directory
 		}
 
 		return directoryNames;
+	}
+	
+	private void reportFinding(AbstractHttpTransaction originalTransaction, AbstractHttpTransaction testTransaction, String newDirectory) {
+
+		String uri = originalTransaction.getHostUriWithoutTrailingSlash() + newDirectory;
+		ReportIssueDAO issueDAO = new ReportIssueDAO(scanInstanceDataStore);
+
+		ReportIssueDocument reportIssueDocument = issueDAO.findByUrlAndThreatTypeAndModuleNumber(uri, ReportThreatType.PRED_RESOURCE_LOCATION,
+				moduleNumber, false);
+
+		if (reportIssueDocument == null) {
+			reportIssueDocument = new ReportIssueDocument();
+
+			reportIssueDocument.setModuleName(moduleName);
+			reportIssueDocument.setModuleNumber(moduleNumber);
+
+			// reasoning
+			reportIssueDocument.setReasoning("A directory was discovered by guessing its name.");
+
+			// remediation
+			reportIssueDocument.setRemediation("Review the contents of the directory and remove if it is not required.");
+
+			// references
+			reportIssueDocument.setReferences("OWASP - http://www.owasp.org/index.php/Testing_for_Old,"
+					+ "_Backup_and_Unreferenced_Files_(OWASP-CM-006)");
+			
+			issueDAO.createReportIssueDocument(reportIssueDocument);
+
+		}
+		
+		//set issue variant
+		ReportIssueVariantDocument issueVariant = new ReportIssueVariantDocument();
+		String description = "The following directory was discovered by guessing its name: \n";
+		description += " Original Directory: " + uri + "\n";
+		description += " Discovered Directory: " + testTransaction.getURI() + "\n";
+		description += "If the directory was not linked to by the website," +  
+				" they could lead an attacker to unintended areas.";
+		issueVariant.setDescription(description);
+		issueVariant.setOrigicalTxn(originalTransaction.getObjId());
+		issueVariant.setTestTxn(testTransaction.getObjId());
+		
+		
+		issueDAO.addReportIssueVariants(reportIssueDocument.getId(), issueVariant);
+
 	}
 
 }

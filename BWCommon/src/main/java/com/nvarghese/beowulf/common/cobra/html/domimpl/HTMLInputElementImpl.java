@@ -24,8 +24,9 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
 import java.util.logging.Level;
 
-import com.nvarghese.beowulf.common.cobra.html.FormInput;
 import org.w3c.dom.html2.HTMLInputElement;
+
+import com.nvarghese.beowulf.common.cobra.html.FormInput;
 
 public class HTMLInputElementImpl extends HTMLBaseInputElement implements HTMLInputElement {
 

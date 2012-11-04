@@ -13,12 +13,16 @@
 		<param-name>test-module-list-filename</param-name>
 		<param-value>test_modules.xml</param-value>
 	</context-param>
+	<context-param>
+		<param-name>wasc-threat-types-filename</param-name>
+		<param-value>wasc_threat_types.xml</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>com.nvarghese.beowulf.smf.SmfQueueManager</listener-class>
 	</listener>	
 	<listener>
-		<listener-class>com.nvarghese.beowulf.smf.SmfTestModuleListLoader</listener-class>
+		<listener-class>com.nvarghese.beowulf.smf.SmfDataLoader</listener-class>
 	</listener>
 	
 	<servlet>

@@ -4,17 +4,18 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.Scriptable;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+
 import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
 import com.nvarghese.beowulf.common.cobra.html.ReadyStateChangeListener;
 import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
 import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 import com.nvarghese.beowulf.common.cobra.js.JavaScript;
 import com.nvarghese.beowulf.common.cobra.util.Urls;
-import org.mozilla.javascript.Context;
-import org.mozilla.javascript.Function;
-import org.mozilla.javascript.Scriptable;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Document;
 
 public class XMLHttpRequest extends AbstractScriptableDelegate {
 

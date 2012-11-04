@@ -19,7 +19,6 @@ package com.nvarghese.beowulf.common.cobra.html.test;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -35,6 +34,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.w3c.dom.html2.HTMLCollection;
+import org.w3c.dom.html2.HTMLElement;
+import org.w3c.dom.html2.HTMLLinkElement;
+
 import com.nvarghese.beowulf.common.cobra.html.BrowserFrame;
 import com.nvarghese.beowulf.common.cobra.html.FormInput;
 import com.nvarghese.beowulf.common.cobra.html.HtmlObject;
@@ -48,11 +51,6 @@ import com.nvarghese.beowulf.common.cobra.util.Urls;
 import com.nvarghese.beowulf.common.cobra.util.io.RecordedInputStream;
 import com.nvarghese.beowulf.common.http.renderer.CobraUserAgent;
 import com.nvarghese.beowulf.common.http.txn.AbstractHttpTransaction;
-
-import org.w3c.dom.html2.HTMLCollection;
-import org.w3c.dom.html2.HTMLElement;
-import org.w3c.dom.html2.HTMLLinkElement;
-import org.xml.sax.InputSource;
 
 /**
  * The <code>SimpleHtmlRendererContext</code> class implements the

@@ -1,13 +1,11 @@
 package com.nvarghese.beowulf.common.ds;
 
 import java.net.UnknownHostException;
-import java.util.List;
 
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
-import com.mongodb.ServerAddress;
 
 public class DataStoreUtil {
 

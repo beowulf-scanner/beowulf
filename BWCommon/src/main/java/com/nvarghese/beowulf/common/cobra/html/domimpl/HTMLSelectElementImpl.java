@@ -2,12 +2,13 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
 import java.util.ArrayList;
 
-import com.nvarghese.beowulf.common.cobra.html.FormInput;
 import org.mozilla.javascript.Function;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.html2.HTMLElement;
 import org.w3c.dom.html2.HTMLOptionsCollection;
 import org.w3c.dom.html2.HTMLSelectElement;
+
+import com.nvarghese.beowulf.common.cobra.html.FormInput;
 
 public class HTMLSelectElementImpl extends HTMLBaseInputElement implements HTMLSelectElement {
 

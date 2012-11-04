@@ -24,9 +24,10 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
 import java.util.ArrayList;
 
-import com.nvarghese.beowulf.common.cobra.html.js.Executor;
 import org.mozilla.javascript.Function;
 import org.w3c.dom.html2.HTMLImageElement;
+
+import com.nvarghese.beowulf.common.cobra.html.js.Executor;
 
 public class HTMLImageElementImpl extends HTMLAbstractUIElement implements HTMLImageElement {
 

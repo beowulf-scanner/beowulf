@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nvarghese.beowulf.common.cobra.util.Objects;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.EvaluatorException;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.WrappedException;
+
+import com.nvarghese.beowulf.common.cobra.util.Objects;
 
 public class JavaFunctionObject extends ScriptableObject implements Function {
 

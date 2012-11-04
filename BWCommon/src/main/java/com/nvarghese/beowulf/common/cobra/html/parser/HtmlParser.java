@@ -38,8 +38,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
-import com.nvarghese.beowulf.common.cobra.html.io.WritableLineReader;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,6 +45,9 @@ import org.w3c.dom.Node;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
+
+import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
+import com.nvarghese.beowulf.common.cobra.html.io.WritableLineReader;
 
 /**
  * The <code>HtmlParser</code> class is an HTML DOM parser. This parser provides

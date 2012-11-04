@@ -25,9 +25,10 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 
 public class NodeListImpl extends AbstractScriptableDelegate implements NodeList {
 

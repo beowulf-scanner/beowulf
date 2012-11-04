@@ -30,17 +30,18 @@ import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 
-import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
-import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
-import com.nvarghese.beowulf.common.cobra.html.domimpl.DOMImplementationImpl;
-import com.nvarghese.beowulf.common.cobra.html.domimpl.HTMLDocumentImpl;
-import com.nvarghese.beowulf.common.cobra.html.io.WritableLineReader;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
+import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
+import com.nvarghese.beowulf.common.cobra.html.domimpl.DOMImplementationImpl;
+import com.nvarghese.beowulf.common.cobra.html.domimpl.HTMLDocumentImpl;
+import com.nvarghese.beowulf.common.cobra.html.io.WritableLineReader;
 
 /**
  * The <code>DocumentBuilderImpl</code> class is an HTML DOM parser that

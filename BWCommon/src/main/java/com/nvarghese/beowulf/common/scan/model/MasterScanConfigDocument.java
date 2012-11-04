@@ -6,8 +6,6 @@ import java.util.Map;
 
 import com.google.code.morphia.annotations.Embedded;
 import com.google.code.morphia.annotations.Entity;
-import com.google.code.morphia.annotations.PostLoad;
-import com.google.code.morphia.annotations.PostPersist;
 import com.google.code.morphia.annotations.PrePersist;
 import com.google.code.morphia.annotations.Transient;
 import com.nvarghese.beowulf.common.model.AbstractDocument;

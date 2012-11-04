@@ -42,8 +42,10 @@ public class NewScanService {
 
 		logger.info("New scan job received to kick start the service with WebScanDocument#obj_id: {}", newScanJob.getWebScanObjectId());
 
+		ObjectId id = new ObjectId(newScanJob.getWebScanObjectId());
 		WebScanDAO webScanDAO = new WebScanDAO(SFControllerManager.getInstance().getDataStore());
-		WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(newScanJob.getWebScanObjectId());
+
+		WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(id);
 		Datastore ds = null;
 
 		if (webScanDocument != null) {
@@ -52,7 +54,7 @@ public class NewScanService {
 			ds = createScanDataStore();
 
 			// start rpc server
-			int rpcPort = startRpcServerInstance();
+			int rpcPort = startRpcServerInstance(id);
 
 			// update web scan document
 			webScanDocument.setBwControllerIPAddress(SFControllerManager.getInstance().getSettings().getIpAddress());
@@ -119,7 +121,7 @@ public class NewScanService {
 
 	}
 
-	private int startRpcServerInstance() {
+	private int startRpcServerInstance(final ObjectId webScanObjId) {
 
 		final int port = findFreePort();
 		new Thread() {
@@ -129,15 +131,23 @@ public class NewScanService {
 				EventLoop loop = EventLoop.defaultEventLoop();
 
 				Server svr = new Server(loop);
-				svr.serve(new BwControllerRpcInterfaceImpl());
+				BwControllerRpcInterfaceImpl scanController = new BwControllerRpcInterfaceImpl(svr, webScanObjId);
+				
+				//start rpc interface
+				svr.serve(scanController);
+				
+				//start scan monitoring
+				scanController.startScanMonitoring();
 				try {
 					svr.listen(port);
 					logger.info("Server listening on port TCP/" + port + " for connections");
 					loop.join();
 				} catch (IOException e) {
 					logger.error("Failed to start rpc server. Reason: {}", e.getMessage(), e);
+					svr.close();
 				} catch (InterruptedException e) {
 					logger.error("Interrupted rpc server running at port: {}. ", port, e);
+					svr.close();
 				}
 
 			}

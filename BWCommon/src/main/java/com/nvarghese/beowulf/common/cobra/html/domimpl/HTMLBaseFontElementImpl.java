@@ -20,7 +20,6 @@
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
 // import org.cobra_grendel.html.style.*;
-import com.nvarghese.beowulf.common.cobra.util.gui.ColorFactory;
 import org.w3c.dom.html2.HTMLBaseFontElement;
 
 public class HTMLBaseFontElementImpl extends HTMLAbstractUIElement implements HTMLBaseFontElement {

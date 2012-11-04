@@ -29,10 +29,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
-import com.nvarghese.beowulf.common.cobra.util.Nodes;
 import org.w3c.dom.Node;
 import org.w3c.dom.html2.HTMLCollection;
+
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
+import com.nvarghese.beowulf.common.cobra.util.Nodes;
 
 public class DescendentHTMLCollection extends AbstractScriptableDelegate implements HTMLCollection {
 

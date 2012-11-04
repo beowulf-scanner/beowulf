@@ -24,11 +24,12 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
 import java.util.ArrayList;
 
-import com.nvarghese.beowulf.common.cobra.html.FormInput;
-import com.nvarghese.beowulf.common.cobra.html.js.Executor;
 import org.mozilla.javascript.Function;
 import org.w3c.dom.Node;
 import org.w3c.dom.html2.HTMLFormElement;
+
+import com.nvarghese.beowulf.common.cobra.html.FormInput;
+import com.nvarghese.beowulf.common.cobra.html.js.Executor;
 
 public abstract class HTMLBaseInputElement extends HTMLAbstractUIElement {
 

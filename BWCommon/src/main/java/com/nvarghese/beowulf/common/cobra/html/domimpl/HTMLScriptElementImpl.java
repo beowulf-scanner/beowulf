@@ -29,15 +29,16 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
-import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
-import com.nvarghese.beowulf.common.cobra.html.js.Executor;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.EcmaError;
 import org.mozilla.javascript.Scriptable;
 import org.w3c.dom.Document;
 import org.w3c.dom.UserDataHandler;
 import org.w3c.dom.html2.HTMLScriptElement;
+
+import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
+import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
+import com.nvarghese.beowulf.common.cobra.html.js.Executor;
 
 public class HTMLScriptElementImpl extends HTMLElementImpl implements HTMLScriptElement {
 

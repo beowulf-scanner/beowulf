@@ -24,7 +24,7 @@
 			<use_automatic_overrides>true</use_automatic_overrides>
 		</response_code_overrides>
 		<base_uris>
-			<base_uri>http://www.webscantest.com/osrun/</base_uri>
+			<base_uri>http://localhost/dvwa-1-07/</base_uri>
 		</base_uris>
 		<restrictions>
 			<forbidden_parameter_names>

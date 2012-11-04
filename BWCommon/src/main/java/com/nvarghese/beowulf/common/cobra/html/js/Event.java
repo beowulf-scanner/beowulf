@@ -23,8 +23,9 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 import org.w3c.dom.html2.HTMLElement;
+
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 
 public class Event extends AbstractScriptableDelegate {
 

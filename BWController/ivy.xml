@@ -20,6 +20,7 @@
 	<dependencies>
 
 		<dependency org="com.nvarghese.beowulf" name="beowulf-common" rev="latest.integration" transitive="true" />
+		<dependency org="org.quartz-scheduler" name="quartz" rev="2.1.5" />
 
 		<!-- logging libraries -->
 		<dependency org="org.slf4j" name="slf4j-api" rev="1.6.1" />

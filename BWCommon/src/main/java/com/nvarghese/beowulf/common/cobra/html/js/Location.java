@@ -4,10 +4,11 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.w3c.dom.Document;
+
 import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
 import com.nvarghese.beowulf.common.cobra.html.domimpl.HTMLDocumentImpl;
 import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
-import org.w3c.dom.Document;
 
 public class Location extends AbstractScriptableDelegate {
 

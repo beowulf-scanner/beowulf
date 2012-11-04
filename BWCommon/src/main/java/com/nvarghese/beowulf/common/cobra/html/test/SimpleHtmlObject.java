@@ -6,8 +6,9 @@ import java.awt.FlowLayout;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-import com.nvarghese.beowulf.common.cobra.html.HtmlObject;
 import org.w3c.dom.html2.HTMLElement;
+
+import com.nvarghese.beowulf.common.cobra.html.HtmlObject;
 
 /**
  * Simple implementation of

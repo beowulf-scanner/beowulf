@@ -24,13 +24,14 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
-import com.nvarghese.beowulf.common.cobra.util.gui.ColorFactory;
 import org.w3c.dom.UserDataHandler;
 import org.w3c.dom.css.CSSStyleSheet;
 import org.w3c.dom.html2.HTMLBodyElement;
 import org.w3c.dom.html2.HTMLDocument;
 import org.w3c.dom.html2.HTMLLinkElement;
+
+import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
+import com.nvarghese.beowulf.common.cobra.util.gui.ColorFactory;
 
 public class HTMLLinkElementImpl extends HTMLAbstractUIElement implements HTMLLinkElement {
 

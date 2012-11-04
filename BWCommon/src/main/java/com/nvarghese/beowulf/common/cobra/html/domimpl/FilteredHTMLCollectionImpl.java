@@ -24,9 +24,10 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
 import java.util.Map;
 
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 import org.w3c.dom.Node;
 import org.w3c.dom.html2.HTMLCollection;
+
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
 
 public class FilteredHTMLCollectionImpl extends AbstractScriptableDelegate implements HTMLCollection {
 

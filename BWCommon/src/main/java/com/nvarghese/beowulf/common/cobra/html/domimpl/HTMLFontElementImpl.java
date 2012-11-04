@@ -28,7 +28,6 @@ package com.nvarghese.beowulf.common.cobra.html.domimpl;
  * org.cobra_grendel.html.style.HtmlValues; import
  * org.cobra_grendel.html.style.RenderState;
  */
-import com.nvarghese.beowulf.common.cobra.util.gui.ColorFactory;
 import org.w3c.dom.html2.HTMLFontElement;
 
 public class HTMLFontElementImpl extends HTMLAbstractUIElement implements HTMLFontElement {

@@ -1,12 +1,17 @@
 package com.nvarghese.beowulf.common.webtest.scs.jobs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
+import com.google.code.morphia.query.Query;
 import com.nvarghese.beowulf.common.dao.AbstractMongoDAO;
+import com.nvarghese.beowulf.common.webtest.JobStatus;
 
 public class CategorizationJobDAO extends AbstractMongoDAO<CategorizationJobDocument, ObjectId> {
 
@@ -62,6 +67,78 @@ public class CategorizationJobDAO extends AbstractMongoDAO<CategorizationJobDocu
 		Key<CategorizationJobDocument> key = save(categorizationJobDocument);
 		return (ObjectId) key.getId();
 
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isInProgressJobsPresent() {
+
+		boolean present = true;
+
+		List<JobStatus> jobStatus = new ArrayList<JobStatus>();
+		jobStatus.add(JobStatus.INIT);
+		jobStatus.add(JobStatus.PROCESSING);
+		jobStatus.add(JobStatus.WAITING);
+
+		Query<CategorizationJobDocument> q = ds.createQuery(CategorizationJobDocument.class).field("jobStatus").in(jobStatus);
+		long count = count(q);
+		if (count > 0) {
+			present = true;
+		} else {
+			present = false;
+		}
+		return present;
+
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public long getCountOfCompletedJobs() {
+
+		List<JobStatus> jobStatus = new ArrayList<JobStatus>();
+		jobStatus.add(JobStatus.COMPLETED);
+		Query<CategorizationJobDocument> q = ds.createQuery(CategorizationJobDocument.class).field("jobStatus").in(jobStatus);
+		long count = count(q);
+
+		return count;
+
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public long getCountOfInProgressJobs() {
+
+		List<JobStatus> jobStatus = new ArrayList<JobStatus>();
+		jobStatus.add(JobStatus.INIT);
+		jobStatus.add(JobStatus.PROCESSING);
+		jobStatus.add(JobStatus.WAITING);
+
+		Query<CategorizationJobDocument> q = ds.createQuery(CategorizationJobDocument.class).field("jobStatus").in(jobStatus);
+		long count = count(q);
+
+		return count;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public long getCountOfErrorOrTerminatedJobs() {
+
+		List<JobStatus> jobStatus = new ArrayList<JobStatus>();
+		jobStatus.add(JobStatus.ERROR);
+		jobStatus.add(JobStatus.TERMINATED);
+
+		Query<CategorizationJobDocument> q = ds.createQuery(CategorizationJobDocument.class).field("jobStatus").in(jobStatus);
+		long count = count(q);
+
+		return count;
 	}
 
 }

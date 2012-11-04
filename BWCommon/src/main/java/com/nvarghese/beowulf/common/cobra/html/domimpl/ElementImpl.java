@@ -30,8 +30,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.nvarghese.beowulf.common.cobra.util.Objects;
-import com.nvarghese.beowulf.common.cobra.util.Strings;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
 import org.w3c.dom.DOMException;
@@ -41,6 +39,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.w3c.dom.TypeInfo;
+
+import com.nvarghese.beowulf.common.cobra.util.Objects;
+import com.nvarghese.beowulf.common.cobra.util.Strings;
 
 public class ElementImpl extends NodeImpl implements Element {
 

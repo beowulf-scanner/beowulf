@@ -42,19 +42,6 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
-import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
-import com.nvarghese.beowulf.common.cobra.html.ReadyStateChangeListener;
-import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
-import com.nvarghese.beowulf.common.cobra.html.io.WritableLineReader;
-import com.nvarghese.beowulf.common.cobra.html.js.Executor;
-import com.nvarghese.beowulf.common.cobra.html.js.Location;
-import com.nvarghese.beowulf.common.cobra.html.js.Window;
-import com.nvarghese.beowulf.common.cobra.html.parser.HtmlParser;
-import com.nvarghese.beowulf.common.cobra.util.Domains;
-import com.nvarghese.beowulf.common.cobra.util.Urls;
-import com.nvarghese.beowulf.common.cobra.util.WeakValueHashMap;
-import com.nvarghese.beowulf.common.cobra.util.io.EmptyReader;
 import org.mozilla.javascript.Function;
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
@@ -79,6 +66,20 @@ import org.w3c.dom.views.AbstractView;
 import org.w3c.dom.views.DocumentView;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+
+import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
+import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
+import com.nvarghese.beowulf.common.cobra.html.ReadyStateChangeListener;
+import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
+import com.nvarghese.beowulf.common.cobra.html.io.WritableLineReader;
+import com.nvarghese.beowulf.common.cobra.html.js.Executor;
+import com.nvarghese.beowulf.common.cobra.html.js.Location;
+import com.nvarghese.beowulf.common.cobra.html.js.Window;
+import com.nvarghese.beowulf.common.cobra.html.parser.HtmlParser;
+import com.nvarghese.beowulf.common.cobra.util.Domains;
+import com.nvarghese.beowulf.common.cobra.util.Urls;
+import com.nvarghese.beowulf.common.cobra.util.WeakValueHashMap;
+import com.nvarghese.beowulf.common.cobra.util.io.EmptyReader;
 
 /**
  * Implementation of the W3C <code>HTMLDocument</code> interface.

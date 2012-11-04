@@ -39,6 +39,8 @@ import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.w3c.dom.Document;
+
 import com.nvarghese.beowulf.common.cobra.html.HttpRequest;
 import com.nvarghese.beowulf.common.cobra.html.ReadyStateChangeListener;
 import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
@@ -46,7 +48,6 @@ import com.nvarghese.beowulf.common.cobra.util.EventDispatch;
 import com.nvarghese.beowulf.common.cobra.util.GenericEventListener;
 import com.nvarghese.beowulf.common.cobra.util.Urls;
 import com.nvarghese.beowulf.common.cobra.util.io.IORoutines;
-import org.w3c.dom.Document;
 
 /**
  * The <code>SimpleHttpRequest</code> class implements the

@@ -22,10 +22,11 @@
  */
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
-import com.nvarghese.beowulf.common.cobra.html.BrowserFrame;
-import com.nvarghese.beowulf.common.cobra.html.js.Window;
 import org.w3c.dom.Document;
 import org.w3c.dom.html2.HTMLFrameElement;
+
+import com.nvarghese.beowulf.common.cobra.html.BrowserFrame;
+import com.nvarghese.beowulf.common.cobra.html.js.Window;
 
 public class HTMLFrameElementImpl extends HTMLElementImpl implements HTMLFrameElement, FrameNode {
 

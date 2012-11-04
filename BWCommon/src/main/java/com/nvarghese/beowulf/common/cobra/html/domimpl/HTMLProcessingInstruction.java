@@ -3,7 +3,6 @@
  */
 package com.nvarghese.beowulf.common.cobra.html.domimpl;
 
-import com.nvarghese.beowulf.common.cobra.html.domimpl.NodeImpl;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Node;
 import org.w3c.dom.ProcessingInstruction;

@@ -35,11 +35,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
-import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
-import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
-import com.nvarghese.beowulf.common.cobra.util.Objects;
-import com.nvarghese.beowulf.common.cobra.util.Strings;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
 import org.w3c.dom.DOMException;
@@ -51,6 +46,12 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 import org.w3c.dom.UserDataHandler;
+
+import com.nvarghese.beowulf.common.cobra.html.HtmlRendererContext;
+import com.nvarghese.beowulf.common.cobra.html.UserAgentContext;
+import com.nvarghese.beowulf.common.cobra.js.AbstractScriptableDelegate;
+import com.nvarghese.beowulf.common.cobra.util.Objects;
+import com.nvarghese.beowulf.common.cobra.util.Strings;
 
 public abstract class NodeImpl extends AbstractScriptableDelegate implements Node, ModelNode, java.io.Serializable {
 
