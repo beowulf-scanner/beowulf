@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wasc_threat_types>
+  <wasc_threat_type>
+    <threat_type_id>8001</threat_type_id>
+    <threat_class_name>Authentication</threat_class_name>
+    <threat_subclass_name>Brute Force</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8002</threat_type_id>
+    <threat_class_name>Authentication</threat_class_name>
+    <threat_subclass_name>Insufficient Authentication</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8003</threat_type_id>
+    <threat_class_name>Authentication</threat_class_name>
+    <threat_subclass_name>Weak Password Recovery Validation</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8004</threat_type_id>
+    <threat_class_name>Authorization</threat_class_name>
+    <threat_subclass_name>Credential/Session Prediction</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8005</threat_type_id>
+    <threat_class_name>Authorization</threat_class_name>
+    <threat_subclass_name>Insufficient Authorization</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8006</threat_type_id>
+    <threat_class_name>Authorization</threat_class_name>
+    <threat_subclass_name>Insufficient Session Expiration</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8007</threat_type_id>
+    <threat_class_name>Authorization</threat_class_name>
+    <threat_subclass_name>Session Fixation</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8008</threat_type_id>
+    <threat_class_name>Authorization</threat_class_name>
+    <threat_subclass_name>Insecure Direct Object Reference</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8009</threat_type_id>
+    <threat_class_name>Client side Attacks</threat_class_name>
+    <threat_subclass_name>Content Spoofing</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8010</threat_type_id>
+    <threat_class_name>Client side Attacks</threat_class_name>
+    <threat_subclass_name>Cross Site Scripting</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8011</threat_type_id>
+    <threat_class_name>Client side Attacks</threat_class_name>
+    <threat_subclass_name>Cross Site Request Forgery</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8012</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>Buffer Overflow</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8013</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>Format String Attack</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8014</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>LDAP Injection</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8015</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>OS Commanding</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8016</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>SQL Injection</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8017</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>SSI Injection</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8018</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>XPath Injection</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8019</threat_type_id>
+    <threat_class_name>Command Execution</threat_class_name>
+    <threat_subclass_name>Remote File Inclusion</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8020</threat_type_id>
+    <threat_class_name>Information Disclosure</threat_class_name>
+    <threat_subclass_name>Directory Indexing</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8021</threat_type_id>
+    <threat_class_name>Information Disclosure</threat_class_name>
+    <threat_subclass_name>Information Leakage</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8022</threat_type_id>
+    <threat_class_name>Information Disclosure</threat_class_name>
+    <threat_subclass_name>Path Traversal</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8023</threat_type_id>
+    <threat_class_name>Information Disclosure</threat_class_name>
+    <threat_subclass_name>Predictable Resource Location</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8024</threat_type_id>
+    <threat_class_name>Logical Attacks</threat_class_name>
+    <threat_subclass_name>Abuse of Functionality</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8025</threat_type_id>
+    <threat_class_name>Logical Attacks</threat_class_name>
+    <threat_subclass_name>Denial of Service</threat_subclass_name>
+  </wasc_threat_type>
+  <wasc_threat_type>
+    <threat_type_id>8026</threat_type_id>
+    <threat_class_name>Logical Attacks</threat_class_name>
+    <threat_subclass_name>Insufficient Process Validation</threat_subclass_name>
+  </wasc_threat_type>
+</wasc_threat_types>
