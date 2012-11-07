@@ -43,6 +43,28 @@ public class WebScanDAOTest {
 
 	}
 
+	@Test(dependsOnMethods = { "testCreateWebScanDocument" })
+	public void testUpdateScanJobsInProgress() {
+
+		WebScanDAO webScanDAO = new WebScanDAO(ds);
+		WebScanDocument webScanDocument = webScanDAO.find().get();
+
+		boolean scanJobsInProgress = webScanDocument.isScanJobsInProgress();
+		// System.out.println("Initial job status: " + scanJobsInProgress);
+		scanJobsInProgress = !scanJobsInProgress;
+		// System.out.println("Toggled status: " + scanJobsInProgress);
+
+		webScanDAO.updateScanJobsInProgress(webScanDocument.getId(), scanJobsInProgress);
+		WebScanDocument loadedWebScanDocument = webScanDAO.getWebScanDocument(webScanDocument.getId());
+
+		Assert.assertEquals(loadedWebScanDocument.isScanJobsInProgress(), scanJobsInProgress);
+		// System.out.println("loaded status: " +
+		// loadedWebScanDocument.isScanJobsInProgress());
+		// System.out.println("initial web doc status: " +
+		// webScanDocument.isScanJobsInProgress());
+
+	}
+
 	@Test
 	public void testNonExistingWebScanDocument() {
 

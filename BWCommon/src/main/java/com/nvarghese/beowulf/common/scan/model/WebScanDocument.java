@@ -24,6 +24,7 @@ public class WebScanDocument extends AbstractDocument {
 	private String restoreScanPhase;
 
 	private boolean scanRunning;
+	private boolean scanJobsInProgress;
 
 	private boolean abortRequested;
 	private String abortingReason;
@@ -72,6 +73,7 @@ public class WebScanDocument extends AbstractDocument {
 		txnDbName = "";
 		abortRequested = false;
 		scanRunning = false;
+		scanJobsInProgress = false;
 		scanPhase = "";
 		scanStartTime = new Date(0);
 		scanEndTime = new Date(0);
@@ -170,6 +172,16 @@ public class WebScanDocument extends AbstractDocument {
 	public void setScanRunning(boolean scanRunning) {
 
 		this.scanRunning = scanRunning;
+	}
+
+	public boolean isScanJobsInProgress() {
+
+		return scanJobsInProgress;
+	}
+
+	public void setScanJobsInProgress(boolean scanJobsInProgress) {
+
+		this.scanJobsInProgress = scanJobsInProgress;
 	}
 
 	public String getRestoreScanPhase() {

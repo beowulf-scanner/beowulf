@@ -11,6 +11,9 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
+import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
+import com.nvarghese.beowulf.sfc.SFControllerManager;
 import com.nvarghese.beowulf.sfc.services.ScanMonitorService;
 
 public class ScanMonitorJob implements Job {
@@ -21,19 +24,49 @@ public class ScanMonitorJob implements Job {
 	@Override
 	public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
-		ScanMonitorService scanMonitorService = new ScanMonitorService();
+		final ScanMonitorService scanMonitorService = new ScanMonitorService();
 		JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
-		ObjectId webScanObjId = new ObjectId(dataMap.getString(WEBSCANOBJID));
+		final ObjectId webScanObjId = new ObjectId(dataMap.getString(WEBSCANOBJID));
 
 		try {
-			if (!scanMonitorService.isScanRunning(webScanObjId)) {
 
+			boolean running = scanMonitorService.isScanRunning(webScanObjId);
+			WebScanDAO webScanDAO = new WebScanDAO(SFControllerManager.getInstance().getDataStore());
+			WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(webScanObjId);
+			boolean isScanJobsRunning = webScanDocument.isScanJobsInProgress();
+
+			if (running) {
+				if (isScanJobsRunning) {
+					// no action required
+				} else {
+					// update scan jobs status
+					isScanJobsRunning = true;
+					webScanDAO.updateScanJobsInProgress(webScanDocument.getId(), isScanJobsRunning);
+				}
+			} else {
+				if (isScanJobsRunning) {
+					// check the scan running status in the next execution of
+					// scheduled job
+					isScanJobsRunning = false;
+					webScanDAO.updateScanJobsInProgress(webScanDocument.getId(), isScanJobsRunning);
+				} else {
+
+					logger.info("Scan with id: {} reached complete stage. Shutting down scan instance server", webScanObjId.toString());
+
+					//spawn a new thread
+					new Thread() {
+						public void run() {
+							scanMonitorService.stopScanInstanceServer(webScanObjId);
+						}
+					}.start();
+				}
 			}
+
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
+			logger.error("Failed to check scan status for id: {}, Reason: {}", webScanObjId.toString(), e.getMessage());
 			e.printStackTrace();
 		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
+			logger.error("Failed to check scan status for id: {}, Reason: {}", webScanObjId.toString(), e.getMessage());
 			e.printStackTrace();
 		}
 

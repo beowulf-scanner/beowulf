@@ -5,6 +5,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -68,6 +69,19 @@ public class SfcQuartzSchedulerManager implements ServletContextListener {
 		else {
 			logger.warn("Scheduler was not initialized properly. Failed to schedule the submitted job");
 		}
+	}
+
+	public static boolean unScheduleJob(JobKey jobKey) throws SchedulerException {
+
+		boolean deleted = false;
+		if (scheduler != null)
+			deleted = scheduler.deleteJob(jobKey);
+		else {
+			logger.warn("Scheduler was not initialized properly. Failed to unschedule the submitted job");
+		}
+		
+		return deleted;
+
 	}
 
 }

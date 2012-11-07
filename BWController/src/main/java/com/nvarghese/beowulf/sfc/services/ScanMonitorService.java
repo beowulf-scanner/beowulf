@@ -12,6 +12,8 @@ import com.nvarghese.beowulf.common.BeowulfCommonConfigManager;
 import com.nvarghese.beowulf.common.ds.DataStoreUtil;
 import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
+import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDAO;
+import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestJobDAO;
 import com.nvarghese.beowulf.sfc.SFControllerManager;
 
 public class ScanMonitorService {
@@ -27,11 +29,40 @@ public class ScanMonitorService {
 
 		Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), webScanDocument.getTxnDbName());
 
+		// check categ jobs
+		CategorizationJobDAO categJobDAO = new CategorizationJobDAO(ds);
+		boolean categJobsPresent = categJobDAO.isInProgressJobsPresent();
+
+		// check test jobs
+		TestJobDAO testJobDAO = new TestJobDAO(ds);
+		boolean testJobsPresent = testJobDAO.isInProgressJobsPresent();
+
+		running = categJobsPresent || testJobsPresent;
+
 		return running;
 
 	}
-	
-	
-	
+
+	public void stopScanInstanceServer(ObjectId webScanObjId) {
+
+		ScanInstanceServer scanInstanceServer = ScanInstanceRegister.getInstance().getScanInstanceServer(webScanObjId.toString());
+
+		if (scanInstanceServer == null) {
+			logger.warn("Failed to stop scan instance for the id: {}. Reason: Scan Instance is not present in register map", webScanObjId.toString());
+			return;
+		}
+
+		scanInstanceServer.stopScanMonitoring();
+
+		// update web scan
+		WebScanDAO webScanDAO = new WebScanDAO(SFControllerManager.getInstance().getDataStore());
+		webScanDAO.updateScanRunning(webScanObjId, false);
+
+		// terminate scan
+		scanInstanceServer.terminateServer();
+
+		ScanInstanceRegister.getInstance().unregisterScanInstanceServer(webScanObjId.toString());
+
+	}
 
 }

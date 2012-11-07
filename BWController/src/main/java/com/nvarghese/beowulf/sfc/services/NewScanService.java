@@ -59,6 +59,8 @@ public class NewScanService {
 			// update web scan document
 			webScanDocument.setBwControllerIPAddress(SFControllerManager.getInstance().getSettings().getIpAddress());
 			webScanDocument.setBwControllerPort(rpcPort);
+			webScanDocument.setScanRunning(true);
+			webScanDocument.setScanJobsInProgress(true);
 			webScanDocument.setTxnDbName(ds.getDB().getName());
 			webScanDAO.updateWebScanDocument(webScanDocument);
 
@@ -131,13 +133,14 @@ public class NewScanService {
 				EventLoop loop = EventLoop.defaultEventLoop();
 
 				Server svr = new Server(loop);
-				BwControllerRpcInterfaceImpl scanController = new BwControllerRpcInterfaceImpl(svr, webScanObjId);
-				
-				//start rpc interface
-				svr.serve(scanController);
-				
-				//start scan monitoring
-				scanController.startScanMonitoring();
+				ScanInstanceServer scanInstanceServer = new ScanInstanceServer(svr, webScanObjId);
+
+				// start rpc interface
+				svr.serve(scanInstanceServer);
+
+				// start scan monitoring
+				scanInstanceServer.startScanMonitoring();
+				ScanInstanceRegister.getInstance().registerScanInstanceServer(webScanObjId.toString(), scanInstanceServer);
 				try {
 					svr.listen(port);
 					logger.info("Server listening on port TCP/" + port + " for connections");

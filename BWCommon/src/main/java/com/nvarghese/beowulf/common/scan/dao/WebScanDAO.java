@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
+import com.google.code.morphia.query.UpdateOperations;
 import com.nvarghese.beowulf.common.dao.AbstractMongoDAO;
+import com.nvarghese.beowulf.common.scan.model.ReportIssueDocument;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 
 public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
@@ -27,7 +29,7 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 	public WebScanDocument getWebScanDocument(ObjectId objectId) {
 
 		WebScanDocument webScanDocument = get(objectId);
-		
+
 		return webScanDocument;
 	}
 
@@ -67,6 +69,30 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 		logger.debug("Creating new webscandocument.");
 		Key<WebScanDocument> key = save(webScanDocument);
 		return (ObjectId) key.getId();
+
+	}
+
+	/**
+	 * 
+	 * @param webScanObjectId
+	 * @param scanJobsInProgress
+	 */
+	public void updateScanJobsInProgress(ObjectId webScanObjectId, boolean scanJobsInProgress) {
+
+		UpdateOperations<WebScanDocument> ops = ds.createUpdateOperations(WebScanDocument.class).set("scanJobsInProgress", scanJobsInProgress);
+		ds.update(ds.createQuery(WebScanDocument.class).field("id").equal(webScanObjectId), ops);
+
+	}
+	
+	/**
+	 * 
+	 * @param webScanObjectId
+	 * @param scanRunning
+	 */
+	public void updateScanRunning(ObjectId webScanObjectId, boolean scanRunning) {
+
+		UpdateOperations<WebScanDocument> ops = ds.createUpdateOperations(WebScanDocument.class).set("scanRunning", scanRunning);
+		ds.update(ds.createQuery(WebScanDocument.class).field("id").equal(webScanObjectId), ops);
 
 	}
 

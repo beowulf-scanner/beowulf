@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.msgpack.rpc.Request;
 import org.msgpack.rpc.Server;
 import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,14 +16,14 @@ import com.nvarghese.beowulf.sfc.SfcQuartzSchedulerManager;
 import com.nvarghese.beowulf.sfc.quartz.ScanMonitorJob;
 import com.nvarghese.beowulf.sfc.quartz.TimeBasedRepeatableTriggerBuilder;
 
-public class BwControllerRpcInterfaceImpl implements BwControllerRpcInterface {
+public class ScanInstanceServer implements BwControllerRpcInterface {
 
 	private Server server;
 	private ObjectId webScanObjId;
 
-	static Logger logger = LoggerFactory.getLogger(BwControllerRpcInterfaceImpl.class);
+	static Logger logger = LoggerFactory.getLogger(ScanInstanceServer.class);
 
-	public BwControllerRpcInterfaceImpl(Server server, ObjectId webScanObjId) {
+	public ScanInstanceServer(Server server, ObjectId webScanObjId) {
 
 		this.server = server;
 		this.webScanObjId = webScanObjId;
@@ -49,9 +50,10 @@ public class BwControllerRpcInterfaceImpl implements BwControllerRpcInterface {
 		boolean scheduled = false;
 
 		String jobId = "scanMonitor-" + webScanObjId.toString();
-		JobDetail jobDetail = newJob(ScanMonitorJob.class).withIdentity(jobId, "scanMoniitorGroup")
+		String triggerId = "scanMonitorTrigger-" + webScanObjId.toString();
+		JobDetail jobDetail = newJob(ScanMonitorJob.class).withIdentity(jobId, "scanMonitorGroup")
 				.usingJobData(ScanMonitorJob.WEBSCANOBJID, webScanObjId.toString()).build();
-		TimeBasedRepeatableTriggerBuilder triggerBuilder = new TimeBasedRepeatableTriggerBuilder("scanMonitorTrigger", "scanMoniitorGroup", 60);
+		TimeBasedRepeatableTriggerBuilder triggerBuilder = new TimeBasedRepeatableTriggerBuilder(triggerId, "scanMonitorGroup", 60);
 
 		try {
 			SfcQuartzSchedulerManager.scheduleJob(jobDetail, triggerBuilder.build());
@@ -63,11 +65,37 @@ public class BwControllerRpcInterfaceImpl implements BwControllerRpcInterface {
 		return scheduled;
 	}
 
-	private void terminateServer() {
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean stopScanMonitoring() {
+
+		boolean unscheduled = false;
+		try {
+			String jobId = "scanMonitor-" + webScanObjId.toString();
+			unscheduled = SfcQuartzSchedulerManager.unScheduleJob(new JobKey(jobId, "scanMonitorGroup"));
+			logger.info("Submitted request to unschedule scan monitoring. Status: {}", unscheduled);
+		} catch (SchedulerException e) {
+			logger.error("Failed to unschedule scan monitor for webscanId: {}", webScanObjId, e);
+			unscheduled = false;
+		}
+		return unscheduled;
+
+	}
+
+	public void terminateServer() {
 
 		logger.info("Received request to stop the controller server instance for webscanId: {}", webScanObjId);
+		
+		server.getEventLoop().getWorkerExecutor().shutdownNow();
+		server.getEventLoop().getIoExecutor().shutdownNow();
+		server.getEventLoop().getWorkerExecutor().shutdownNow();
+		
+		server.getEventLoop().shutdown();
 		server.close();
-		logger.info("Stopper the controller server instance for webscanId: {}", webScanObjId);
+		
+		logger.info("Stopped the controller server instance for webscanId: {}", webScanObjId);
 	}
 
 }

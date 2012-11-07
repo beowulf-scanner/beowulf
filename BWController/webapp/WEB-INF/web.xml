@@ -9,11 +9,15 @@
 		<param-name>queue-conf-filename</param-name>
 		<param-value>queues.conf</param-value>
 	</context-param>
-
+		<context-param>
+		<param-name>sfc-quartz-filename</param-name>
+		<param-value>sfc_quartz.properties</param-value>
+	</context-param>
 	<listener>
 		<listener-class>com.nvarghese.beowulf.sfc.SfcQueueManager</listener-class>
 	</listener>
-	
-	
+	<listener>
+		<listener-class>com.nvarghese.beowulf.sfc.SfcQuartzSchedulerManager</listener-class>
+	</listener>
 	
 </web-app>
