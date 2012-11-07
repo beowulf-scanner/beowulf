@@ -66,7 +66,7 @@ public abstract class TokenSingleSetTransactionCategorizer extends SingleSetCate
 
 	protected abstract String[] getTokens(AbstractHttpTransaction transaction);
 
-	private TestJob makeTestJob(AbstractHttpTransaction transaction, long moduleNumber, String token) {
+	protected TestJob makeTestJob(AbstractHttpTransaction transaction, long moduleNumber, String token) {
 
 		TestJobDocument testJobDocument = new TestJobDocument();
 		testJobDocument.setJobStatus(JobStatus.INIT);

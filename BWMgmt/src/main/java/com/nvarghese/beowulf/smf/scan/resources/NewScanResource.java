@@ -13,11 +13,12 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nvarghese.beowulf.common.exception.ServiceException;
 import com.nvarghese.beowulf.common.scan.dto.config.Profile;
-import com.nvarghese.beowulf.smf.scan.dto.ScanRequest;
+import com.nvarghese.beowulf.smf.scan.dto.scanrequest.ScanRequest;
 import com.nvarghese.beowulf.smf.scan.services.ScanManagementService;
 
 /**
@@ -33,7 +34,7 @@ public class NewScanResource {
 	@Context
 	UriInfo uriInfo;
 
-	private static Logger logger = Logger.getLogger(NewScanResource.class);
+	static Logger logger = LoggerFactory.getLogger(NewScanResource.class);
 
 	@POST
 	@Path("new")
@@ -49,6 +50,7 @@ public class NewScanResource {
 			UriBuilder ub = uriInfo.getBaseUriBuilder();
 			URI uri = ub.path("/scan/" + scanRequest.getId()).build();
 			response = Response.created(uri).entity(scanRequest).build();
+			logger.info("Successfully submitted request for new scan with id:{} ", scanRequest.getId());
 		} catch (ServiceException e) {
 			response = Response.status(Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}

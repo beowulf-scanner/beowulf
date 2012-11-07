@@ -151,5 +151,28 @@
 		<test_attributes />
 		<module_enabled>true</module_enabled>
 	</meta_test_module>
-
+	<meta_test_module test_category="ARCHITECTURE" test_type="HOST_TEST">
+		<module_number>1007</module_number>
+		<module_name>FingerPrinting</module_name>
+		<module_description>Fingerprinting module to detect target Host, IP and technology</module_description>
+		<module_class_name>com.nvarghese.beowulf.sfe.webtest.tm.architecture.FingerPrinting</module_class_name>
+		<test_attributes />
+		<module_enabled>true</module_enabled>
+	</meta_test_module>
+	<meta_test_module test_category="INJECTION" test_type="HTTP_QUERY_PARAM_TEST">
+		<module_number>1008</module_number>
+		<module_name>SingleQuoteSQLInjection</module_name>
+		<module_description>Detects SQL Injection attacks using single quote attack vector</module_description>
+		<module_class_name>com.nvarghese.beowulf.sfe.webtest.tm.injection.SingleQuoteSQLInjection</module_class_name>
+		<test_attributes />
+		<module_enabled>false</module_enabled>
+	</meta_test_module>
+	<meta_test_module test_category="INFORMATION_LEAKAGE" test_type="DIRECTORY_TEST">
+		<module_number>1009</module_number>
+		<module_name>PhpInfoPage</module_name>
+		<module_description>Detects phpinfo() page and extracts usefule information</module_description>
+		<module_class_name>com.nvarghese.beowulf.sfe.webtest.tm.infoleak.PhpInfoPage</module_class_name>
+		<test_attributes />
+		<module_enabled>true</module_enabled>
+	</meta_test_module>
 </meta_test_modules>

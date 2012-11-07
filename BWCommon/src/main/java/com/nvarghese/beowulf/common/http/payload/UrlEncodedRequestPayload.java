@@ -115,4 +115,10 @@ public class UrlEncodedRequestPayload implements RequestPayload {
 		return nps;
 	}
 
+	public String getParameterValue(String name) {
+
+		NameValuePair nm = mappedParameters.get(name);
+		return nm.getValue();
+	}
+
 }

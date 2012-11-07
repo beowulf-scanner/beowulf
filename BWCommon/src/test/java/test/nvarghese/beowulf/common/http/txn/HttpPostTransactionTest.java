@@ -45,6 +45,12 @@ public class HttpPostTransactionTest {
 		transaction.execute();
 		String responseString = transaction.getResponseBodyAsString();
 		CookieStore cookieStore = transaction.getCookieStore();
+		
+		System.out.println("-------------------------------------------------------");
+		System.out.println(transaction.requestToString());
+		System.out.println(transaction.responseToString());
+
+		System.out.println("-------------------------------------------------------");
 
 		Assert.assertNotNull(responseString);
 		Assert.assertEquals(transaction.getResponse().getStatusLine().getStatusCode(), 200);

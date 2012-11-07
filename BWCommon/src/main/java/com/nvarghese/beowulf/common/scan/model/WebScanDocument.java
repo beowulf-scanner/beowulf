@@ -46,10 +46,20 @@ public class WebScanDocument extends AbstractDocument {
 
 	@Reference
 	private MasterScanConfigDocument scanConfig;
+	
+	@Reference
+	private MasterScanReportDocument scanReport;
 
-	private int createdJobs;
-	private int completedJobs;
-	private int pendingJobs;
+	private long createdCategorizationJobs;
+	private long completedCategorizationJobs;
+	private long erroredCategorizationJobs;
+	private long pendingCategorizationJobs;
+
+	private long createdExecutionJobs;
+	private long completedExecutionJobs;
+	private long erroredExecutionJobs;
+	private long pendingExecutionJobs;
+
 	private int percentageDone;
 
 	private String txnDbName;
@@ -78,9 +88,17 @@ public class WebScanDocument extends AbstractDocument {
 		scanStartTime = new Date(0);
 		scanEndTime = new Date(0);
 		estimatedTime = new Date(0);
-		createdJobs = 0;
-		pendingJobs = 0;
-		completedJobs = 0;
+
+		createdCategorizationJobs = 0;
+		completedCategorizationJobs = 0;
+		erroredCategorizationJobs = 0;
+		pendingCategorizationJobs = 0;
+
+		createdExecutionJobs = 0;
+		completedExecutionJobs = 0;
+		erroredExecutionJobs = 0;
+		pendingExecutionJobs = 0;
+
 		percentageDone = 0;
 		lastError = "";
 		setAbortingReason("");
@@ -244,34 +262,96 @@ public class WebScanDocument extends AbstractDocument {
 		this.scanConfig = scanConfig;
 	}
 
-	public int getCreatedJobs() {
-
-		return createdJobs;
+	
+	public MasterScanReportDocument getScanReport() {
+	
+		return scanReport;
 	}
 
-	public void setCreatedJobs(int createdJobs) {
-
-		this.createdJobs = createdJobs;
+	
+	public void setScanReport(MasterScanReportDocument scanReport) {
+	
+		this.scanReport = scanReport;
 	}
 
-	public int getCompletedJobs() {
+	public long getCreatedCategorizationJobs() {
 
-		return completedJobs;
+		return createdCategorizationJobs;
 	}
 
-	public void setCompletedJobs(int completedJobs) {
+	public void setCreatedCategorizationJobs(long createdCategorizationJobs) {
 
-		this.completedJobs = completedJobs;
+		this.createdCategorizationJobs = createdCategorizationJobs;
 	}
 
-	public int getPendingJobs() {
+	public long getCompletedCategorizationJobs() {
 
-		return pendingJobs;
+		return completedCategorizationJobs;
 	}
 
-	public void setPendingJobs(int pendingJobs) {
+	public void setCompletedCategorizationJobs(long completedCategorizationJobs) {
 
-		this.pendingJobs = pendingJobs;
+		this.completedCategorizationJobs = completedCategorizationJobs;
+	}
+
+	public long getErroredCategorizationJobs() {
+
+		return erroredCategorizationJobs;
+	}
+
+	public void setErroredCategorizationJobs(long erroredCategorizationJobs) {
+
+		this.erroredCategorizationJobs = erroredCategorizationJobs;
+	}
+
+	public long getPendingCategorizationJobs() {
+
+		return pendingCategorizationJobs;
+	}
+
+	public void setPendingCategorizationJobs(long pendingCategorizationJobs) {
+
+		this.pendingCategorizationJobs = pendingCategorizationJobs;
+	}
+
+	public long getCreatedExecutionJobs() {
+
+		return createdExecutionJobs;
+	}
+
+	public void setCreatedExecutionJobs(long createdExecutionJobs) {
+
+		this.createdExecutionJobs = createdExecutionJobs;
+	}
+
+	public long getCompletedExecutionJobs() {
+
+		return completedExecutionJobs;
+	}
+
+	public void setCompletedExecutionJobs(long completedExecutionJobs) {
+
+		this.completedExecutionJobs = completedExecutionJobs;
+	}
+
+	public long getErroredExecutionJobs() {
+
+		return erroredExecutionJobs;
+	}
+
+	public void setErroredExecutionJobs(long erroredExecutionJobs) {
+
+		this.erroredExecutionJobs = erroredExecutionJobs;
+	}
+
+	public long getPendingExecutionJobs() {
+
+		return pendingExecutionJobs;
+	}
+
+	public void setPendingExecutionJobs(long pendingExecutionJobs) {
+
+		this.pendingExecutionJobs = pendingExecutionJobs;
 	}
 
 	public int getPercentageDone() {

@@ -24,6 +24,7 @@ import com.nvarghese.beowulf.common.webtest.sfe.jobs.TestParameterDocument;
 import com.nvarghese.beowulf.sfe.SfeManager;
 import com.nvarghese.beowulf.sfe.webtest.tm.AbstractTestModule;
 import com.nvarghese.beowulf.sfe.webtest.types.DirectoryTestType;
+import com.nvarghese.beowulf.sfe.webtest.types.HostTestType;
 
 public class TestExecutorService {
 
@@ -36,8 +37,8 @@ public class TestExecutorService {
 		WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(testJob.getWebScanObjId());
 
 		try {
-			BwControllerRpcInterface bwContollerRpcClient = bwControllerService.getRpcClient(webScanDocument.getBwControllerIPAddress(),
-					webScanDocument.getBwControllerPort());
+			//BwControllerRpcInterface bwContollerRpcClient = bwControllerService.getRpcClient(webScanDocument.getBwControllerIPAddress(),
+			//		webScanDocument.getBwControllerPort());
 			Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), testJob.getDatabaseName());
 
 			TestJobDAO testJobDAO = new TestJobDAO(ds);
@@ -63,8 +64,8 @@ public class TestExecutorService {
 
 			}
 
-			String reply = bwContollerRpcClient.sayHello("BW-Executor System");
-			logger.info("RPC Message was sent to server. Server replied: {}", reply);
+			//String reply = bwContollerRpcClient.sayHello("BW-Executor System");
+			//logger.info("RPC Message was sent to server. Server replied: {}", reply);
 
 		} catch (ConfigurationException e) {
 			logger.error("Failed to create/get datastore for scan instance. Reason: {}", e.getMessage(), e);
@@ -96,6 +97,12 @@ public class TestExecutorService {
 					TestParameterDocument testParamDocument = testJobDocument.getTestParameters().get(0);
 					String paramValue = (String) testParamDocument.getParameterValue();
 					directoryTestModule.testByDirectory(testJobDocument.getTxnObjId(), paramValue);
+				} else if (testJobDocument.getTestType() == WebTestType.HOST_TEST) {
+					Class targetTestModuleClass = Class.forName(testModuleMetaDocument.getModuleClassName());
+					Object targetTestModuleObject = targetTestModuleClass.newInstance();
+					HostTestType hostTestModule = HostTestType.class.cast(targetTestModuleObject);
+					((AbstractTestModule) hostTestModule).initialize(ds, testModuleMetaDocument, testModuleScanConfigDocument);
+					hostTestModule.testByServer(testJobDocument.getTxnObjId());
 				}
 
 			} catch (ClassNotFoundException e) {

@@ -21,6 +21,7 @@ import com.nvarghese.beowulf.common.scan.model.ReportIssueDocument;
 import com.nvarghese.beowulf.common.scan.model.ReportIssueVariantDocument;
 import com.nvarghese.beowulf.common.utils.HttpUtils;
 import com.nvarghese.beowulf.common.webtest.ReportThreatType;
+import com.nvarghese.beowulf.common.webtest.ThreatSeverityType;
 import com.nvarghese.beowulf.sfe.ConfigurationManager;
 import com.nvarghese.beowulf.sfe.webtest.tm.AbstractTestModule;
 import com.nvarghese.beowulf.sfe.webtest.types.DirectoryTestType;
@@ -100,7 +101,7 @@ public class DirectoryEnumerator extends AbstractTestModule implements Directory
 	
 	private void reportFinding(AbstractHttpTransaction originalTransaction, AbstractHttpTransaction testTransaction, String newDirectory) {
 
-		String uri = originalTransaction.getHostUriWithoutTrailingSlash() + newDirectory;
+		String uri = testTransaction.getURI().toString();
 		ReportIssueDAO issueDAO = new ReportIssueDAO(scanInstanceDataStore);
 
 		ReportIssueDocument reportIssueDocument = issueDAO.findByUrlAndThreatTypeAndModuleNumber(uri, ReportThreatType.PRED_RESOURCE_LOCATION,
@@ -108,6 +109,10 @@ public class DirectoryEnumerator extends AbstractTestModule implements Directory
 
 		if (reportIssueDocument == null) {
 			reportIssueDocument = new ReportIssueDocument();
+			
+			reportIssueDocument.setThreatSeverityType(ThreatSeverityType.MEDIUM);
+			reportIssueDocument.setThreatType(ReportThreatType.PRED_RESOURCE_LOCATION);
+			reportIssueDocument.setIssueUrl(uri);
 
 			reportIssueDocument.setModuleName(moduleName);
 			reportIssueDocument.setModuleNumber(moduleNumber);
@@ -128,9 +133,9 @@ public class DirectoryEnumerator extends AbstractTestModule implements Directory
 		
 		//set issue variant
 		ReportIssueVariantDocument issueVariant = new ReportIssueVariantDocument();
-		String description = "The following directory was discovered by guessing its name: \n";
-		description += " Original Directory: " + uri + "\n";
-		description += " Discovered Directory: " + testTransaction.getURI() + "\n";
+		String description = "The following directory was discovered by guessing its name:</br></br>";
+		description += "&nbsp;&nbsp;Original Directory: " + uri + "</br>";
+		description += "&nbsp;&nbsp;Discovered Directory: " + testTransaction.getURI() + "</br></br>";
 		description += "If the directory was not linked to by the website," +  
 				" they could lead an attacker to unintended areas.";
 		issueVariant.setDescription(description);

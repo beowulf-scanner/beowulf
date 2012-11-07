@@ -29,6 +29,8 @@ public class SFControllerSettings {
 	private String zkGroupNode;
 	private String zkServers;
 
+	private String reportDir;
+
 	private static final String BWSFC__IP_ADDR = "bw-controller.ip_address";
 	private static final String BWSFC__DEFAULT_CONF_DIR = "bw-controller.conf.dir";
 	private static final String BWSFC__JETTY__RESOURCE_FILE_NAME = "bw-controller.jetty.resource_file_name";
@@ -38,6 +40,8 @@ public class SFControllerSettings {
 
 	private static final String BWSFC__ZK__GROUP_NODE = "bw-controller.zookeeper.group_node_name";
 	private static final String BWSFC__ZK__SERVER_LIST = "bw-controller.zookeeper.servers";
+
+	private static final String BWSFC__REPORT_DIR = "bw-controller.report.dir";
 
 	static Logger logger = LoggerFactory.getLogger(SFControllerSettings.class);
 
@@ -50,8 +54,7 @@ public class SFControllerSettings {
 
 	public SFControllerSettings(String categServerConfigFileName) throws ConfigurationException, URISyntaxException {
 
-		propertiesConfiguration = new PropertiesConfiguration(SFControllerSettings.class.getClassLoader().getResource(
-				categServerConfigFileName));
+		propertiesConfiguration = new PropertiesConfiguration(SFControllerSettings.class.getClassLoader().getResource(categServerConfigFileName));
 		initialize();
 	}
 
@@ -82,8 +85,7 @@ public class SFControllerSettings {
 			ipAddress = propertiesConfiguration.getString(BWSFC__IP_ADDR);
 		}
 		{
-			jettyResourceFileName = propertiesConfiguration
-					.getString(BWSFC__JETTY__RESOURCE_FILE_NAME, "jetty-web.xml");
+			jettyResourceFileName = propertiesConfiguration.getString(BWSFC__JETTY__RESOURCE_FILE_NAME, "jetty-web.xml");
 			jettyContextDescriptor = propertiesConfiguration.getString(BWSFC__JETTY__CONTEXT__DESCRIPTOR);
 			jettyContextResourceBase = propertiesConfiguration.getString(BWSFC__JETTY__CONTEXT__RESOURCE_BASE);
 			jettyContextRootPath = propertiesConfiguration.getString(BWSFC__JETTY__CONTEXT__ROOT_PATH);
@@ -91,6 +93,10 @@ public class SFControllerSettings {
 		{
 			zkGroupNode = propertiesConfiguration.getString(BWSFC__ZK__GROUP_NODE, "controller");
 			zkServers = propertiesConfiguration.getString(BWSFC__ZK__SERVER_LIST);
+		}
+
+		{
+			reportDir = propertiesConfiguration.getString(BWSFC__REPORT_DIR, "reports");
 		}
 
 	}
@@ -183,6 +189,11 @@ public class SFControllerSettings {
 	public void setJettyContextRootPath(String jettyContextRootPath) {
 
 		this.jettyContextRootPath = jettyContextRootPath;
+	}
+
+	public String getReportDir() {
+
+		return reportDir;
 	}
 
 }

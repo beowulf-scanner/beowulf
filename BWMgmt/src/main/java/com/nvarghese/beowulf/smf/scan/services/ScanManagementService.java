@@ -4,24 +4,28 @@ import java.util.Map;
 
 import javax.jms.JMSException;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nvarghese.beowulf.common.exception.ServiceException;
 import com.nvarghese.beowulf.common.jobs.NewScanJob;
 import com.nvarghese.beowulf.common.scan.dao.MasterScanConfigDAO;
+import com.nvarghese.beowulf.common.scan.dao.MasterScanReportDAO;
 import com.nvarghese.beowulf.common.scan.dao.WebScanDAO;
 import com.nvarghese.beowulf.common.scan.dto.config.Profile;
 import com.nvarghese.beowulf.common.scan.model.MasterScanConfigDocument;
+import com.nvarghese.beowulf.common.scan.model.MasterScanReportDocument;
 import com.nvarghese.beowulf.common.scan.model.TestModuleScanConfigDocument;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
+import com.nvarghese.beowulf.common.webtest.ScanPhase;
 import com.nvarghese.beowulf.common.webtest.dao.TestModuleMetaDataDAO;
 import com.nvarghese.beowulf.common.webtest.model.TestModuleMetaDataDocument;
 import com.nvarghese.beowulf.smf.SmfManager;
-import com.nvarghese.beowulf.smf.scan.dto.Baseuris;
-import com.nvarghese.beowulf.smf.scan.dto.Comments;
-import com.nvarghese.beowulf.smf.scan.dto.Jobs;
-import com.nvarghese.beowulf.smf.scan.dto.ScanRequest;
+import com.nvarghese.beowulf.smf.scan.dto.scanrequest.Baseuris;
+import com.nvarghese.beowulf.smf.scan.dto.scanrequest.Comments;
+import com.nvarghese.beowulf.smf.scan.dto.scanrequest.Jobs;
+import com.nvarghese.beowulf.smf.scan.dto.scanrequest.ScanRequest;
 import com.nvarghese.beowulf.smf.scan.transformers.ScanProfileTransformer;
 
 public class ScanManagementService {
@@ -44,10 +48,16 @@ public class ScanManagementService {
 		// persist
 		MasterScanConfigDAO scanConfigDAO = new MasterScanConfigDAO(SmfManager.getInstance().getDataStore());
 		scanConfigDAO.createMasterScanConfigDocument(scanConfigDocument);
+		
+		MasterScanReportDAO reportDAO = new MasterScanReportDAO(SmfManager.getInstance().getDataStore());
+		MasterScanReportDocument scanReport = new MasterScanReportDocument();
+		reportDAO.createMasterScanReportDocument(scanReport);
 
 		WebScanDocument webScanDocument = new WebScanDocument();
 		webScanDocument.setScanConfig(scanConfigDocument);
+		webScanDocument.setScanReport(scanReport);
 		webScanDocument.setBaseUris(scanConfigDocument.getSettingScanConfig().getBaseURIList());
+		webScanDocument.setScanPhase(ScanPhase.INITIALIZATION.getName());
 
 		// persist
 		WebScanDAO webScanDAO = new WebScanDAO(SmfManager.getInstance().getDataStore());
@@ -84,6 +94,23 @@ public class ScanManagementService {
 
 	}
 
+	/**
+	 * 
+	 * @param objectId
+	 * @return
+	 * @throws ResourceNotFoundException
+	 */
+	public ScanRequest getWebScanRequest(ObjectId objectId) throws ResourceNotFoundException {
+
+		WebScanDAO webScanDAO = new WebScanDAO(SmfManager.getInstance().getDataStore());
+		WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(objectId);
+		if (webScanDocument != null) {
+			return transformToScanRequest(webScanDocument);
+		} else {
+			throw new ResourceNotFoundException();
+		}
+	}
+
 	private ScanRequest transformToScanRequest(WebScanDocument webScanDocument) {
 
 		ScanRequest scanRequest = new ScanRequest();
@@ -97,9 +124,13 @@ public class ScanManagementService {
 		scanRequest.setComments(comments);
 
 		Jobs jobs = new Jobs();
-		jobs.setCompleted(webScanDocument.getCompletedJobs());
-		jobs.setCreated(webScanDocument.getCreatedJobs());
-		jobs.setPending(webScanDocument.getPendingJobs());
+		long completed = webScanDocument.getCompletedCategorizationJobs() + webScanDocument.getCompletedExecutionJobs();
+		long pending = webScanDocument.getPendingCategorizationJobs() + webScanDocument.getPendingExecutionJobs();
+		long created = webScanDocument.getCreatedCategorizationJobs() + webScanDocument.getCreatedExecutionJobs();
+
+		jobs.setCompleted(completed);
+		jobs.setCreated(created);
+		jobs.setPending(pending);
 		scanRequest.setJobs(jobs);
 
 		scanRequest.setId(webScanDocument.getId().toString());

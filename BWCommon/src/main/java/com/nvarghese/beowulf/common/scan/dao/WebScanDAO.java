@@ -8,7 +8,6 @@ import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Key;
 import com.google.code.morphia.query.UpdateOperations;
 import com.nvarghese.beowulf.common.dao.AbstractMongoDAO;
-import com.nvarghese.beowulf.common.scan.model.ReportIssueDocument;
 import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 
 public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
@@ -83,7 +82,7 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 		ds.update(ds.createQuery(WebScanDocument.class).field("id").equal(webScanObjectId), ops);
 
 	}
-	
+
 	/**
 	 * 
 	 * @param webScanObjectId
@@ -92,6 +91,18 @@ public class WebScanDAO extends AbstractMongoDAO<WebScanDocument, ObjectId> {
 	public void updateScanRunning(ObjectId webScanObjectId, boolean scanRunning) {
 
 		UpdateOperations<WebScanDocument> ops = ds.createUpdateOperations(WebScanDocument.class).set("scanRunning", scanRunning);
+		ds.update(ds.createQuery(WebScanDocument.class).field("id").equal(webScanObjectId), ops);
+
+	}
+
+	/**
+	 * 
+	 * @param webScanObjectId
+	 * @param scanRunning
+	 */
+	public void updateScanPhase(ObjectId webScanObjectId, String scanPhase) {
+
+		UpdateOperations<WebScanDocument> ops = ds.createUpdateOperations(WebScanDocument.class).set("scanPhase", scanPhase);
 		ds.update(ds.createQuery(WebScanDocument.class).field("id").equal(webScanObjectId), ops);
 
 	}

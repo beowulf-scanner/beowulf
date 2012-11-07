@@ -7,6 +7,8 @@ import javax.ws.rs.core.Application;
 
 import com.nvarghese.beowulf.smf.scan.resources.HelloWorld;
 import com.nvarghese.beowulf.smf.scan.resources.NewScanResource;
+import com.nvarghese.beowulf.smf.scan.resources.ReportResource;
+import com.nvarghese.beowulf.smf.scan.resources.SimpleQueryResource;
 
 public class SmfRestApplication extends Application {
 
@@ -16,6 +18,8 @@ public class SmfRestApplication extends Application {
 
 		services.add(new HelloWorld());
 		services.add(new NewScanResource());
+		services.add(new SimpleQueryResource());
+		services.add(new ReportResource());
 	}
 
 	@Override

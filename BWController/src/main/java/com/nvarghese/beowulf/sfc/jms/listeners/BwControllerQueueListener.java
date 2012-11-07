@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nvarghese.beowulf.common.jobs.NewScanJob;
+import com.nvarghese.beowulf.common.jobs.ReportGenerateJob;
 import com.nvarghese.beowulf.sfc.services.NewScanService;
+import com.nvarghese.beowulf.sfc.services.ReportService;
 
 public class BwControllerQueueListener implements MessageListener {
 
@@ -32,13 +34,24 @@ public class BwControllerQueueListener implements MessageListener {
 			Object object = objMessage.getObject();
 			if (object instanceof NewScanJob) {
 
-				final NewScanJob newScanJob = (NewScanJob) object;				
+				final NewScanJob newScanJob = (NewScanJob) object;
 				new Thread() {
 
 					public void run() {
 
 						NewScanService newScanService = new NewScanService();
 						newScanService.startScan(newScanJob);
+					}
+				}.start();
+
+			} else if (object instanceof ReportGenerateJob) {
+				final ReportGenerateJob reportGenJob = (ReportGenerateJob) object;
+				new Thread() {
+
+					public void run() {
+
+						ReportService reportService = new ReportService();
+						reportService.generateReport(reportGenJob);
 					}
 				}.start();
 

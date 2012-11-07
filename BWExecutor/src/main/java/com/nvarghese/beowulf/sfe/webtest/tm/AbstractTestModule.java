@@ -36,24 +36,28 @@ public abstract class AbstractTestModule {
 			TestModuleScanConfigDocument testModuleScanConfigDocument) {
 
 		this.scanInstanceDataStore = scanInstanceDataStore;
+		
 		List<TestModuleOptionDocument> metaOptionDocuments = testModuleMetaDocument.getOptions();
-		for (TestModuleOptionDocument metaOptionDocument : metaOptionDocuments) {
-			Options option = new Options();
-			option.setOptionName(metaOptionDocument.getOptionName());
-			option.setOptionValue(metaOptionDocument.getOptionValue());
-			// implement type checks
-			optionsMap.put(metaOptionDocument.getOptionName(), option);
+		if (metaOptionDocuments != null) {
+			for (TestModuleOptionDocument metaOptionDocument : metaOptionDocuments) {
+				Options option = new Options();
+				option.setOptionName(metaOptionDocument.getOptionName());
+				option.setOptionValue(metaOptionDocument.getOptionValue());
+				// implement type checks
+				optionsMap.put(metaOptionDocument.getOptionName(), option);
+			}
 		}
 
 		List<TestModuleOptionDocument> moduleOptionDocuments = testModuleScanConfigDocument.getOptions();
-
-		for (TestModuleOptionDocument optionDocument : moduleOptionDocuments) {
-			if (optionsMap.containsKey(optionDocument.getOptionName())) {
-				Options option = new Options();
-				option.setOptionName(optionDocument.getOptionName());
-				option.setOptionValue(optionDocument.getOptionValue());
-				// implement type checks
-				optionsMap.put(optionDocument.getOptionName(), option);
+		if (metaOptionDocuments != null) {
+			for (TestModuleOptionDocument optionDocument : moduleOptionDocuments) {
+				if (optionsMap.containsKey(optionDocument.getOptionName())) {
+					Options option = new Options();
+					option.setOptionName(optionDocument.getOptionName());
+					option.setOptionValue(optionDocument.getOptionValue());
+					// implement type checks
+					optionsMap.put(optionDocument.getOptionName(), option);
+				}
 			}
 		}
 

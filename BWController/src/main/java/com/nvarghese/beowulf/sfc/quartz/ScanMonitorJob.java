@@ -27,9 +27,15 @@ public class ScanMonitorJob implements Job {
 		final ScanMonitorService scanMonitorService = new ScanMonitorService();
 		JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
 		final ObjectId webScanObjId = new ObjectId(dataMap.getString(WEBSCANOBJID));
+		
+		logger.info("Running scan monitor job for WebScanDocument#id: {}", webScanObjId);
 
 		try {
 
+			//update job details
+			scanMonitorService.updateWebScanDocumentWithScanJobDetails(webScanObjId);
+			
+			//check status
 			boolean running = scanMonitorService.isScanRunning(webScanObjId);
 			WebScanDAO webScanDAO = new WebScanDAO(SFControllerManager.getInstance().getDataStore());
 			WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(webScanObjId);
@@ -53,9 +59,11 @@ public class ScanMonitorJob implements Job {
 
 					logger.info("Scan with id: {} reached complete stage. Shutting down scan instance server", webScanObjId.toString());
 
-					//spawn a new thread
+					// spawn a new thread
 					new Thread() {
+
 						public void run() {
+
 							scanMonitorService.stopScanInstanceServer(webScanObjId);
 						}
 					}.start();

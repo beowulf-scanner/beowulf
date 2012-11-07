@@ -7,7 +7,7 @@
 // Generated on: 2011.01.20 at 12:25:00 PM IST
 //
 
-package com.nvarghese.beowulf.smf.scan.dto;
+package com.nvarghese.beowulf.smf.scan.dto.scanrequest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="created" type="{http://www.w3.org/2001/XMLSchema}integer"/>
- *         &lt;element name="completed" type="{http://www.w3.org/2001/XMLSchema}integer"/>
- *         &lt;element name="pending" type="{http://www.w3.org/2001/XMLSchema}integer"/>
+ *         &lt;element name="created" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="completed" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="pending" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,19 +45,19 @@ import javax.xml.bind.annotation.XmlType;
 public class Jobs {
 
 	@XmlElement(required = true)
-	protected int created;
+	protected long created;
 	@XmlElement(required = true)
-	protected int completed;
+	protected long completed;
 	@XmlElement(required = true)
-	protected int pending;
+	protected long pending;
 
 	/**
 	 * Gets the value of the created property.
 	 * 
-	 * @return possible object is {@link int }
+	 * @return possible object is {@link long }
 	 * 
 	 */
-	public int getCreated() {
+	public long getCreated() {
 
 		return created;
 	}
@@ -66,10 +66,10 @@ public class Jobs {
 	 * Sets the value of the created property.
 	 * 
 	 * @param value
-	 *            allowed object is {@link int }
+	 *            allowed object is {@link long }
 	 * 
 	 */
-	public void setCreated(int value) {
+	public void setCreated(long value) {
 
 		this.created = value;
 	}
@@ -77,10 +77,10 @@ public class Jobs {
 	/**
 	 * Gets the value of the completed property.
 	 * 
-	 * @return possible object is {@link int }
+	 * @return possible object is {@link long }
 	 * 
 	 */
-	public int getCompleted() {
+	public long getCompleted() {
 
 		return completed;
 	}
@@ -89,10 +89,10 @@ public class Jobs {
 	 * Sets the value of the completed property.
 	 * 
 	 * @param value
-	 *            allowed object is {@link int }
+	 *            allowed object is {@link long }
 	 * 
 	 */
-	public void setCompleted(int value) {
+	public void setCompleted(long value) {
 
 		this.completed = value;
 	}
@@ -100,10 +100,10 @@ public class Jobs {
 	/**
 	 * Gets the value of the pending property.
 	 * 
-	 * @return possible object is {@link int }
+	 * @return possible object is {@link long }
 	 * 
 	 */
-	public int getPending() {
+	public long getPending() {
 
 		return pending;
 	}
@@ -112,15 +112,15 @@ public class Jobs {
 	 * Sets the value of the pending property.
 	 * 
 	 * @param value
-	 *            allowed object is {@link int }
+	 *            allowed object is {@link long }
 	 * 
 	 */
-	public void setPending(int value) {
+	public void setPending(long value) {
 
 		this.pending = value;
 	}
 
-	public Jobs(int created, int completed, int pending) {
+	public Jobs(long created, long completed, long pending) {
 
 		this.created = created;
 		this.completed = completed;

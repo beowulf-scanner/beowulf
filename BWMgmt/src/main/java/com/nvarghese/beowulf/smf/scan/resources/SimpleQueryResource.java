@@ -1,76 +1,59 @@
-//package com.nvarghese.beowulf.smf.scan.resources;
-//
-//import javax.ws.rs.GET;
-//import javax.ws.rs.Path;
-//import javax.ws.rs.PathParam;
-//import javax.ws.rs.Produces;
-//import javax.ws.rs.WebApplicationException;
-//import javax.ws.rs.core.MediaType;
-//
-//import org.apache.log4j.Logger;
-//import org.bson.types.ObjectId;
-//
-//import com.ivizsecurity.verimo.buttercup.dao.MongoDBService;
-//import com.ivizsecurity.verimo.buttercup.model.jaxb.scanrequest.ScanRequest;
-//import com.ivizsecurity.verimo.buttercup.model.mongo.WebScanDocument;
-//import com.ivizsecurity.verimo.buttercup.transformers.ScanRequestTransformer;
-//import com.sun.jersey.api.NotFoundException;
-//
-///**
-// * This resource provides answers to simple queries such as start time, expected
-// * time , percentage done as defined in requirement.
-// * 
-// * @author deepak
-// * 
-// */
-//
-//@Path("/scan/{id}")
-//public class SimpleQueryResource {
-//
-//	private static Logger logger = Logger.getLogger(SimpleQueryResource.class);
-//
-//	@GET
-//	@Produces(MediaType.APPLICATION_XML)
-//	public ScanRequest getSimpleInfo(@PathParam("id") String id) {
-//
-//		logger.debug("Getting information for id: " + id);
-//		
-//		ScanRequest scanRequest = null;
-//		ObjectId objectId = null;
-//		
-//		if (ObjectId.isValid(id)) {
-//			objectId = new ObjectId(id);
-//			scanRequest = prepareResponse(objectId);
-//		} else {
-//			throw new WebApplicationException(400);
-//		}
-//
-//		if (scanRequest != null)
-//			return scanRequest;
-//		else {
-//			throw new NotFoundException("Scan with id '" + id + "' is not found");
-//		}
-//
-//	}
-//
-//	/**
-//	 * 
-//	 * @param id
-//	 * @return ScanRequest
-//	 */
-//	private ScanRequest prepareResponse(ObjectId id) {
-//
-//		logger.debug("Preparing response for id: " + id.toString());
-//		
-//		ScanRequest scanRequest = null;
-//		WebScanDocument scanDoc = MongoDBService.getWebScanDocument(id);
-//		
-//		if(scanDoc != null) {		
-//			scanRequest = ScanRequestTransformer.doTransform(scanDoc);
-//		} 
-//
-//		return scanRequest;
-//
-//	}
-//
-//}
+package com.nvarghese.beowulf.smf.scan.resources;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.nvarghese.beowulf.smf.scan.dto.scanrequest.ScanRequest;
+import com.nvarghese.beowulf.smf.scan.services.ResourceNotFoundException;
+import com.nvarghese.beowulf.smf.scan.services.ScanManagementService;
+
+/**
+ * This resource provides answers to simple queries such as start time, expected
+ * time , percentage done as defined in requirement.
+ */
+
+@Path("/api/scan/{id}")
+public class SimpleQueryResource {
+
+	static Logger logger = LoggerFactory.getLogger(SimpleQueryResource.class);
+
+	@GET
+	@Produces(MediaType.APPLICATION_XML)
+	public Response getSimpleInfo(@PathParam("id") String id) {
+
+		logger.info("Getting information for id: " + id);
+
+		ScanRequest scanRequest = null;
+		ObjectId objectId = null;
+		ScanManagementService scanManagementService = new ScanManagementService();
+		Response response = null;
+		try {
+			if (ObjectId.isValid(id)) {
+				objectId = new ObjectId(id);
+				scanRequest = scanManagementService.getWebScanRequest(objectId);
+				response = Response.status(Status.OK).entity(scanRequest).build();
+			} else {
+				response = Response.status(Status.BAD_REQUEST).entity("Id is invalid").build();
+			}
+		} catch (ResourceNotFoundException e) {
+			logger.warn("Requested webscandocument for id: {} cannot be found");
+			response = Response.status(Status.NOT_FOUND).entity("Resource not found").build();
+		} catch (Exception e) {
+			logger.error("Failed to retrieve web scan document. Reason: {}", e.getMessage(), e);
+			response = Response.status(Status.NOT_FOUND).entity("Resource not found").build();
+		}
+
+		return response;
+
+	}
+
+}

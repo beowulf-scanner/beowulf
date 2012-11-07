@@ -35,8 +35,8 @@ public class CategorizationService {
 		WebScanDocument webScanDocument = webScanDAO.getWebScanDocument(categorizerJob.getWebScanObjId());
 
 		try {
-			BwControllerRpcInterface bwContollerRpcClient = bwControllerService.getRpcClient(webScanDocument.getBwControllerIPAddress(),
-					webScanDocument.getBwControllerPort());
+			//BwControllerRpcInterface bwContollerRpcClient = bwControllerService.getRpcClient(webScanDocument.getBwControllerIPAddress(),
+			//		webScanDocument.getBwControllerPort());
 			Datastore ds = DataStoreUtil.createOrGetDataStore(BeowulfCommonConfigManager.getDbUri(), categorizerJob.getDatabaseName());
 
 			CategorizationJobDAO categJobDAO = new CategorizationJobDAO(ds);
@@ -62,8 +62,8 @@ public class CategorizationService {
 
 			}
 
-			String reply = bwContollerRpcClient.sayHello("BW-Categorization System");
-			logger.info("RPC Message was sent to server. Server replied: {}", reply);
+			//String reply = bwContollerRpcClient.sayHello("BW-Categorization System");
+			//logger.info("RPC Message was sent to server. Server replied: {}", reply);
 
 		} catch (ConfigurationException e) {
 			logger.error("Failed to create/get datastore for scan instance. Reason: {}", e.getMessage(), e);

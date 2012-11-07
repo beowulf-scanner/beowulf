@@ -141,4 +141,17 @@ public class CategorizationJobDAO extends AbstractMongoDAO<CategorizationJobDocu
 		return count;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public long getCountOfAllJobs() {
+
+		Query<CategorizationJobDocument> q = ds.createQuery(CategorizationJobDocument.class);
+		long count = count(q);
+
+		return count;
+
+	}
+
 }

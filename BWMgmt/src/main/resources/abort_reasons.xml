@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reasons>
+	<reason>
+		<id>1</id>
+		<value>mistakenly given</value>
+	</reason>
+	<reason>
+		<id>2</id>
+		<value>invalid ip</value>
+	</reason>
+</reasons>
+

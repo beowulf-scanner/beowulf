@@ -153,6 +153,35 @@ public abstract class AbstractHttpTransaction {
 		return httpTxn;
 	}
 
+	public static AbstractHttpTransaction clone(HttpTxnDocument httpTxnDocument) {
+
+		AbstractHttpTransaction httpTxn = null;
+		try {
+			RequestPayload requestPayload = RequestPayloadUtils.deserialize(httpTxnDocument.getRequestPayload());
+			HttpRequest httpRequest = HttpTransactionFactory.createHttpRequest(httpTxnDocument.getRequestMethod(),
+					new URI(httpTxnDocument.getRequestURI()), httpTxnDocument.getRequestHeaders().toArray(new BasicHeader[0]),
+					requestPayload.toHttpEntity());
+
+			httpTxn = HttpTransactionFactory.createTransaction(httpRequest, httpTxnDocument.getReferer(), httpTxnDocument.getTransactionSource());
+			httpTxn.setCookieStore(httpTxnDocument.getCookieStore());
+			httpTxn.setRefererTxnObjId(httpTxnDocument.getRefererTxnObjId());
+
+			httpTxn.payloadChanged.set(httpTxnDocument.isPayloadChanged());
+			httpTxn.responseReady.set(false);
+			httpTxn.uncompressed.set(false);
+			httpTxn.setSaved(false);
+
+		} catch (URISyntaxException e) {
+			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
+		} catch (NotImplementedException e) {
+			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error("Failed to retrieve the object. Reason: {}", e.getMessage(), e);
+		}
+		return httpTxn;
+
+	}
+
 	/**
 	 * 
 	 * @return
@@ -257,6 +286,19 @@ public abstract class AbstractHttpTransaction {
 		}
 
 		return nps;
+
+	}
+
+	public String getQueryParamater(String name) {
+
+		RequestPayload requestPayload = httpRequestWrapper.getRequestPayload();
+		if (requestPayload instanceof UrlEncodedRequestPayload) {
+			String value = ((UrlEncodedRequestPayload) requestPayload).getParameterValue(name);
+			return value;
+		} else {
+			logger.warn("Request payload is not of content-type: {}", ContentType.APPLICATION_FORM_URLENCODED);
+			return null;
+		}
 
 	}
 
@@ -584,6 +626,42 @@ public abstract class AbstractHttpTransaction {
 	public void setTransactionSource(TransactionSource transactionSource) {
 
 		this.transactionSource = transactionSource;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String requestToString() {
+
+		StringBuilder requestString = new StringBuilder();
+		requestString.append(httpRequestWrapper.getHttpRequest().getRequestLine().toString()).append("\n");
+		for (Header header : httpRequestWrapper.getHttpRequest().getAllHeaders()) {
+			requestString.append(header.toString()).append("\n");
+		}
+		requestString.append("\n");
+
+		return requestString.toString();
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public String responseToString() {
+
+		StringBuilder responseString = new StringBuilder();
+		if (httpResponseWrapper != null) {
+			responseString.append(httpResponseWrapper.getStatusLine().toString() + "\r\n");
+			for (Header header : httpResponseWrapper.getHeaders()) {
+				responseString.append(header.toString()).append("\n");
+			}
+			responseString.append("\r\n");
+			responseString.append(new String(httpResponseWrapper.getResponseBody()));
+
+		}
+
+		return responseString.toString();
 	}
 
 }

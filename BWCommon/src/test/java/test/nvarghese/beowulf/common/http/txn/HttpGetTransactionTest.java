@@ -61,7 +61,9 @@ public class HttpGetTransactionTest {
 
 		int statusCode = transaction.getResponseStatusCode();
 		String responseString = transaction.getResponseBodyAsString();
-
+		
+		
+		
 		Assert.assertNotNull(responseString);
 		Assert.assertEquals(statusCode, 200);
 

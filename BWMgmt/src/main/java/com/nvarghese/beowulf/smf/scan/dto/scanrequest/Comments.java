@@ -7,7 +7,7 @@
 // Generated on: 2011.01.20 at 12:25:00 PM IST
 //
 
-package com.nvarghese.beowulf.smf.scan.dto;
+package com.nvarghese.beowulf.smf.scan.dto.scanrequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element ref="{}baseuri"/>
+ *         &lt;element ref="{}comment" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -41,27 +41,27 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "baseuri" })
-@XmlRootElement(name = "baseuris")
-public class Baseuris {
+@XmlType(name = "", propOrder = { "comment" })
+@XmlRootElement(name = "comments")
+public class Comments {
 
 	@XmlElement(required = true)
-	protected List<String> baseuri;
+	protected List<String> comment;
 
 	/**
-	 * Gets the value of the baseuri property.
+	 * Gets the value of the comment property.
 	 * 
 	 * <p>
 	 * This accessor method returns a reference to the live list, not a
 	 * snapshot. Therefore any modification you make to the returned list will
 	 * be present inside the JAXB object. This is why there is not a
-	 * <CODE>set</CODE> method for the baseuri property.
+	 * <CODE>set</CODE> method for the comment property.
 	 * 
 	 * <p>
 	 * For example, to add a new item, do as follows:
 	 * 
 	 * <pre>
-	 * getBaseuri().add(newItem);
+	 * getComment().add(newItem);
 	 * </pre>
 	 * 
 	 * 
@@ -70,17 +70,26 @@ public class Baseuris {
 	 * 
 	 * 
 	 */
-	public List<String> getBaseuri() {
+	public List<String> getComment() {
 
-		if (baseuri == null) {
-			baseuri = new ArrayList<String>();
+		if (comment == null) {
+			comment = new ArrayList<String>();
 		}
-		return this.baseuri;
+		return this.comment;
 	}
 
-	public void setBaseuri(List<String> baseuri) {
+	public void setComment(List<String> comment) {
 
-		this.baseuri = baseuri;
+		this.comment = comment;
 	}
 
+	public Comments(List<String> comment) {
+
+		this.comment = comment;
+	}
+	
+	public Comments() {
+
+		comment = new ArrayList<String>();
+	}
 }

@@ -7,7 +7,7 @@
 // Generated on: 2011.01.20 at 12:25:00 PM IST
 //
 
-package com.nvarghese.beowulf.smf.scan.dto;
+package com.nvarghese.beowulf.smf.scan.dto.scanrequest;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

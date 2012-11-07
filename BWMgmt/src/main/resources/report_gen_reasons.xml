@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reasons>
+	<reason>
+		<id>1</id>
+		<value>First time report generation</value>
+	</reason>
+	<reason>
+		<id>2</id>
+		<value>Marked more false positives after report generation</value>
+	</reason>
+</reasons>

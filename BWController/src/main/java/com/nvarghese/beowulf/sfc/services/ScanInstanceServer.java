@@ -53,7 +53,7 @@ public class ScanInstanceServer implements BwControllerRpcInterface {
 		String triggerId = "scanMonitorTrigger-" + webScanObjId.toString();
 		JobDetail jobDetail = newJob(ScanMonitorJob.class).withIdentity(jobId, "scanMonitorGroup")
 				.usingJobData(ScanMonitorJob.WEBSCANOBJID, webScanObjId.toString()).build();
-		TimeBasedRepeatableTriggerBuilder triggerBuilder = new TimeBasedRepeatableTriggerBuilder(triggerId, "scanMonitorGroup", 60);
+		TimeBasedRepeatableTriggerBuilder triggerBuilder = new TimeBasedRepeatableTriggerBuilder(triggerId, "scanMonitorGroup", 20);
 
 		try {
 			SfcQuartzSchedulerManager.scheduleJob(jobDetail, triggerBuilder.build());

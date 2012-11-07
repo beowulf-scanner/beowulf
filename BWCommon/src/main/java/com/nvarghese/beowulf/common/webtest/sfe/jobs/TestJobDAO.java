@@ -12,6 +12,7 @@ import com.google.code.morphia.Key;
 import com.google.code.morphia.query.Query;
 import com.nvarghese.beowulf.common.dao.AbstractMongoDAO;
 import com.nvarghese.beowulf.common.webtest.JobStatus;
+import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDocument;
 
 public class TestJobDAO extends AbstractMongoDAO<TestJobDocument, ObjectId> {
 
@@ -141,4 +142,16 @@ public class TestJobDAO extends AbstractMongoDAO<TestJobDocument, ObjectId> {
 		return count;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public long getCountOfAllJobs() {
+
+		Query<TestJobDocument> q = ds.createQuery(TestJobDocument.class);
+		long count = count(q);
+
+		return count;
+
+	}
 }

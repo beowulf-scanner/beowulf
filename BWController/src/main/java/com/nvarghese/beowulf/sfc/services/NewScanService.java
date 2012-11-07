@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.util.Date;
 
 import javax.jms.JMSException;
 
@@ -29,6 +30,7 @@ import com.nvarghese.beowulf.common.scan.model.WebScanDocument;
 import com.nvarghese.beowulf.common.utils.ByteUtils;
 import com.nvarghese.beowulf.common.webtest.CategorizerType;
 import com.nvarghese.beowulf.common.webtest.JobStatus;
+import com.nvarghese.beowulf.common.webtest.ScanPhase;
 import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDAO;
 import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizationJobDocument;
 import com.nvarghese.beowulf.common.webtest.scs.jobs.CategorizerJob;
@@ -60,7 +62,9 @@ public class NewScanService {
 			webScanDocument.setBwControllerIPAddress(SFControllerManager.getInstance().getSettings().getIpAddress());
 			webScanDocument.setBwControllerPort(rpcPort);
 			webScanDocument.setScanRunning(true);
+			webScanDocument.setScanStartTime(new Date());
 			webScanDocument.setScanJobsInProgress(true);
+			webScanDocument.setScanPhase(ScanPhase.PRIMARY_SCAN.getName());
 			webScanDocument.setTxnDbName(ds.getDB().getName());
 			webScanDAO.updateWebScanDocument(webScanDocument);
 

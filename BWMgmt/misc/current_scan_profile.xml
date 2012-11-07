@@ -224,6 +224,16 @@
 			<module_name>Backup file enumerator</module_name>
 			<module_enabled>false</module_enabled>
 		</test_module>
+		<test_module>
+			<module_number>1007</module_number>
+			<module_name>FingerPrinting</module_name>
+			<module_enabled>true</module_enabled>
+		</test_module>
+		<test_module>
+			<module_number>1009</module_number>
+			<module_name>PhpInfoPage</module_name>
+			<module_enabled>true</module_enabled>
+		</test_module>
 	</test_modules>
 
 	<!-- End Test Module Settings -->
